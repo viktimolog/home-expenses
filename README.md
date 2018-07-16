@@ -1,6 +1,6 @@
 Get Started
 
-Clone the project git clone https://github.com/viktimolog/news.git
+Clone the project git clone https://github.com/viktimolog/home-expenses.git
 
 Change the directory cd news
 
