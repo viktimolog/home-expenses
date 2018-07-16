@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`>>>Item --- Snapshot +++capturing Snapshot of Home 1`] = `
+<div
+  className="MuiPaper-root-2 MuiPaper-elevation1-5 MuiPaper-rounded-3 MuiCard-root-1"
+  style={
+    Object {
+      "alignItems": "center",
+      "border": "1px",
+      "borderColor": "#ff829e",
+      "borderStyle": "solid",
+      "display": "flex",
+      "flexDirection": "row",
+      "justifyContent": "space-between",
+      "margin": 10,
+      "padding": 10,
+      "paddingBottom": 6,
+      "width": "30%",
+    }
+  }
+>
+  <div
+    className="MuiCardMedia-root-29 media"
+  >
+    <img
+      alt=""
+      src="https://s3.amazonaws.com/uifaces/faces/twitter/kevinoh/128.jpg"
+    />
+  </div>
+  <div
+    className="MuiCardContent-root-31"
+  >
+    <h2
+      className="MuiTypography-root-32 MuiTypography-headline-37 MuiTypography-gutterBottom-49"
+    >
+      Liana
+       
+      Crooks
+    </h2>
+    <p
+      className="MuiTypography-root-32 MuiTypography-body1-41"
+    >
+      Investor Functionality Coordinator
+    </p>
+  </div>
+  <div
+    className="MuiCardActions-root-56"
+  >
+    <button
+      className="MuiButtonBase-root-82 MuiButton-root-58 MuiButton-contained-67 MuiButton-containedPrimary-68 MuiButton-raised-70 MuiButton-raisedPrimary-71 MuiButton-sizeSmall-79 MuiCardActions-action-57"
+      disabled={false}
+      onBlur={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      style={
+        Object {
+          "margin": -14,
+        }
+      }
+      tabIndex="0"
+      type="button"
+    >
+      <span
+        className="MuiButton-label-59"
+      >
+        <a
+          onClick={[Function]}
+          style={
+            Object {
+              "color": "white",
+            }
+          }
+        >
+          More
+        </a>
+      </span>
+      <span
+        className="MuiTouchRipple-root-85"
+      />
+    </button>
+  </div>
+</div>
+`;

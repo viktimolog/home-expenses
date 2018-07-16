@@ -1,0 +1,47 @@
+.image {
+    display: flex;
+    max-width: 100%;
+    width: 50px;
+    height: 50px;
+}
+
+.app-header .toolbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.app-items {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 10px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.item {
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    align-items: center;
+    width: 30%;
+    margin: 10px;
+    border: 1px solid;
+    border-color: #ff829e;
+    border-radius: 50px;
+    background-color: beige;
+}
+
+.media {
+    /*margin: 10px;*/
+    /*margin-bottom: 6px;*/
+}
+
+.avatar{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    width: 20px;
+    height: 20px;
+}
