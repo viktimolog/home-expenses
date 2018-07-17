@@ -4,7 +4,8 @@ import {
     CATEGORY_DOWN,
     CATEGORY_UP,
     DEL_CATEGORY,
-    ADD_CATEGORY
+    ADD_CATEGORY,
+    UPDATE_CATEGORYNAME
 } from 'actions/actionTypes'
 import {
     GetItems
@@ -56,5 +57,12 @@ export const addCategory = categories => dispatch => {
     dispatch({
         type: ADD_CATEGORY,
         categories: categories
+    })
+}
+
+export const updateCategoryName = category => dispatch => {
+    dispatch({
+        type: UPDATE_CATEGORYNAME,
+        category: category
     })
 }

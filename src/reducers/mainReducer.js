@@ -1,10 +1,11 @@
 import {
-  FIND_ITEMS,
-  GET_ITEMS,
+    FIND_ITEMS,
+    GET_ITEMS,
     CATEGORY_DOWN,
     CATEGORY_UP,
     DEL_CATEGORY,
-    ADD_CATEGORY
+    ADD_CATEGORY,
+    UPDATE_CATEGORYNAME
 } from '../actions/actionTypes'
 
 const initialState = {
@@ -46,8 +47,21 @@ const initialState = {
 const mainReducer = (state = initialState, action) => {
   switch (action.type) {
 
-      case ADD_CATEGORY: {
+      case UPDATE_CATEGORYNAME: {
 
+          const updateCategory = {
+              id: action.category.id,
+              name: action.newName,
+              rating: action.category.rating,
+              subCategories: action.category.subCategories
+          }
+
+          return {
+              categories: [...state.categories.filter(category => category !== action.category), updateCategory]
+          }
+      }
+
+      case ADD_CATEGORY: {
           let maxRating = 0;
 
           if(action.categories.length !== 0)

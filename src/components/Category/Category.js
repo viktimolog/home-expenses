@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import {Link} from 'react-router-dom';
 import {TextConstants} from "../../constants/TextConstants";
 
+import ModalDialogEditCategoryName from 'components/ModalDialogEditCategoryName/ModalDialogEditCategoryName'
+
 const Styles = {
     display: 'flex',
     justifyContent: 'flex-start',
@@ -16,7 +18,9 @@ const Styles = {
     flexDirection: 'row'
 }
 
-const Category = ({category, categories, categoryUP, categoryDOWN, delCategory}) => {
+//TODO create subCategories
+
+const Category = ({category, categories, categoryUP, categoryDOWN, delCategory, updateCategoryName}) => {
 
     const UPhandler = () => {
         categoryUP(categories, category.rating)
@@ -30,12 +34,19 @@ const Category = ({category, categories, categoryUP, categoryDOWN, delCategory})
         delCategory(category)
     }
 
-
-return(
+    return(
         <Card style={Styles}>
             <CardContent>
-                <Typography color="inherit" gutterBottom variant="title" component="h2">
-                    {category.name}
+                <Typography
+                    color="inherit"
+                    gutterBottom variant="title"
+                    component="h2"
+                >
+                    {/*{category.name}*/}
+                    <ModalDialogEditCategoryName
+                        category={category}
+                        updateCategoryName={updateCategoryName}
+                    />
                 </Typography>
             </CardContent>
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', marginLeft: '100px'}}>

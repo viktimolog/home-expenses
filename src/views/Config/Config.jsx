@@ -92,6 +92,7 @@ const ADDhandler = () => {
                                           categoryUP={props.categoryUP}
                                           categoryDOWN={props.categoryDOWN}
                                           delCategory={props.delCategory}
+                                          updateCategoryName={props.updateCategoryName}
                                       />
                                   </TableCell>
                               </TableRow>

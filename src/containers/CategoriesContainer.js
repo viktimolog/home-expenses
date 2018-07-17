@@ -8,7 +8,8 @@ import {
     categoryUP,
     categoryDOWN,
     delCategory,
-    addCategory
+    addCategory,
+    updateCategoryName
 } from 'actions/actionCreator'
 import Config from 'views/Config/Config'
 
@@ -28,6 +29,7 @@ class CategoriesContainer extends React.Component {
                     categoryDOWN={this.props.categoryDOWN}
                     delCategory={this.props.delCategory}
                     addCategory={this.props.addCategory}
+                    updateCategoryName={this.props.updateCategoryName}
                 />
             </div>)
     }
@@ -51,7 +53,8 @@ const mapDispatchToProps = {
     categoryUP,
     categoryDOWN,
     delCategory,
-    addCategory
+    addCategory,
+    updateCategoryName
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoriesContainer)
