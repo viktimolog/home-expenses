@@ -5,8 +5,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
 import ModalDialogEditCategoryName from 'components/ModalDialogEditCategoryName/ModalDialogEditCategoryName'
+import ModalDialogYesNo from 'components/ModalDialogYesNo/ModalDialogYesNo'
 
 const Styles = {
     display: 'flex',
@@ -69,14 +69,10 @@ const Category = ({category, categories, categoryUP, categoryDOWN, delCategory, 
                     </Button>
                 </CardActions>
                 <CardActions>
-                    <Button
-                        size="small"
-                        color="secondary"
-                        variant="contained"
-                        onClick={DELhandler}
-                    >
-                        Del
-                    </Button>
+                    <ModalDialogYesNo
+                        category={category}
+                        delCategory={delCategory}
+                    />
                 </CardActions>
                 <CardActions>
                     <Button

@@ -85,7 +85,7 @@ class ModalDialogEditCategoryName extends React.Component {
                             }
                         />
                         <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '30px'}}>
-                            <Button onClick={this.handleUpdateCategoryname}>Submit</Button>
+                            <Button onClick={this.handleUpdateCategoryname}>OK</Button>
                             <Button onClick={this.handleClose}>Cancel</Button>
                         </div>
                     </div>

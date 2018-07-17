@@ -4,7 +4,6 @@ import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 
 function getModalStyle() {
     const top = 50
@@ -42,7 +41,8 @@ class ModalDialogYesNo extends React.Component {
     };
 
     DELhandler = () => {
-        this.props.delCategory(this.props.category)
+        this.props.delCategory(this.props.category);
+        this.handleClose();
     }
 
     render() {
@@ -50,7 +50,14 @@ class ModalDialogYesNo extends React.Component {
 
         return (
             <div>
-                <Button onClick={this.handleOpen}>{this.state.newName}</Button>
+                <Button
+                    size="small"
+                    color="secondary"
+                    variant="contained"
+                    onClick={this.handleOpen}
+                >
+                    DEL
+                </Button>
                 <Modal
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
