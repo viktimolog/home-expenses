@@ -60,9 +60,10 @@ export const addCategory = categories => dispatch => {
     })
 }
 
-export const updateCategoryName = category => dispatch => {
+export const updateCategoryName = (category, newName) => dispatch => {
     dispatch({
         type: UPDATE_CATEGORYNAME,
-        category: category
+        category,
+        newName
     })
 }

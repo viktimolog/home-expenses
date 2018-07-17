@@ -27,15 +27,10 @@ const styles = theme => ({
     },
 });
 
-class ModalDialogEditCategoryName extends React.Component {
-    constructor(props) {
-        super(props)
+class ModalDialogYesNo extends React.Component {
 
-        this.state = {
-            open: false,
-            newName: props.category.name
-        }
-
+    state = {
+        open: false,
     }
 
     handleOpen = () => {
@@ -46,15 +41,8 @@ class ModalDialogEditCategoryName extends React.Component {
         this.setState({open: false});
     };
 
-    handleUpdateCategoryname = () => {
-        this.props.updateCategoryName(this.props.category, this.state.newName.trim());
-        this.handleClose();
-    };
-
-    stringHandler = name => event => {
-        this.setState({
-            [name]: event.target.value
-        })
+    DELhandler = () => {
+        this.props.delCategory(this.props.category)
     }
 
     render() {
@@ -71,21 +59,10 @@ class ModalDialogEditCategoryName extends React.Component {
                 >
                     <div style={getModalStyle()} className={classes.paper}>
                         <Typography variant="title" id="modal-title">
-                            Please, edit the category
+                            Are you sure?
                         </Typography>
-                        <CustomInput
-                            id="editCategoryName"
-                            formControlProps={{fullWidth: true}}
-                            inputProps={
-                                {
-                                    value: this.state.newName,
-                                    onChange: this.stringHandler('newName'),
-                                    autoFocus: true
-                                }
-                            }
-                        />
                         <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '30px'}}>
-                            <Button onClick={this.handleUpdateCategoryname}>Submit</Button>
+                            <Button onClick={this.DELhandler}>Delete</Button>
                             <Button onClick={this.handleClose}>Cancel</Button>
                         </div>
                     </div>
@@ -95,8 +72,8 @@ class ModalDialogEditCategoryName extends React.Component {
     }
 }
 
-ModalDialogEditCategoryName.propTypes = {
+ModalDialogYesNo.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ModalDialogEditCategoryName);
+export default withStyles(styles)(ModalDialogYesNo);

@@ -5,18 +5,16 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import {Link} from 'react-router-dom';
-import {TextConstants} from "../../constants/TextConstants";
 
 import ModalDialogEditCategoryName from 'components/ModalDialogEditCategoryName/ModalDialogEditCategoryName'
 
 const Styles = {
     display: 'flex',
-    justifyContent: 'flex-start',
-    alignContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    flexDirection: 'row'
+    alignContent: 'center',
 }
+
 
 //TODO create subCategories
 
@@ -34,7 +32,7 @@ const Category = ({category, categories, categoryUP, categoryDOWN, delCategory, 
         delCategory(category)
     }
 
-    return(
+    return (
         <Card style={Styles}>
             <CardContent>
                 <Typography
@@ -42,7 +40,6 @@ const Category = ({category, categories, categoryUP, categoryDOWN, delCategory, 
                     gutterBottom variant="title"
                     component="h2"
                 >
-                    {/*{category.name}*/}
                     <ModalDialogEditCategoryName
                         category={category}
                         updateCategoryName={updateCategoryName}
