@@ -63,7 +63,7 @@ const TableList = props => {
                         </p>
                     </CardHeader>
                     <CardBody>
-                        <Table className={classes.table}>
+                        <Table>
                             <TableBody>
                                 {props.categories
                                     .sort((a, b) => a.rating > b.rating)
