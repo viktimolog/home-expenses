@@ -1,107 +1,122 @@
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Button from '@material-ui/core/Button';
+
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
-import Table from "components/Table/Table.jsx";
+// import Table from "components/Table/Table.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import Category from "../../components/Category/Category";
 
 const styles = {
-  cardCategoryWhite: {
-    "&,& a,& a:hover,& a:focus": {
-      color: "rgba(255,255,255,.62)",
-      margin: "0",
-      fontSize: "14px",
-      marginTop: "0",
-      marginBottom: "0"
+    cardCategoryWhite: {
+        "&,& a,& a:hover,& a:focus": {
+            color: "rgba(255,255,255,.62)",
+            margin: "0",
+            fontSize: "14px",
+            marginTop: "0",
+            marginBottom: "0"
+        },
+        "& a,& a:hover,& a:focus": {
+            color: "#FFFFFF"
+        }
     },
-    "& a,& a:hover,& a:focus": {
-      color: "#FFFFFF"
+    cardTitleWhite: {
+        color: "#FFFFFF",
+        marginTop: "0px",
+        minHeight: "auto",
+        fontWeight: "300",
+        fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+        marginBottom: "3px",
+        textDecoration: "none",
+        "& small": {
+            color: "#777",
+            fontSize: "65%",
+            fontWeight: "400",
+            lineHeight: "1"
+        }
     }
-  },
-  cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none",
-    "& small": {
-      color: "#777",
-      fontSize: "65%",
-      fontWeight: "400",
-      lineHeight: "1"
-    }
-  }
 };
 
-function TableList(props) {
+const styles1 = theme => ({
+    root: {
+        width: '100%',
+        marginTop: theme.spacing.unit * 3,
+        overflowX: 'auto',
+    },
+    table: {
+        minWidth: 700,
+    },
+});
+
+const TableList = props => {
+
+const ADDhandler = () => {
+    props.addCategory(props.categories);
+}
+
   const { classes } = props;
   return (
     <Grid container>
-      <GridItem xs={12} sm={12} md={12}>
+      <GridItem xs={12} sm={12} md={10}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Simple Table</h4>
+            <h4 className={classes.cardTitleWhite}>Edit Categories</h4>
             <p className={classes.cardCategoryWhite}>
-              Here is a subtitle for this table
+              Please, config your categories
             </p>
           </CardHeader>
+
           <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["Name", "Country", "City", "Salary"]}
-              tableData={[
-                ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
-                ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
-                ["Sage Rodriguez", "Netherlands", "Baileux", "$56,142"],
-                ["Philip Chaney", "Korea, South", "Overland Park", "$38,735"],
-                ["Doris Greene", "Malawi", "Feldkirchen in Kärnten", "$63,542"],
-                ["Mason Porter", "Chile", "Gloucester", "$78,615"]
-              ]}
-            />
-          </CardBody>
-        </Card>
-      </GridItem>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card plain>
-          <CardHeader plain color="primary">
-            <h4 className={classes.cardTitleWhite}>
-              Table on Plain Background
-            </h4>
-            <p className={classes.cardCategoryWhite}>
-              Here is a subtitle for this table
-            </p>
-          </CardHeader>
-          <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["ID", "Name", "Country", "City", "Salary"]}
-              tableData={[
-                ["1", "Dakota Rice", "$36,738", "Niger", "Oud-Turnhout"],
-                ["2", "Minerva Hooper", "$23,789", "Curaçao", "Sinaai-Waas"],
-                ["3", "Sage Rodriguez", "$56,142", "Netherlands", "Baileux"],
-                [
-                  "4",
-                  "Philip Chaney",
-                  "$38,735",
-                  "Korea, South",
-                  "Overland Park"
-                ],
-                [
-                  "5",
-                  "Doris Greene",
-                  "$63,542",
-                  "Malawi",
-                  "Feldkirchen in Kärnten"
-                ],
-                ["6", "Mason Porter", "$78,615", "Chile", "Gloucester"]
-              ]}
-            />
+              <Table className={classes.table}>
+                  <TableBody>
+                      {props.categories
+                          .sort((a,b)=>a.rating > b.rating)
+                          .map(category => {
+                          return (
+                              <TableRow key={category.id}>
+                                  <TableCell component="th" scope="row">
+                                      <Category
+                                          categories={props.categories}
+                                          category={category}
+                                          categoryUP={props.categoryUP}
+                                          categoryDOWN={props.categoryDOWN}
+                                          delCategory={props.delCategory}
+                                      />
+                                  </TableCell>
+                              </TableRow>
+                          );
+                      })}
+                      <TableRow
+                          style={{
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignContent: 'center',
+                              alignItems: 'center',
+                              marginLeft: '25px'
+                          }}
+                      >
+                          <Button
+                              size="small"
+                              color="secondary"
+                              variant="contained"
+                              onClick={ADDhandler}
+                          >
+                              ADD CATEGORY
+                          </Button>
+                      </TableRow>
+                  </TableBody>
+              </Table>
           </CardBody>
         </Card>
       </GridItem>
@@ -110,3 +125,11 @@ function TableList(props) {
 }
 
 export default withStyles(styles)(TableList);
+
+TableList.propTypes = {
+    categories: PropTypes.array.isRequired,
+    categoryUP: PropTypes.func.isRequired,
+    categoryDOWN: PropTypes.func.isRequired
+}
+
+

@@ -16,7 +16,7 @@ const routing = routerMiddleware(history);
 
 // localStorage.clear();
 
-export const store = createStore(
+const store = createStore(
     AppReducer,
     compose(
         applyMiddleware(routing, thunk),
