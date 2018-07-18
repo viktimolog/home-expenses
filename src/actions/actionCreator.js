@@ -35,16 +35,16 @@ export const findItems = text => dispatch => {
 export const categoryUP = (categories, rating) => dispatch => {
             dispatch({
                 type: CATEGORY_UP,
-                categories: categories,
-                rating: rating
+                categories,
+                rating
             })
 }
 
 export const categoryDOWN = (categories, rating) => dispatch => {
     dispatch({
         type: CATEGORY_DOWN,
-        categories: categories,
-        rating: rating
+        categories,
+        rating
     })
 }
 
@@ -70,20 +70,21 @@ export const updateCategoryName = (category, newName) => dispatch => {
     })
 }
 
-export const subCategoryUP = (categories, category, subCategory) => dispatch => {
+
+
+
+export const subCategoryUP = (subCategories, subCategory) => dispatch => {
     dispatch({
         type: SUBCATEGORY_UP,
-        categories,
-        category,
+        subCategories,
         subCategory
     })
 }
 
-export const subCategoryDOWN = (categories, category, subCategory) => dispatch => {
+export const subCategoryDOWN = (subCategories, subCategory) => dispatch => {
     dispatch({
         type: SUBCATEGORY_DOWN,
-        categories,
-        category,
+        subCategories,
         subCategory
     })
 }

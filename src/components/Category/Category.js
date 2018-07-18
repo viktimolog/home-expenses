@@ -30,7 +30,17 @@ const Styles = {
 
 //TODO create subCategories
 
-const Category = ({category, categories, categoryUP, categoryDOWN, delCategory, updateCategoryName}) => {
+const Category = ({
+                      subCategories,
+                      category,
+                      categories,
+                      categoryUP,
+                      categoryDOWN,
+                      delCategory,
+                      updateCategoryName,
+                      subCategoryUP,
+                      subCategoryDOWN
+}) => {
 
     const UPhandler = () => {
         categoryUP(categories, category.rating)
@@ -92,7 +102,7 @@ const Category = ({category, categories, categoryUP, categoryDOWN, delCategory, 
                             size="small"
                             color="inherit"
                             variant="contained"
-                            // onClick={goBack}
+                            // onClick={goBack}//TODO
                         >
                             Edit
                         </Button>
@@ -107,17 +117,19 @@ const Category = ({category, categories, categoryUP, categoryDOWN, delCategory, 
                         <CardBody>
                             <Table>
                                 <TableBody>
-                                    {category.subCategories
+                                    {subCategories
+                                        .filter(subCategory => subCategory.idCategory === category.id)
                                         .sort((a, b) => a.rating > b.rating)
                                         .map(subCategory => {
                                             return (
                                                 <TableRow key={category.id}>
                                                     <TableCell component="th" scope="row">
                                                         <SubCategory
-                                                            categories={category.subCategories}
+                                                            subCategories={subCategories}
                                                             subCategory={subCategory}
-                                                            // categoryUP={props.categoryUP}
-                                                            // categoryDOWN={props.categoryDOWN}
+                                                            subCategoryUP={subCategoryUP}
+                                                            subCategoryDOWN={subCategoryDOWN}
+                                                            //TODO
                                                         />
                                                     </TableCell>
                                                 </TableRow>

@@ -16,14 +16,14 @@ const Styles = {
 }
 
 
-const SubCategory = ({subCategory, subCategories, subCategoryUP, subCategoryDOWN}) => {
+const subCategory = ({subCategory, subCategories, subCategoryUP, subCategoryDOWN}) => {
 
     const UPhandler = () => {
-        subCategoryUP(subCategories, subCategory.rating)
+        subCategoryUP(subCategories, subCategory)
     }
 
     const DOWNhandler = () => {
-        subCategoryDOWN(subCategories, subCategory.rating)
+        subCategoryDOWN(subCategories, subCategory)
     }
 
     return (
@@ -59,8 +59,8 @@ const SubCategory = ({subCategory, subCategories, subCategoryUP, subCategoryDOWN
     )
 }
 
-SubCategory.propTypes = {
+subCategory.propTypes = {
     category: PropTypes.object.isRequired,
 }
 
-export default SubCategory
+export default subCategory

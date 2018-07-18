@@ -9,7 +9,9 @@ import {
     categoryDOWN,
     delCategory,
     addCategory,
-    updateCategoryName
+    updateCategoryName,
+    subCategoryUP,
+    subCategoryDOWN
 } from 'actions/actionCreator'
 import Config from 'views/Config/Config'
 
@@ -30,6 +32,9 @@ class CategoriesContainer extends React.Component {
                     delCategory={this.props.delCategory}
                     addCategory={this.props.addCategory}
                     updateCategoryName={this.props.updateCategoryName}
+                    subCategories={this.props.subCategories}
+                    subCategoryUP={this.props.subCategoryUP}
+                    subCategoryDOWN={this.props.subCategoryDOWN}
                 />
             </div>)
     }
@@ -37,6 +42,7 @@ class CategoriesContainer extends React.Component {
 
 CategoriesContainer.propTypes = {
     categories: PropTypes.array.isRequired,
+    subCategories: PropTypes.array.isRequired,
     // getItems: PropTypes.func.isRequired,
     categoryUP: PropTypes.func.isRequired,
     categoryDOWN: PropTypes.func.isRequired,
@@ -46,6 +52,7 @@ CategoriesContainer.propTypes = {
 
 const mapStateToProps = state => ({
     categories: state.mainReducer.categories,
+    subCategories: state.mainReducer.subCategories
 })
 
 const mapDispatchToProps = {
@@ -54,7 +61,9 @@ const mapDispatchToProps = {
     categoryDOWN,
     delCategory,
     addCategory,
-    updateCategoryName
+    updateCategoryName,
+    subCategoryUP,
+    subCategoryDOWN
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoriesContainer)

@@ -15,49 +15,84 @@ const initialState = {
         {
             id: '0',
             name: 'category 1',
-            rating: 0,
-            subCategories: []
+            rating: 0
         },
         {
             id: '1',
             name: 'category 2',
-            rating: 1,
-            subCategories: []
+            rating: 1
         },
         {
             id: '2',
             name: 'category 3',
-            rating: 2,
-            subCategories: []
+            rating: 2
         },
         {
             id: '3',
             name: 'category 4',
-            rating: 3,
-            subCategories: []
+            rating: 3
         },
         {
             id: '4',
             name: 'category 5',
-            rating: 4,
-            subCategories: [
-                {
-                    id: '0',
-                    name: 'subCategory 1_5',
-                    rating: 0
-                },
-                {
-                    id: '1',
-                    name: 'subCategory 2_5',
-                    rating: 1
-                },
-                {
-                    id: '2',
-                    name: 'subCategory 3_5',
-                    rating: 2
-                }
-            ]
+            rating: 4
+        }
+    ],
+    subCategories: [
+        {
+            id: '0',
+            idCategory: '4',
+            name: 'subCategory 1_5',
+            rating: 0
         },
+        {
+            id: '1',
+            idCategory: '4',
+            name: 'subCategory 2_5',
+            rating: 1
+        },
+        {
+            id: '2',
+            idCategory: '4',
+            name: 'subCategory 3_5',
+            rating: 2
+        },
+        {
+            id: '0',
+            idCategory: '1',
+            name: 'subCategory 1_2',
+            rating: 0
+        },
+        {
+            id: '1',
+            idCategory: '1',
+            name: 'subCategory 2_2',
+            rating: 1
+        },
+        {
+            id: '2',
+            idCategory: '1',
+            name: 'subCategory 3_2',
+            rating: 2
+        },
+        {
+            id: '2',
+            idCategory: '1',
+            name: 'subCategory 4_2',
+            rating: 3
+        },
+        {
+            id: '0',
+            idCategory: '0',
+            name: 'subCategory 1_1',
+            rating: 0
+        },
+        {
+            id: '1',
+            idCategory: '0',
+            name: 'subCategory 2_1',
+            rating: 1
+        }
     ]
 }
 
@@ -69,11 +104,11 @@ const mainReducer = (state = initialState, action) => {
             const updateCategory = {
                 id: action.category.id,
                 name: action.newName,
-                rating: action.category.rating,
-                subCategories: action.category.subCategories
+                rating: action.category.rating
             }
 
             return {
+                ...state,
                 categories: [...state.categories.filter(category => category !== action.category), updateCategory]
             }
         }
@@ -87,11 +122,11 @@ const mainReducer = (state = initialState, action) => {
             const newCategory = {
                 id: Math.floor(Date.now() / 1000),
                 name: '',
-                rating: maxRating + 1,
-                subCategories: []
+                rating: maxRating + 1
             }
 
             return {
+                ...state,
                 categories: [...state.categories, newCategory]
             }
         }
@@ -100,6 +135,34 @@ const mainReducer = (state = initialState, action) => {
             return {
                 ...state,
                 categories: state.categories.filter(category => category !== action.category)
+            }
+        }
+
+        case CATEGORY_UP: {
+            if (action.rating === 0) return {...state};
+
+            const ratingUPcategory = action.categories.find(category => category.rating === action.rating);
+            const ratingDOWNcategory = action.categories.find(category => category.rating === action.rating - 1);
+
+            const newUPcategory = {
+                id: ratingUPcategory.id,
+                name: ratingUPcategory.name,
+                rating: ratingUPcategory.rating - 1
+            }
+
+            const newDOWNcategory = {
+                id: ratingDOWNcategory.id,
+                name: ratingDOWNcategory.name,
+                rating: ratingDOWNcategory.rating + 1
+            }
+
+
+            return {
+                ...state,
+                categories: [...state.categories
+                    .filter(category => category.rating !== action.rating)
+                    .filter(category => category.rating !== action.rating - 1),
+                    newUPcategory, newDOWNcategory]
             }
         }
 
@@ -114,15 +177,13 @@ const mainReducer = (state = initialState, action) => {
             const newUPcategory = {
                 id: ratingUPcategory.id,
                 name: ratingUPcategory.name,
-                rating: ratingUPcategory.rating - 1,
-                subCategories: ratingUPcategory.subCategories
+                rating: ratingUPcategory.rating - 1
             }
 
             const newDOWNcategory = {
                 id: ratingDOWNcategory.id,
                 name: ratingDOWNcategory.name,
-                rating: ratingDOWNcategory.rating + 1,
-                subCategories: ratingDOWNcategory.subCategories
+                rating: ratingDOWNcategory.rating + 1
             }
 
 
@@ -135,80 +196,77 @@ const mainReducer = (state = initialState, action) => {
             }
         }
 
-        case CATEGORY_UP: {
-            if (action.rating === 0) return {...state};
+        case SUBCATEGORY_DOWN: {
+            const curSubCategories = action.subCategories
+                .filter(subCategory => subCategory.idCategory === action.subCategory.idCategory)
 
-            const ratingUPcategory = action.categories.find(category => category.rating === action.rating);
-            const ratingDOWNcategory = action.categories.find(category => category.rating === action.rating - 1);
+            const maxRating = curSubCategories.sort((a, b) => a.rating < b.rating)[0].rating;
+
+            if (action.subCategory.rating === maxRating) return {...state};
+
+
+            const ratingUPcategory = curSubCategories
+                .find(subCategory => subCategory.rating === action.subCategory.rating + 1);
+            const ratingDOWNcategory = curSubCategories
+                .find(subCategory => subCategory.rating === action.subCategory.rating);
 
             const newUPcategory = {
                 id: ratingUPcategory.id,
+                idCategory: ratingUPcategory.idCategory,
                 name: ratingUPcategory.name,
-                rating: ratingUPcategory.rating - 1,
-                subCategories: ratingUPcategory.subCategories
+                rating: ratingUPcategory.rating - 1
             }
 
             const newDOWNcategory = {
                 id: ratingDOWNcategory.id,
+                idCategory: ratingDOWNcategory.idCategory,
                 name: ratingDOWNcategory.name,
-                rating: ratingDOWNcategory.rating + 1,
-                subCategories: ratingDOWNcategory.subCategories
+                rating: ratingDOWNcategory.rating + 1
             }
 
 
             return {
                 ...state,
-                categories: [...state.categories
-                    .filter(category => category.rating !== action.rating)
-                    .filter(category => category.rating !== action.rating - 1),
+                subCategories: [...state.subCategories
+                    .filter(category => category !== ratingUPcategory)
+                    .filter(category => category !== ratingDOWNcategory),
                     newUPcategory, newDOWNcategory]
             }
         }
 
-        //action.categories and action.category and action.subCategory - rating selected subCategory is there
         case SUBCATEGORY_UP: {
             if (action.subCategory.rating === 0) return {...state};
 
+            const curSubCategories = action.subCategories
+                .filter(subCategory => subCategory.idCategory === action.subCategory.idCategory)
 
-            // const newSubCategories
 
+            const ratingUPcategory = curSubCategories
+                .find(subCategory => subCategory.rating === action.subCategory.rating);
+            const ratingDOWNcategory = curSubCategories
+                .find(subCategory => subCategory.rating === action.subCategory.rating - 1);
 
-            const updatedCategory = {
-                id: action.category.id,
-                name: action.category.name,
-                rating: action.category.rating,
-                // subCategories: newSubCategories
+            const newUPcategory = {
+                id: ratingUPcategory.id,
+                idCategory: ratingUPcategory.idCategory,
+                name: ratingUPcategory.name,
+                rating: ratingUPcategory.rating - 1
             }
 
-            const ratingUPsubCategory = action.categories.subCategories
-                .find(category => category.rating === action.rating);
-
-            const ratingDOWNsubCategory = action.categories.subCategories
-                .find(category => category.rating === action.rating - 1);
-
-            // const ratingUPcategory = action.categories.find(category => category.rating === action.rating);
-            // const ratingDOWNcategory = action.categories.find(category => category.rating === action.rating - 1);
-
-            // const newUPcategory = {
-            //     id: ratingUPcategory.id,
-            //     name: ratingUPcategory.name,
-            //     rating: ratingUPcategory.rating - 1,
-            //     subCategories: ratingUPcategory.subCategories
-            // }
-            //
-            // const newDOWNcategory = {
-            //     id: ratingDOWNcategory.id,
-            //     name: ratingDOWNcategory.name,
-            //     rating: ratingDOWNcategory.rating + 1,
-            //     subCategories: ratingDOWNcategory.subCategories
-            // }
+            const newDOWNcategory = {
+                id: ratingDOWNcategory.id,
+                idCategory: ratingDOWNcategory.idCategory,
+                name: ratingDOWNcategory.name,
+                rating: ratingDOWNcategory.rating + 1
+            }
 
 
             return {
                 ...state,
-                categories: [...state.categories
-                    .filter(category => category !== action.category)
-                    ,updatedCategory]
+                subCategories: [...state.subCategories
+                    .filter(category => category !== ratingUPcategory)
+                    .filter(category => category !== ratingDOWNcategory),
+                    newUPcategory, newDOWNcategory]
             }
         }
 
