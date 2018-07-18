@@ -58,37 +58,37 @@ const initialState = {
             rating: 2
         },
         {
-            id: '0',
+            id: '3',
             idCategory: '1',
             name: 'category 1',
             rating: 0
         },
         {
-            id: '1',
+            id: '4',
             idCategory: '1',
             name: 'category 2',
             rating: 1
         },
         {
-            id: '2',
+            id: '5',
             idCategory: '1',
             name: 'category 3',
             rating: 2
         },
         {
-            id: '2',
+            id: '6',
             idCategory: '1',
             name: 'category 4',
             rating: 3
         },
         {
-            id: '0',
+            id: '7',
             idCategory: '0',
             name: 'category 1',
             rating: 0
         },
         {
-            id: '1',
+            id: '8',
             idCategory: '0',
             name: 'category 2',
             rating: 1
@@ -99,7 +99,25 @@ const initialState = {
 const mainReducer = (state = initialState, action) => {
     switch (action.type) {
 
+        //action.category + action.newName
         case UPDATE_CATEGORYNAME: {
+
+            const curSubCategories = [...state.subCategories
+                    .filter(subCategory => subCategory.name === action.category.name)]
+
+            let renameCurSubCategories = [];
+
+            curSubCategories.map(subCategory => {
+
+                const newSubCategory = {
+                    id: subCategory.id,
+                    idCategory: subCategory.idCategory,
+                    name: action.newName,
+                    rating: subCategory.rating
+                }
+                renameCurSubCategories.push(newSubCategory)
+                }
+            )
 
             const updateCategory = {
                 id: action.category.id,
@@ -109,7 +127,10 @@ const mainReducer = (state = initialState, action) => {
 
             return {
                 ...state,
-                categories: [...state.categories.filter(category => category !== action.category), updateCategory]
+                categories: [...state.categories.filter(category => category !== action.category), updateCategory],
+                subCategories: [...state.subCategories
+                    .filter(subCategory => subCategory.name !== action.category.name)]
+                    .concat(renameCurSubCategories)
             }
         }
 
