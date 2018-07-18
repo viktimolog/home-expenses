@@ -156,7 +156,9 @@ const mainReducer = (state = initialState, action) => {
             return {
                 ...state,
                 categories: state.categories.filter(category => category !== action.category),
-                subCategories: state.subCategories.filter(subCategory => subCategory.name !== action.category.name)
+                subCategories: state.subCategories
+                    .filter(subCategory => subCategory.name !== action.category.name)
+                    .filter(subCategory => subCategory.idCategory !== action.category.id)
             }
         }
 
