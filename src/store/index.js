@@ -1,12 +1,16 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
-import AppReducer from '../reducers'
+import createHistory from 'history/createBrowserHistory';
+import {routerMiddleware} from 'react-router-redux';
+import AppReducer from 'reducers'
 
-const middleware = [thunk]
+export const history = createHistory();
+const routing = routerMiddleware(history);
+
 const store = createStore(
-  AppReducer,
-  compose(
-    applyMiddleware(...middleware)
-  )
+    AppReducer,
+    compose(
+        applyMiddleware(routing, thunk),
+    )
 )
 export default store
