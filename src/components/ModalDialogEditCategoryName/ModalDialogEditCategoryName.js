@@ -28,14 +28,20 @@ const styles = theme => ({
 });
 
 class ModalDialogEditCategoryName extends React.Component {
-    constructor(props) {
-        super(props)
+    // constructor(props) {
+    //     super(props)
+    //
+    //     this.state = {
+    //         open: false,
+    //         newName: props.category.name,
+    //     }
+    // }
 
-        this.state = {
-            open: false,
-            newName: props.category.name
-        }
+    //TODO ?
 
+    state = {
+        open: false,
+        newName: this.props.category.name,
     }
 
     handleOpen = () => {

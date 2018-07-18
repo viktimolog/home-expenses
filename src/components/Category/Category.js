@@ -18,6 +18,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import ModalDialogEditCategoryName from 'components/ModalDialogEditCategoryName/ModalDialogEditCategoryName'
 import ModalDialogYesNo from 'components/ModalDialogYesNo/ModalDialogYesNo'
+import ModalDialogEditSubCategories from 'components/ModalDialogEditSubCategories/ModalDialogEditSubCategories'
 import SubCategory from 'components/SubCategory/SubCategory'
 
 const Styles = {
@@ -28,8 +29,6 @@ const Styles = {
 }
 
 
-//TODO create subCategories
-
 const Category = ({
                       subCategories,
                       category,
@@ -39,7 +38,8 @@ const Category = ({
                       delCategory,
                       updateCategoryName,
                       subCategoryUP,
-                      subCategoryDOWN
+                      subCategoryDOWN,
+                      delSubCategory
 }) => {
 
     const UPhandler = () => {
@@ -97,15 +97,14 @@ const Category = ({
                             delCategory={delCategory}
                         />
                     </CardActions>
-                    <CardActions>
-                        <Button
-                            size="small"
-                            color="inherit"
-                            variant="contained"
-                            // onClick={goBack}//TODO
-                        >
-                            Edit
-                        </Button>
+                    <CardActions>//TODO
+                        <ModalDialogEditSubCategories
+                            category={category}
+                            subCategories={subCategories}
+                            subCategoryUP={subCategoryUP}
+                            subCategoryDOWN={subCategoryDOWN}
+                            delSubCategory={delSubCategory}
+                        />
                     </CardActions>
                 </div>
             </Card>
@@ -129,7 +128,6 @@ const Category = ({
                                                             subCategory={subCategory}
                                                             subCategoryUP={subCategoryUP}
                                                             subCategoryDOWN={subCategoryDOWN}
-                                                            //TODO
                                                         />
                                                     </TableCell>
                                                 </TableRow>
@@ -142,7 +140,6 @@ const Category = ({
                 </GridItem>
             </Grid>
         </div>
-
     )
 }
 

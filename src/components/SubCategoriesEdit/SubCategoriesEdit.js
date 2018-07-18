@@ -5,7 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from 'components/CustomButtons/Button.jsx'
-import {ArrowUpward, ArrowDownward} from "@material-ui/icons";
+import {ArrowUpward, ArrowDownward, Close} from "@material-ui/icons";
 
 
 const Styles = {
@@ -16,7 +16,7 @@ const Styles = {
 }
 
 
-const subCategory = ({subCategory, subCategories, subCategoryUP, subCategoryDOWN}) => {
+const SubCategoriesEdit = ({category, delSubCategory, subCategory, subCategories, subCategoryUP, subCategoryDOWN}) => {
 
     const UPhandler = () => {
         subCategoryUP(subCategory)
@@ -24,6 +24,10 @@ const subCategory = ({subCategory, subCategories, subCategoryUP, subCategoryDOWN
 
     const DOWNhandler = () => {
         subCategoryDOWN(subCategory)
+    }
+
+    const delSubCategoryHandler = () => {
+        delSubCategory(category, subCategory)
     }
 
     return (
@@ -54,13 +58,21 @@ const subCategory = ({subCategory, subCategories, subCategoryUP, subCategoryDOWN
                         <ArrowDownward/>
                     </Button>
                 </CardActions>
+                <CardActions>
+                    <Button
+                        color="inherit"
+                        onClick={delSubCategoryHandler}
+                    >
+                        <Close/>
+                    </Button>
+                </CardActions>
             </div>
         </Card>
     )
 }
 
-subCategory.propTypes = {
+SubCategoriesEdit.propTypes = {
     category: PropTypes.object.isRequired,
 }
 
-export default subCategory
+export default SubCategoriesEdit

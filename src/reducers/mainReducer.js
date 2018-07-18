@@ -7,7 +7,8 @@ import {
     ADD_CATEGORY,
     UPDATE_CATEGORYNAME,
     SUBCATEGORY_DOWN,
-    SUBCATEGORY_UP
+    SUBCATEGORY_UP,
+    DEL_SUBCATEGORY
 } from 'actions/actionTypes'
 
 const initialState = {
@@ -15,89 +16,88 @@ const initialState = {
         {
             id: '0',
             name: 'category 1',
-            rating: 0
+            rating: 0,
+            parent: true
         },
         {
             id: '1',
             name: 'category 2',
-            rating: 1
+            rating: 1,
+            parent: false
         },
         {
             id: '2',
             name: 'category 3',
-            rating: 2
+            rating: 2,
+            parent: true
         },
         {
             id: '3',
             name: 'category 4',
-            rating: 3
+            rating: 3,
+            parent: true
         },
         {
             id: '4',
             name: 'category 5',
-            rating: 4
+            rating: 4,
+            parent: false
+        },
+        {
+            id: '5',
+            name: 'category 6',
+            rating: 5,
+            parent: true
         }
     ],
     subCategories: [
         {
             id: '0',
             idCategory: '4',
-            name: 'category 1',
+            name: 'category 4',
             rating: 0
-        },
-        {
-            id: '1',
-            idCategory: '4',
-            name: 'category 2',
-            rating: 1
-        },
-        {
-            id: '2',
-            idCategory: '4',
-            name: 'category 3',
-            rating: 2
-        },
-        {
-            id: '3',
-            idCategory: '1',
-            name: 'category 1',
-            rating: 0
-        },
-        {
-            id: '4',
-            idCategory: '1',
-            name: 'category 2',
-            rating: 1
         },
         {
             id: '5',
             idCategory: '1',
             name: 'category 3',
-            rating: 2
+            rating: 0
         },
         {
             id: '6',
             idCategory: '1',
-            name: 'category 4',
-            rating: 3
+            name: 'category 6',
+            rating: 1
         },
         {
             id: '7',
             idCategory: '0',
             name: 'category 1',
             rating: 0
-        },
-        {
-            id: '8',
-            idCategory: '0',
-            name: 'category 2',
-            rating: 1
         }
     ]
 }
 
 const mainReducer = (state = initialState, action) => {
     switch (action.type) {
+
+
+        //action.category action.subcategory
+        case DEL_SUBCATEGORY: {
+            const updateCategory = {
+                id: action.category.id,
+                name: action.category.name,
+                rating: action.category.rating,
+                parent: false
+            }
+
+            return {
+                ...state,
+                categories: [...state.categories.filter(category => category !== action.category), updateCategory],
+                subCategories: [...state.subCategories
+                    .filter(subCategory => subCategory !== action.subCategory)]
+            }
+        }
 
         //action.category + action.newName
         case UPDATE_CATEGORYNAME: {
@@ -122,7 +122,8 @@ const mainReducer = (state = initialState, action) => {
             const updateCategory = {
                 id: action.category.id,
                 name: action.newName,
-                rating: action.category.rating
+                rating: action.category.rating,
+                parent: action.category.parent
             }
 
             return {
@@ -143,7 +144,8 @@ const mainReducer = (state = initialState, action) => {
             const newCategory = {
                 id: Math.floor(Date.now() / 1000),
                 name: '',
-                rating: maxRating + 1
+                rating: maxRating + 1,
+                parent: false
             }
 
             return {
@@ -155,10 +157,10 @@ const mainReducer = (state = initialState, action) => {
         case DEL_CATEGORY: {
             return {
                 ...state,
-                categories: state.categories.filter(category => category !== action.category),
-                subCategories: state.subCategories
+                categories: [...state.categories.filter(category => category !== action.category)],
+                subCategories: [...state.subCategories
                     .filter(subCategory => subCategory.name !== action.category.name)
-                    .filter(subCategory => subCategory.idCategory !== action.category.id)
+                    .filter(subCategory => subCategory.idCategory !== action.category.id)]
             }
         }
 
@@ -171,13 +173,15 @@ const mainReducer = (state = initialState, action) => {
             const newUPcategory = {
                 id: ratingUPcategory.id,
                 name: ratingUPcategory.name,
-                rating: ratingUPcategory.rating - 1
+                rating: ratingUPcategory.rating - 1,
+                parent: ratingUPcategory.parent
             }
 
             const newDOWNcategory = {
                 id: ratingDOWNcategory.id,
                 name: ratingDOWNcategory.name,
-                rating: ratingDOWNcategory.rating + 1
+                rating: ratingDOWNcategory.rating + 1,
+                parent: ratingDOWNcategory.parent
             }
 
 
@@ -201,13 +205,15 @@ const mainReducer = (state = initialState, action) => {
             const newUPcategory = {
                 id: ratingUPcategory.id,
                 name: ratingUPcategory.name,
-                rating: ratingUPcategory.rating - 1
+                rating: ratingUPcategory.rating - 1,
+                parent: ratingUPcategory.parent
             }
 
             const newDOWNcategory = {
                 id: ratingDOWNcategory.id,
                 name: ratingDOWNcategory.name,
-                rating: ratingDOWNcategory.rating + 1
+                rating: ratingDOWNcategory.rating + 1,
+                parent: ratingDOWNcategory.parent
             }
 
 
@@ -221,8 +227,8 @@ const mainReducer = (state = initialState, action) => {
         }
 
         case SUBCATEGORY_DOWN: {
-            const curSubCategories = action.subCategories
-                .filter(subCategory => subCategory.idCategory === action.subCategory.idCategory)
+            const curSubCategories = [...state.subCategories
+                .filter(subCategory => subCategory.idCategory === action.subCategory.idCategory)]
 
             const maxRating = curSubCategories.sort((a, b) => a.rating < b.rating)[0].rating;
 
@@ -261,8 +267,8 @@ const mainReducer = (state = initialState, action) => {
         case SUBCATEGORY_UP: {
             if (action.subCategory.rating === 0) return {...state};
 
-            const curSubCategories = action.subCategories
-                .filter(subCategory => subCategory.idCategory === action.subCategory.idCategory)
+            const curSubCategories = [...state.subCategories
+                .filter(subCategory => subCategory.idCategory === action.subCategory.idCategory)]
 
 
             const ratingUPcategory = curSubCategories
