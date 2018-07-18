@@ -40,8 +40,9 @@ const Category = ({
                       subCategoryUP,
                       subCategoryDOWN,
                       delSubCategory,
-                      addSubCategory
-}) => {
+                      addSubCategory,
+                      clearCategories
+                  }) => {
 
     const UPhandler = () => {
         categoryUP(categories, category.rating)
@@ -98,7 +99,7 @@ const Category = ({
                             delCategory={delCategory}
                         />
                     </CardActions>
-                    <CardActions>//TODO
+                    <CardActions>
                         <ModalDialogEditSubCategories
                             category={category}
                             subCategories={subCategories}
@@ -107,6 +108,7 @@ const Category = ({
                             delSubCategory={delSubCategory}
                             addSubCategory={addSubCategory}
                             categories={categories}
+                            clearCategories={clearCategories}
                         />
                     </CardActions>
                 </div>

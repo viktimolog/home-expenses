@@ -81,7 +81,8 @@ class ModalDialogEditSubCategories extends React.Component {
                             <GridItem xs={12} sm={12} md={12}>
                                 <Card>
                                     <CardHeader color="primary">
-                                        <h4 className={classes.cardTitleWhite}>Edit Category: {this.props.category.name}</h4>
+                                        <h4 className={classes.cardTitleWhite}>Edit
+                                            Category: {this.props.category.name}</h4>
                                         <p className={classes.cardCategoryWhite}>
                                             Please, config your subcategories
                                         </p>
@@ -111,9 +112,10 @@ class ModalDialogEditSubCategories extends React.Component {
                                                 <TableRow>
                                                     <TableCell component="th" scope="row">
                                                         <SelectDialogAddSubCategory
-                                                             categories={this.props.categories}
-                                                             addSubCategory={this.props.addSubCategory}
-                                                             category={this.props.category}
+                                                            categories={this.props.categories}
+                                                            addSubCategory={this.props.addSubCategory}
+                                                            category={this.props.category}
+                                                            clearCategories={this.props.clearCategories}
                                                         />
                                                     </TableCell>
                                                 </TableRow>

@@ -95,6 +95,7 @@ export const delSubCategory = (category, subCategory) => dispatch => {
 }
 
 export const addSubCategory = (category, newSubCategory) => dispatch => {
+    // if(category.id !== newSubCategory.id)
     dispatch({
         type: ADD_SUBCATEGORY,
         category,

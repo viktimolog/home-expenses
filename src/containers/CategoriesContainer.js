@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
+import {createSelector} from 'reselect'
 import Header from '../components/Header'
 // import Search from '../components/Search'
 import {
@@ -24,7 +25,6 @@ class CategoriesContainer extends React.Component {
     // }
 
     render() {
-        alert('class CategoriesContainer render')
         return (
             <div>
                 {/*<Header curItem={false}/>*/}
@@ -40,6 +40,7 @@ class CategoriesContainer extends React.Component {
                     subCategoryDOWN={this.props.subCategoryDOWN}
                     delSubCategory={this.props.delSubCategory}
                     addSubCategory={this.props.addSubCategory}
+                    clearCategories={this.props.clearCategories}
                 />
             </div>)
     }
@@ -57,9 +58,23 @@ CategoriesContainer.propTypes = {
     addSubCategory: PropTypes.func.isRequired
 }
 
+const getCategories = state => state.mainReducer.categories
+
+const getClearCategories = createSelector(
+    getCategories,
+    (categories) => {
+
+        return categories
+            .filter(category => category.parent === false)
+            .filter(category => category.child === false)
+
+    }
+)
+
 const mapStateToProps = state => ({
     categories: state.mainReducer.categories,
-    subCategories: state.mainReducer.subCategories
+    subCategories: state.mainReducer.subCategories,
+    clearCategories: getClearCategories(state)
 })
 
 const mapDispatchToProps = {

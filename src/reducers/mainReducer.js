@@ -13,6 +13,8 @@ import {
 } from 'actions/actionTypes'
 
 const initialState = {
+    userEmail: 'testUserEmailFromState',
+    userPassword: 'testUserPasswordFromState',
     categories: [
         {
             id: '0',
@@ -33,7 +35,7 @@ const initialState = {
             name: 'category 3',
             rating: 2,
             parent: true,
-            child: true
+            child: false
         },
         {
             id: '3',
@@ -80,13 +82,6 @@ const initialState = {
             idParent: '3'
         },
         {
-            id: '1',
-            idCategory: '1',
-            name: 'category 3',
-            rating: 0,
-            idParent: '2'
-        },
-        {
             id: '2',
             idCategory: '1',
             name: 'category 6',
@@ -107,21 +102,13 @@ const mainReducer = (state = initialState, action) => {
     switch (action.type) {
 
 
-        //action.category and action.newSubCategory - real category//TODO
+        //action.category and action.newSubCategory - real category
         case ADD_SUBCATEGORY: {
-
-            // console.log('consolelog state.subCategories = ', state.subCategories)
-            // console.log('consolelog state.categories = ', state.categories)
 
             let maxRating = 0;
 
             const subCategories = [...state.subCategories
                 .filter(subCategory => subCategory.idCategory === action.category.id)]
-
-            // console.log('consolelog action.category = ', action.category)//OK
-
-            // console.log('consolelog action.newSubCategory = ', action.newSubCategory)//OK-2
-
 
             const categorySetChild = {
                 id: action.newSubCategory.id,
@@ -130,8 +117,6 @@ const mainReducer = (state = initialState, action) => {
                 parent: action.newSubCategory.parent,
                 child: true
             }
-
-            // console.log('consolelog categorySetChild = ', categorySetChild)
 
             if (subCategories.length !== 0)
                 maxRating = subCategories.sort((a, b) => a.rating < b.rating)[0].rating;
@@ -145,8 +130,6 @@ const mainReducer = (state = initialState, action) => {
                 child: action.category.child
             }
 
-            // console.log('consolelog updateCategory = ', updateCategory)
-
             const newSubCategory = {
                 id: Math.floor(Date.now() / 1000),
                 idCategory: action.category.id,
@@ -155,21 +138,18 @@ const mainReducer = (state = initialState, action) => {
                 idParent: action.newSubCategory.id
             }
 
-            console.log('consolelog newSubCategory = ', newSubCategory)//?
-
             return {
                 ...state,
                 categories: [...state.categories
-                    .filter(category => category !== action.category)
-                    .filter(category => category !== action.newSubCategory)
+                    .filter(category => category.id !== action.category.id)
+                    .filter(category => category.id !== action.newSubCategory.id)
                     , updateCategory, categorySetChild],
                 subCategories: [...state.subCategories, newSubCategory]
             }
         }
 
 
-        //TODO action.category - delete
-        //action.subCategory
+        //action.category and action.subCategory
         case DEL_SUBCATEGORY: {
 
             const selectedCategory = {
@@ -185,12 +165,25 @@ const mainReducer = (state = initialState, action) => {
                 child: false
             }
 
+            const countSubCatSelectedCategory = [...state.subCategories
+                .filter(sub => sub.idParent === selectedCategory.id)].length
+
+            const updateParentCategory = {
+                id: action.category.id,
+                name: action.category.name,
+                rating: action.category.rating,
+                parent: countSubCatSelectedCategory !== 1,
+                child: action.category.child
+            }
+
             return {
                 ...state,
-                categories: [...state.categories.filter(category => category !== selectedCategory)
-                    , updateCategory],
+                categories: [...state.categories
+                    .filter(category => category.id !== selectedCategory.id)
+                    .filter(category => category.id !== action.category.id)
+                    , updateCategory, updateParentCategory],
                 subCategories: [...state.subCategories
-                    .filter(subCategory => subCategory !== action.subCategory)]
+                    .filter(subCategory => subCategory.id !== action.subCategory.id)]
             }
         }
 
@@ -226,7 +219,7 @@ const mainReducer = (state = initialState, action) => {
 
             return {
                 ...state,
-                categories: [...state.categories.filter(category => category !== action.category), updateCategory],
+                categories: [...state.categories.filter(category => category.id !== action.category.id), updateCategory],
                 subCategories: [...state.subCategories
                     .filter(subCategory => subCategory.idParent !== action.category.id)]
                     .concat(renameCurSubCategories)
@@ -256,7 +249,7 @@ const mainReducer = (state = initialState, action) => {
         case DEL_CATEGORY: {
             return {
                 ...state,
-                categories: [...state.categories.filter(category => category !== action.category)],
+                categories: [...state.categories.filter(category => category.id !== action.category.id)],
                 subCategories: [...state.subCategories
                     .filter(subCategory => subCategory.idParent !== action.category.id)//her from subCategory
                     .filter(subCategory => subCategory.idCategory !== action.category.id)]//all her
@@ -363,8 +356,8 @@ const mainReducer = (state = initialState, action) => {
             return {
                 ...state,
                 subCategories: [...state.subCategories
-                    .filter(category => category !== ratingUPcategory)
-                    .filter(category => category !== ratingDOWNcategory),
+                    .filter(category => category.id !== ratingUPcategory.id)
+                    .filter(category => category.id !== ratingDOWNcategory.id),
                     newUPcategory, newDOWNcategory]
             }
         }
@@ -401,8 +394,8 @@ const mainReducer = (state = initialState, action) => {
             return {
                 ...state,
                 subCategories: [...state.subCategories
-                    .filter(category => category !== ratingUPcategory)
-                    .filter(category => category !== ratingDOWNcategory),
+                    .filter(category => category.id !== ratingUPcategory.id)
+                    .filter(category => category.id !== ratingDOWNcategory.id),
                     newUPcategory, newDOWNcategory]
             }
         }

@@ -83,6 +83,7 @@ const TableList = props => {
                                                         subCategoryDOWN={props.subCategoryDOWN}
                                                         delSubCategory={props.delSubCategory}
                                                         addSubCategory={props.addSubCategory}
+                                                        clearCategories={props.clearCategories}
                                                     />
                                                 </TableCell>
                                             </TableRow>

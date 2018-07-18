@@ -6,9 +6,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
-import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
@@ -25,86 +23,75 @@ const styles = theme => ({
 
 class SelectDialogAddSubCategory extends React.Component {
 
-    // componentDidMount() {
-    //
-    //     alert('componentDidMount')//не срабатывает
-    //
-    //     const curClearCategories = ([...this.props.categories
-    //         .filter(category => category.parent === false)
-    //         .filter(category => category.child === false)]
-    //         .length > 0)
-    //         ? [...this.props.categories
-    //             .filter(category => category.parent === false)
-    //             .filter(category => category.child === false)]
-    //         : null
-    //     if (curClearCategories !== null)
-    //         this.setState({
-    //             clearCategories: curClearCategories
-    //         })
-    //
-    // }
-
-
-    //curCategory сразу равно или {} или первой категории с parent = false b child = false
-
     state = {
         open: false,
-        // clearCategories: null,
-        curCategory:
-            ([...this.props.categories
-                .filter(category => category.parent === false)
-                .filter(category => category.child === false)]
-                .length > 0)
-                ? [...this.props.categories
-                    .filter(category => category.parent === false)
-                    .filter(category => category.child === false)][0]
-                : {}
-
+        // nameCategory: '',
+        curCategory: null
     }
 
-    handleChange = event => {
-
-        console.log('event.target.value = ', event.target.value)
-
+    handleChange = name => event => {
         this.setState({
-            curCategory: event.target.value,
-        })
+            curCategory: this.props.clearCategories.find(cat => cat.id === event.target.value)
+        });
     };
 
     handleClickOpen = () => {
-
-        // if (this.state.clearCategories === null) {
-        //     alert('Sorry, you do not have the appropriate categories')
-        // }
-        // else
-            this.setState({open: true});
+        this.setState({open: true});
     };
 
     handleClose = () => {
-        this.setState({open: false});
+        this.setState({
+            open: false,
+            curCategory: null
+        });
     };
+
+    // handleAddSubCategory = () => {
+    //
+    //
+    //     if (this.state.curCategory !== null
+    //     && this.props.category.id !== this.state.curCategory.id
+    //     && !this.props.category.child)
+    //         this.props.addSubCategory(this.props.category, this.state.curCategory);
+    //     else {
+    //         if (this.props.clearCategories.length > 0
+    //             && this.props.category.id !== this.props.clearCategories[0].id
+    //             && !this.props.category.child)
+    //             this.props.addSubCategory(this.props.category, this.props.clearCategories[0]);
+    //     }
+    //     this.handleClose();
+    // };
 
     handleAddSubCategory = () => {
 
-        console.log('consolelog this.state.curCategory = ', this.state.curCategory)//bad category 1
+        if (this.props.clearCategories.length <= 0) {
+            this.handleClose();
+            return;
+        }
 
-        if (this.state.curCategory !== {})
+        if (this.state.curCategory !== null) {
+            if (this.props.category.id === this.state.curCategory.id
+                || this.props.category.child) {
+                this.handleClose();
+                return;
+            }
             this.props.addSubCategory(this.props.category, this.state.curCategory);
+        }
 
-        // this.props.addSubCategory(this.props.category);
+        else {
+            if (this.props.category.id === this.props.clearCategories[0].id) {
+                this.handleClose();
+                return;
+            }
+
+            if (!this.props.category.child)
+                this.props.addSubCategory(this.props.category, this.props.clearCategories[0]);
+        }
         this.handleClose();
-
     };
 
     render() {
         const {classes} = this.props;
-
-        const categories = [...this.props.categories
-            .filter(category => category.parent === false)
-            .filter(category => category.child === false)
-        ]
-
-        // const categories = this.state.clearCategories;
 
         return (
             <div>
@@ -128,16 +115,15 @@ class SelectDialogAddSubCategory extends React.Component {
                             <FormControl className={classes.formControl}>
                                 <Select
                                     native
-                                    value={this.state.curCategory}
-                                    onChange={this.handleChange}
+                                    // value={this.state.nameCategory}
+                                    onChange={this.handleChange('nameCategory')}
                                     input={<Input id="age-native-simple"/>}
                                 >
                                     {
-                                        categories.filter(category => category.parent === false)
-                                            .filter(category => category.child === false)
+                                        this.props.clearCategories
                                             .map(category => {
                                                     return (
-                                                        <option value={category}>
+                                                        <option value={category.id}>
                                                             {category.name}
                                                         </option>
                                                     )
