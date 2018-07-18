@@ -24,6 +24,7 @@ class CategoriesContainer extends React.Component {
     // }
 
     render() {
+        alert('class CategoriesContainer render')
         return (
             <div>
                 {/*<Header curItem={false}/>*/}

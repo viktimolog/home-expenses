@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -25,21 +25,46 @@ const styles = theme => ({
 
 class SelectDialogAddSubCategory extends React.Component {
 
-    //curCategory сразу равно или {} или первой категории с parent = false
+    // componentDidMount() {
+    //
+    //     alert('componentDidMount')//не срабатывает
+    //
+    //     const curClearCategories = ([...this.props.categories
+    //         .filter(category => category.parent === false)
+    //         .filter(category => category.child === false)]
+    //         .length > 0)
+    //         ? [...this.props.categories
+    //             .filter(category => category.parent === false)
+    //             .filter(category => category.child === false)]
+    //         : null
+    //     if (curClearCategories !== null)
+    //         this.setState({
+    //             clearCategories: curClearCategories
+    //         })
+    //
+    // }
+
+
+    //curCategory сразу равно или {} или первой категории с parent = false b child = false
 
     state = {
         open: false,
-        // categories: [...this.props.categories.filter(category => category.parent === false)],
+        // clearCategories: null,
         curCategory:
-        ([...this.props.categories.filter(category => category.parent === false)].length>0)
-        ? [...this.props.categories.filter(category => category.parent === false)][0]
-            : {}
+            ([...this.props.categories
+                .filter(category => category.parent === false)
+                .filter(category => category.child === false)]
+                .length > 0)
+                ? [...this.props.categories
+                    .filter(category => category.parent === false)
+                    .filter(category => category.child === false)][0]
+                : {}
 
-    };
+    }
 
     handleChange = event => {
 
-        console.log('event.target.value = ',event.target.value)
+        console.log('event.target.value = ', event.target.value)
 
         this.setState({
             curCategory: event.target.value,
@@ -47,19 +72,24 @@ class SelectDialogAddSubCategory extends React.Component {
     };
 
     handleClickOpen = () => {
-        this.setState({ open: true });
+
+        // if (this.state.clearCategories === null) {
+        //     alert('Sorry, you do not have the appropriate categories')
+        // }
+        // else
+            this.setState({open: true});
     };
 
     handleClose = () => {
-        this.setState({ open: false });
+        this.setState({open: false});
     };
 
     handleAddSubCategory = () => {
 
-        // console.log('this.state.curCategory = ',this.state.curCategory)//ok category 2
+        console.log('consolelog this.state.curCategory = ', this.state.curCategory)//bad category 1
 
-        if(this.state.curCategory !== {})
-        this.props.addSubCategory(this.props.category, this.state.curCategory);
+        if (this.state.curCategory !== {})
+            this.props.addSubCategory(this.props.category, this.state.curCategory);
 
         // this.props.addSubCategory(this.props.category);
         this.handleClose();
@@ -67,9 +97,14 @@ class SelectDialogAddSubCategory extends React.Component {
     };
 
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
 
-        const categories = [...this.props.categories.filter(category => category.parent === false)]
+        const categories = [...this.props.categories
+            .filter(category => category.parent === false)
+            .filter(category => category.child === false)
+        ]
+
+        // const categories = this.state.clearCategories;
 
         return (
             <div>
@@ -95,18 +130,19 @@ class SelectDialogAddSubCategory extends React.Component {
                                     native
                                     value={this.state.curCategory}
                                     onChange={this.handleChange}
-                                    input={<Input id="age-native-simple" />}
+                                    input={<Input id="age-native-simple"/>}
                                 >
                                     {
                                         categories.filter(category => category.parent === false)
+                                            .filter(category => category.child === false)
                                             .map(category => {
-                                                return (
-                                                    <option value={category}>
-                                                        {category.name}
-                                                    </option>
-                                                )
-                                            }
-                                        )
+                                                    return (
+                                                        <option value={category}>
+                                                            {category.name}
+                                                        </option>
+                                                    )
+                                                }
+                                            )
                                     }
                                 </Select>
                             </FormControl>
@@ -126,8 +162,8 @@ class SelectDialogAddSubCategory extends React.Component {
     }
 }
 
-SelectDialogAddSubCategory .propTypes = {
+SelectDialogAddSubCategory.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SelectDialogAddSubCategory );
+export default withStyles(styles)(SelectDialogAddSubCategory);
