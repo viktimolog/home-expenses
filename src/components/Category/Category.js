@@ -39,7 +39,8 @@ const Category = ({
                       updateCategoryName,
                       subCategoryUP,
                       subCategoryDOWN,
-                      delSubCategory
+                      delSubCategory,
+                      addSubCategory
 }) => {
 
     const UPhandler = () => {
@@ -63,7 +64,7 @@ const Category = ({
                         gutterBottom variant="title"
                         component="h2"
                     >
-                        <ModalDialogEditCategoryName
+                        <ModalDialogEditCategoryName //TODO
                             category={category}
                             updateCategoryName={updateCategoryName}
                         />
@@ -104,6 +105,8 @@ const Category = ({
                             subCategoryUP={subCategoryUP}
                             subCategoryDOWN={subCategoryDOWN}
                             delSubCategory={delSubCategory}
+                            addSubCategory={addSubCategory}
+                            categories={categories}
                         />
                     </CardActions>
                 </div>

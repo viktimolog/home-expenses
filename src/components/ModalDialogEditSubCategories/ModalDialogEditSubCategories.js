@@ -2,11 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
-import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -18,8 +15,8 @@ import Grid from "@material-ui/core/Grid";
 import GridItem from "components/Grid/GridItem.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import Category from "components/Category/Category";
 import SubCategoriesEdit from "components/SubCategoriesEdit/SubCategoriesEdit";
+import SelectDialogAddSubCategory from "components/SelectDialogAddSubCategory/SelectDialogAddSubCategory";
 
 function getModalStyle() {
     const top = 50
@@ -106,12 +103,20 @@ class ModalDialogEditSubCategories extends React.Component {
                                                                         subCategoryUP={this.props.subCategoryUP}
                                                                         subCategoryDOWN={this.props.subCategoryDOWN}
                                                                         delSubCategory={this.props.delSubCategory}
-                                                                        //TODO
                                                                     />
                                                                 </TableCell>
                                                             </TableRow>
                                                         );
                                                     })}
+                                                <TableRow>
+                                                    <TableCell component="th" scope="row">
+                                                        <SelectDialogAddSubCategory
+                                                             categories={this.props.categories}
+                                                             addSubCategory={this.props.addSubCategory}
+                                                             category={this.props.category}
+                                                        />
+                                                    </TableCell>
+                                                </TableRow>
                                             </TableBody>
                                         </Table>
                                     </CardBody>

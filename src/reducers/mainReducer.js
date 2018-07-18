@@ -8,7 +8,8 @@ import {
     UPDATE_CATEGORYNAME,
     SUBCATEGORY_DOWN,
     SUBCATEGORY_UP,
-    DEL_SUBCATEGORY
+    DEL_SUBCATEGORY,
+    ADD_SUBCATEGORY
 } from 'actions/actionTypes'
 
 const initialState = {
@@ -80,6 +81,47 @@ const initialState = {
 
 const mainReducer = (state = initialState, action) => {
     switch (action.type) {
+
+
+        //action.category and action.newSubCategory - real category//TODO
+        case ADD_SUBCATEGORY: {
+
+            let maxRating = 0;
+
+            const subCategories = [...state.subCategories.filter(subCategory => subCategory.idCategory === action.category.id)]
+
+            console.log('consolelog action.category = ', action.category)//OK
+
+            console.log('consolelog action.newSubCategory = ', action.newSubCategory)//OK
+
+            if (subCategories.length !== 0)
+                maxRating = subCategories.sort((a, b) => a.rating < b.rating)[0].rating;
+
+
+            const updateCategory = {
+                id: action.category.id,
+                name: action.category.name,
+                rating: action.category.rating,
+                parent: true
+            }
+
+            console.log('consolelog updateCategory = ', updateCategory)//5 ok
+
+            const newSubCategory = {
+                id: Math.floor(Date.now()/1000),
+                idCategory: action.category.id,
+                name: action.newSubCategory.name,
+                rating: maxRating+1
+            }
+
+            console.log('consolelog newSubCategory = ', newSubCategory)//?
+
+            return {
+                ...state,
+                categories: [...state.categories.filter(category => category !== action.category), updateCategory],
+                subCategories: [...state.subCategories, newSubCategory]
+            }
+        }
 
 
         //action.category action.subcategory

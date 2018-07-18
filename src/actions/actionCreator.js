@@ -8,7 +8,8 @@ import {
     UPDATE_CATEGORYNAME,
     SUBCATEGORY_DOWN,
     SUBCATEGORY_UP,
-    DEL_SUBCATEGORY
+    DEL_SUBCATEGORY,
+    ADD_SUBCATEGORY
 } from 'actions/actionTypes'
 import {
     GetItems
@@ -84,10 +85,19 @@ export const subCategoryDOWN = subCategory => dispatch => {
         subCategory
     })
 }
+
 export const delSubCategory = (category, subCategory) => dispatch => {
     dispatch({
         type: DEL_SUBCATEGORY,
         category,
         subCategory
+    })
+}
+
+export const addSubCategory = (category, newSubCategory) => dispatch => {
+    dispatch({
+        type: ADD_SUBCATEGORY,
+        category,
+        newSubCategory
     })
 }
