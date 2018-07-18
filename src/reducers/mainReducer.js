@@ -42,55 +42,55 @@ const initialState = {
         {
             id: '0',
             idCategory: '4',
-            name: 'subCategory 1_5',
+            name: 'category 1',
             rating: 0
         },
         {
             id: '1',
             idCategory: '4',
-            name: 'subCategory 2_5',
+            name: 'category 2',
             rating: 1
         },
         {
             id: '2',
             idCategory: '4',
-            name: 'subCategory 3_5',
+            name: 'category 3',
             rating: 2
         },
         {
             id: '0',
             idCategory: '1',
-            name: 'subCategory 1_2',
+            name: 'category 1',
             rating: 0
         },
         {
             id: '1',
             idCategory: '1',
-            name: 'subCategory 2_2',
+            name: 'category 2',
             rating: 1
         },
         {
             id: '2',
             idCategory: '1',
-            name: 'subCategory 3_2',
+            name: 'category 3',
             rating: 2
         },
         {
             id: '2',
             idCategory: '1',
-            name: 'subCategory 4_2',
+            name: 'category 4',
             rating: 3
         },
         {
             id: '0',
             idCategory: '0',
-            name: 'subCategory 1_1',
+            name: 'category 1',
             rating: 0
         },
         {
             id: '1',
             idCategory: '0',
-            name: 'subCategory 2_1',
+            name: 'category 2',
             rating: 1
         }
     ]
@@ -134,7 +134,8 @@ const mainReducer = (state = initialState, action) => {
         case DEL_CATEGORY: {
             return {
                 ...state,
-                categories: state.categories.filter(category => category !== action.category)
+                categories: state.categories.filter(category => category !== action.category),
+                subCategories: state.subCategories.filter(subCategory => subCategory.name !== action.category.name)
             }
         }
 

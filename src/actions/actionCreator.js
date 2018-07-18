@@ -51,7 +51,7 @@ export const categoryDOWN = (categories, rating) => dispatch => {
 export const delCategory = category => dispatch => {
     dispatch({
         type: DEL_CATEGORY,
-        category: category
+        category
     })
 }
 
