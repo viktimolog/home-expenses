@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import { Manager, Target, Popper } from "react-popper";
+import {Manager, Target, Popper} from "react-popper";
 // import { Manager, Target, Popper } from '@snowcoders/react-popper'
 import Grid from "@material-ui/core/Grid";
 // @material-ui/core components
@@ -29,76 +29,86 @@ import headerLinksStyle from "assets/jss/material-dashboard-react/components/hea
 
 
 class HeaderLinks extends React.Component {
-  state = {
-    open: false
-  };
+    state = {
+        open: false
+    };
 
-  handleClick = () => {
-    this.setState({ open: !this.state.open });
-  };
+    handleClose = () => {
+        this.setState({open: false});
+    };
+
+    handleClick = () => {
+        this.setState({open: !this.state.open});
+    };
 
 
-  render() {
-    const { classes } = this.props;
-    const { open } = this.state;
-    return (
-      <div>
-          <Manager className={classes.manager}>
-              <Target>
-                  <Button
-                      color={window.innerWidth > 959 ? "transparent" : "white"}
-                      justIcon={window.innerWidth > 959}
-                      simple={!(window.innerWidth > 959)}
-                      aria-label="Person"
-                      className={classes.buttonLink}
-                      onClick={this.handleClick}
-                  >
-                      <Person className={classes.icons} />
+    render() {
+        const {classes} = this.props;
+        const {open} = this.state;
+        return (
+            <div>
+                <Manager className={classes.manager}>
+                    <Target>
+                        <Button
+                            color={window.innerWidth > 959 ? "transparent" : "white"}
+                            justIcon={window.innerWidth > 959}
+                            simple={!(window.innerWidth > 959)}
+                            aria-label="Person"
+                            className={classes.buttonLink}
+                            onClick={this.handleClick}
+                        >
+                            <Person className={classes.icons}/>
 
-                      <Hidden mdUp>
-                          <p className={classes.linkText}>Profile</p>
-                      </Hidden>
+                            <Hidden mdUp>
+                                <p className={classes.linkText}>Profile</p>
+                            </Hidden>
 
-                  </Button>
+                        </Button>
 
-              </Target>
-              <Popper
-                  placement="bottom-start"
-                  eventsEnabled={open}
-                  className={
-                      classNames({ [classes.popperClose]: !open }) +
-                      " " +
-                      classes.pooperResponsive
-                  }
-              >
+                    </Target>
+                    <Popper
+                        placement="bottom-start"
+                        eventsEnabled={open}
+                        className={
+                            classNames({[classes.popperClose]: !open}) +
+                            " " +
+                            classes.pooperResponsive
+                        }
+                    >
 
-                  <ClickAwayListener onClickAway={this.handleClose}>
-                      <Grow
-                          in={open}
-                          id="menu-list"
-                          style={{ transformOrigin: "0 0 0" }}
-                      >
-                          <Paper className={classes.dropdown}>
-                              <MenuList role="menu">
-                                  <MenuItem
-                                      className={classes.dropdownItem}
-                                  >
-                                      <a href="../signin">Sign in</a>
-                                  </MenuItem>
-                                  <MenuItem
-                                      className={classes.dropdownItem}
-                                  >
-                                      <a href="../signup">Sign up</a>
-                                  </MenuItem>
-                              </MenuList>
-                          </Paper>
-                      </Grow>
-                  </ClickAwayListener>
-              </Popper>
-          </Manager>
-      </div>
-    );
-  }
+                        <ClickAwayListener onClickAway={this.handleClose}>
+                            <Grow
+                                in={open}
+                                id="menu-list"
+                                style={{transformOrigin: "0 0 0"}}
+                            >
+                                <Paper className={classes.dropdown}>
+                                    <MenuList role="menu">
+                                        <Link to='/signin'>
+                                            <MenuItem
+                                                className={classes.dropdownItem}
+                                                onClick={this.handleClose}
+                                            >
+                                                Sign In
+                                            </MenuItem>
+                                        </Link>
+                                        <Link to='/signup'>
+                                            <MenuItem
+                                                className={classes.dropdownItem}
+                                                onClick={this.handleClose}
+                                            >
+                                                Sign Up
+                                            </MenuItem>
+                                        </Link>
+                                    </MenuList>
+                                </Paper>
+                            </Grow>
+                        </ClickAwayListener>
+                    </Popper>
+                </Manager>
+            </div>
+        );
+    }
 }
 
 export default withStyles(headerLinksStyle)(HeaderLinks);
