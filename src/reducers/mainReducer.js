@@ -9,9 +9,15 @@ import {
     SUBCATEGORY_DOWN,
     SUBCATEGORY_UP,
     DEL_SUBCATEGORY,
-    ADD_SUBCATEGORY
+    ADD_SUBCATEGORY,
+    ADD_EXPENSES,
+    GET_CATEGORIES,
+    GET_SUBCATEGORIES,
+    GET_EXPENSES
 } from 'actions/actionTypes'
-import {ADD_EXPENSES} from "../actions/actionTypes";
+
+// beginDate: 1521991436550,
+// endDate: 1541991436550
 
 //1531991436550
 const initialState = {
@@ -274,6 +280,30 @@ const initialState = {
 
 const mainReducer = (state = initialState, action) => {
     switch (action.type) {
+
+        case GET_CATEGORIES: {
+            return {
+                ...state,
+                // categories: action.payload
+                categories: [...state.categories]
+            }
+        }
+
+        case GET_SUBCATEGORIES: {
+            return {
+                ...state,
+                // subCategories: action.payload
+                subCategories: [...state.subCategories]
+            }
+        }
+
+        case GET_EXPENSES: {
+            return {
+                ...state,
+                // expenses: action.payload
+                expenses: [...state.expenses]
+            }
+        }
 
         //action.newExpense
         case ADD_EXPENSES: {

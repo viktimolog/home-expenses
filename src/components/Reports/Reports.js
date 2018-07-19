@@ -48,20 +48,19 @@ const styles = {
     }
 };
 
+const Styles = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignContent: 'center'
+}
+
 class Reports extends React.Component {
 
     state = {
-        uah: '',
-        expense: '',
-        curCategory:{},
-
         beginDate: 1521991436550,
-        endDate:   1541991436550
-    }
-
-    componentDidMount(){
-
-
+        endDate: 1541991436550
     }
 
     stringHandler = name => event => {
@@ -95,12 +94,12 @@ class Reports extends React.Component {
 
     handleAddExpenses = () => {
 
-        if(this.state.uah ===''){
-            alert('Please, fill the textfield UAH')
-            return
-        }
 
-        if(this.props.categories.length <= 0){
+            alert('CLICK')
+            return
+
+
+        if (this.props.categories.length <= 0) {
             alert('Please, add category!')
             return
         }
@@ -129,46 +128,126 @@ class Reports extends React.Component {
 
     trueExpense = expense => (expense.date >= this.state.beginDate && expense.date <= this.state.endDate)
 
-    //todo
 
+    //todo
+    catSubCatsToString = (sum, curCategory, arrViewExpenses, expense) => {
+
+        if (sum === 0 && !this.trueExpense(expense)) return null;
+
+        let newSum = sum;
+
+        if (this.trueExpense(expense))
+            newSum += expense.valueUAH;
+
+        return (
+            <div style={Styles}>
+                {
+                    expense
+                        ? <TableRow key={curCategory.id}>
+                            <TableCell component="th" scope="row">
+                                {curCategory.name}
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                                {newSum}
+                            </TableCell>
+                        </TableRow>
+                        : <TableRow key={curCategory.id}>
+                            <TableCell component="th" scope="row">
+                                {curCategory.name}
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                                {sum}
+                            </TableCell>
+                        </TableRow>
+                }
+                {
+                    (sum > 0)
+                        ? arrViewExpenses
+                            .map(expense => {
+                                return (
+                                    <div style={{marginLeft: '30px', color: 'blue'}}>
+                                        <TableRow key={expense.id}>
+                                            <TableCell component="th" scope="row">
+                                                {expense.category}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {expense.expense}
+                                            </TableCell>
+                                        </TableRow>
+                                    </div>
+                                );
+                            })
+                        : null
+                }
+            </div>
+        )
+    }
+
+    //todo
     getTrueExpenses = expense => {
-        const date = expense.date;
+        // const date = expense.date;
         const curCategory = this.props.categories.find(cat => cat.id === expense.idCategory);
 
-        let sum = 0, arrExpenses = [];
+        // console.log('consolelog curCategory = ',curCategory)//OK
 
+        var sum = 0;
+        var arrSubExpenses = [];
 
-        //У самой категории есть расходы в заданный период
-        if(this.trueExpense(expense)){
+        var arrViewExpenses = [];
 
-            sum += expense.valueUAH;
+        if (curCategory.parent) {
+            //Нашли все подкатегории текущей категории, array
+            const arrCurSubCat = this.props.subCategories.filter(subCat => subCat.idCategory === curCategory.id);
 
-            //Если категория не имеет подкатегорий OK
-            if(!curCategory.parent){
-                return(
+            console.log('consolelog arrCurSubCat = ', arrCurSubCat)//OK array 1 obj ok
+
+            arrCurSubCat.map(curSubCat => {
+                    const subExpense = this.props.expenses.filter(subExp => subExp.idCategory === curSubCat.idParent);
+                    subExpense.map(subExp => arrSubExpenses.push(subExp))
+                    //Получили массив расходов с подкатегориями нашей категории
+                }
+            )
+
+            arrSubExpenses.map(curSubExp => {
+                    // alert('curSubExp.date = '+curSubExp.date)
+                    console.log('consolelog curSubExp = ', curSubExp)//это массив с одним объектом expense правильным
+                    if (this.trueExpense(curSubExp)) {
+                        // alert('if (this.trueExpense(curSubExp))')//ok
+                        sum += curSubExp.valueUAH;
+                        const viewExp = {
+                            id: Math.floor(Date.now() / 1000),
+                            category: this.props.categories.find(cat => cat.id === curSubExp.idCategory).name,
+                            expense: curSubExp.valueUAH
+                        }
+                        arrViewExpenses.push(viewExp);
+                    }
+                }
+            )
+
+            return this.catSubCatsToString(sum, curCategory, arrViewExpenses, expense)
+        }
+        else {
+            //todo
+            if (this.trueExpense(expense)) {
+                return (
                     <TableRow key={expense.id}>
                         <TableCell component="th" scope="row">
                             {curCategory.name}
                         </TableCell>
                         <TableCell component="th" scope="row">
-                            {sum}
+                            {expense.valueUAH}
                         </TableCell>
                     </TableRow>
                 )
             }
         }
-        //
-        // else
-        return null;
     }
 
-
-    render()
-    {
-        const { classes } = this.props;
+    render() {
+        const {classes} = this.props;
         return (
             <Grid container>
-                    <GridItem xs={12} sm={12} md={12}>
+                <GridItem xs={12} sm={12} md={12}>
                     <Card plain>
                         <CardHeader plain color="primary">
                             <h4 className={classes.cardTitleWhite}>
@@ -197,7 +276,8 @@ class Reports extends React.Component {
                                                 {'>'}
                                             </Button>
                                         </TableCell>
-                                        <TableCell component="th" scope="row" style={{color: 'blue', fontSize: '16px'}}>
+                                        <TableCell component="th" scope="row"
+                                                   style={{color: 'blue', fontSize: '16px'}}>
                                             <Button color="primary" onClick={this.handleAddExpenses}>
                                                 DAY
                                             </Button>
@@ -214,7 +294,8 @@ class Reports extends React.Component {
                                                 MONTH
                                             </Button>
                                         </TableCell>
-                                        <TableCell component="th" scope="row" style={{color: 'blue', fontSize: '16px'}}>
+                                        <TableCell component="th" scope="row"
+                                                   style={{color: 'blue', fontSize: '16px'}}>
                                             <Button color="primary" onClick={this.handleAddExpenses}>
                                                 PERIOD
                                             </Button>
@@ -224,7 +305,8 @@ class Reports extends React.Component {
                                         <TableCell component="th" scope="row"
                                                    style={{color: 'blue', fontSize: '16px'}}>Category</TableCell>
                                         <TableCell component="th" scope="row"
-                                                   style={{color: 'blue', fontSize: '16px'}}>Expenses value, UAH</TableCell>
+                                                   style={{color: 'blue', fontSize: '16px'}}>Expenses value,
+                                            UAH</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -233,6 +315,7 @@ class Reports extends React.Component {
                                         .slice(0, 20)
                                         .map(expense => {
                                             return this.getTrueExpenses(expense)
+                                            // return this.test1(expense)//ok
                                             // if (this.trueExpense(expense))
                                             // return (
                                             //     <TableRow key={expense.id}>
@@ -256,4 +339,9 @@ class Reports extends React.Component {
     }
 }
 
-export default withStyles(styles)(Reports);
+export default withStyles(styles)
+
+(
+    Reports
+)
+;

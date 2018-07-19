@@ -5,15 +5,19 @@ import {createSelector} from 'reselect'
 import {
     // getItems,
     // addExpenses
+    getCategories,
+    getSubCategories,
+    getExpenses
 } from 'actions/actionCreator'
 import Reports from 'components/Reports/Reports'//todo
 
 class ReportsContainer extends React.Component {
 
-    // componentDidMount() {
-    //     this.props.getCategories()?
-    //     this.props.getExpenses()?
-    // }
+    componentDidMount() {
+        // this.props.getCategories()
+        // this.props.getSubCategories()
+        // this.props.getExpenses()
+    }
 
     render() {
         return (
@@ -43,7 +47,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-    // getCategories,
+    getCategories,
+    getSubCategories,
+    getExpenses
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReportsContainer)

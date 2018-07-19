@@ -10,7 +10,10 @@ import {
     SUBCATEGORY_UP,
     DEL_SUBCATEGORY,
     ADD_SUBCATEGORY,
-    ADD_EXPENSES
+    ADD_EXPENSES,
+    GET_CATEGORIES,
+    GET_SUBCATEGORIES,
+    GET_EXPENSES,
 } from 'actions/actionTypes'
 import {
     GetItems
@@ -110,3 +113,24 @@ export const addExpenses = newExpense => dispatch => {
         newExpense
     })
 }
+
+export const getCategories = () => dispatch => {
+    dispatch({
+        type: GET_CATEGORIES,
+        //data from DB
+    })
+}
+
+export const getSubCategories = () => dispatch => {
+    dispatch({
+        type: GET_SUBCATEGORIES,
+        //data from DB
+    })
+}
+
+export const getExpenses = () => dispatch => {
+        dispatch({
+            type: GET_EXPENSES,
+            //data from DB
+        })
+    }
