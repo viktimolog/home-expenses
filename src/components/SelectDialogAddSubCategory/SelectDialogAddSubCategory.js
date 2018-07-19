@@ -46,22 +46,6 @@ class SelectDialogAddSubCategory extends React.Component {
         });
     };
 
-    // handleAddSubCategory = () => {
-    //
-    //
-    //     if (this.state.curCategory !== null
-    //     && this.props.category.id !== this.state.curCategory.id
-    //     && !this.props.category.child)
-    //         this.props.addSubCategory(this.props.category, this.state.curCategory);
-    //     else {
-    //         if (this.props.clearCategories.length > 0
-    //             && this.props.category.id !== this.props.clearCategories[0].id
-    //             && !this.props.category.child)
-    //             this.props.addSubCategory(this.props.category, this.props.clearCategories[0]);
-    //     }
-    //     this.handleClose();
-    // };
-
     handleAddSubCategory = () => {
 
         if (this.props.clearCategories.length <= 0) {
