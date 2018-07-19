@@ -18,6 +18,7 @@ import Signin from "views/Signin/Signin.jsx";
 import EmailVerification from "views/EmailVerification/EmailVerification.jsx";
 import Config from "views/Config/Config.jsx";
 import CategoriesContainer from "containers/CategoriesContainer";
+import DashboardContainer from "containers/DashboardContainer";
 
 const dashboardRoutes = [
     {
@@ -52,9 +53,10 @@ const dashboardRoutes = [
   {
     path: "/dashboard",
     sidebarName: "Dashboard",
-    navbarName: "Material Dashboard",
+    navbarName: "Dashboard",
     icon: Dashboard,
-    component: DashboardPage
+    // component: DashboardPage
+    component: DashboardContainer
   },
   {
     path: "/user",

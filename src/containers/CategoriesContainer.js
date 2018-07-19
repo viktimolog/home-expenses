@@ -2,8 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {createSelector} from 'reselect'
-import Header from '../components/Header'
-// import Search from '../components/Search'
 import {
     // getItems,
     categoryUP,
@@ -27,7 +25,6 @@ class CategoriesContainer extends React.Component {
     render() {
         return (
             <div>
-                {/*<Header curItem={false}/>*/}
                 <Config
                     categories={this.props.categories}
                     categoryUP={this.props.categoryUP}
