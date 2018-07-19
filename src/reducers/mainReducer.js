@@ -13,6 +13,7 @@ import {
 } from 'actions/actionTypes'
 import {ADD_EXPENSES} from "../actions/actionTypes";
 
+//1531991436550
 const initialState = {
     expenses:[
         {
@@ -20,162 +21,170 @@ const initialState = {
             date: 1531991436550,
             category: 'Category 1',
             expense: 'expense 1',
-            valueUAH: 12.34
+            valueUAH: 12.34,
+            idCategory: '0'
         },
         {
             id: '21',
             date: 1531991436550,
             category: 'Category 2',
             expense: '',
-            valueUAH: 24.68
+            valueUAH: 24.68,
+            idCategory: '1'
         },
         {
             id: '20',
             date: 1531991436550,
             category: 'Category 3',
             expense: 'expense 3',
-            valueUAH: 37.02
+            valueUAH: 37.02,
+            idCategory: '2'
         },
         {
             id: '19',
             date: 1531991436550,
             category: 'Category 4',
             expense: '',
-            valueUAH: 54.07
+            valueUAH: 54.07,
+            idCategory: '3'
         },
         {
             id: '18',
             date: 1531991436550,
             category: 'Category 5',
             expense: 'expense 5',
-            valueUAH: 49.36
+            valueUAH: 49.36,
+            idCategory: '4'
         },
         {
             id: '17',
             date: 1531991436550,
             category: 'Category 6',
             expense: '',
-            valueUAH: 61.70
+            valueUAH: 61.70,
+            idCategory: '5'
         },
         {
             id: '16',
             date: 1531991436550,
             category: 'Category 7',
             expense: 'expense 7',
-            valueUAH: 74.04
+            valueUAH: 74.04,
+            idCategory: '6'
         },
         {
             id: '15',
             date: 1531991436550,
             category: 'Category 8',
             expense: '',
-            valueUAH: 86.38
+            valueUAH: 86.38,
+            idCategory: '7'
         },
-        {
-            id: '14',
-            date: 1531991436550,
-            category: 'Category 9',
-            expense: 'expense 9',
-            valueUAH: 98.72
-        },
-        {
-            id: '13',
-            date: 1531991436550,
-            category: 'Category 10',
-            expense: '',
-            valueUAH: 234.08
-        },
-        {
-            id: '12',
-            date: 1531991436550,
-            category: 'Category 11',
-            expense: 'expense 11',
-            valueUAH: 23.12
-        },
-        {
-            id: '11',
-            date: 1531991436550,
-            category: 'Category 12',
-            expense: '',
-            valueUAH: 56.43
-        },
-        {
-            id: '10',
-            date: 1531991436550,
-            category: 'Category 13',
-            expense: 'expense 13',
-            valueUAH: 33.11
-        },
-        {
-            id: '9',
-            date: 1531991436550,
-            category: 'Category 14',
-            expense: '',
-            valueUAH: 67.28
-        },
-        {
-            id: '8',
-            date: 1531991436550,
-            category: 'Category 15',
-            expense: 'expense 15',
-            valueUAH: 17.98
-        },
-        {
-            id: '7',
-            date: 1531991436550,
-            category: 'Category 16',
-            expense: '',
-            valueUAH: 73.22
-        },
-        {
-            id: '6',
-            date: 1531991436550,
-            category: 'Category 17',
-            expense: 'expense 17',
-            valueUAH: 21.75
-        },
-        {
-            id: '5',
-            date: 1531991436550,
-            category: 'Category 18',
-            expense: '',
-            valueUAH: 18.00
-        },
-        {
-            id: '4',
-            date: 1531991436550,
-            category: 'Category 19',
-            expense: 'expense 19',
-            valueUAH: 19.19
-        },
-        {
-            id: '3',
-            date: 1531991436550,
-            category: 'Category 20',
-            expense: '',
-            valueUAH: 20.20
-        },
-        {
-            id: '2',
-            date: 1531991436550,
-            category: 'Category 21',
-            expense: 'expense 21',
-            valueUAH: 21.21
-        },
-        {
-            id: '1',
-            date: 1531991436550,
-            category: 'Category 22',
-            expense: '',
-            valueUAH: 22.00
-        },
-        {
-            id: '0',
-            date: 1531991436550,
-            category: 'Category 23',
-            expense: 'expense 23',
-            valueUAH: 23.23
-        },
+        // {
+        //     id: '14',
+        //     date: 1531991436550,
+        //     category: 'Category 9',
+        //     expense: 'expense 9',
+        //     valueUAH: 98.72
+        // },
+        // {
+        //     id: '13',
+        //     date: 1531991436550,
+        //     category: 'Category 10',
+        //     expense: '',
+        //     valueUAH: 234.08
+        // },
+        // {
+        //     id: '12',
+        //     date: 1531991436550,
+        //     category: 'Category 11',
+        //     expense: 'expense 11',
+        //     valueUAH: 23.12
+        // },
+        // {
+        //     id: '11',
+        //     date: 1531991436550,
+        //     category: 'Category 12',
+        //     expense: '',
+        //     valueUAH: 56.43
+        // },
+        // {
+        //     id: '10',
+        //     date: 1531991436550,
+        //     category: 'Category 13',
+        //     expense: 'expense 13',
+        //     valueUAH: 33.11
+        // },
+        // {
+        //     id: '9',
+        //     date: 1531991436550,
+        //     category: 'Category 14',
+        //     expense: '',
+        //     valueUAH: 67.28
+        // },
+        // {
+        //     id: '8',
+        //     date: 1531991436550,
+        //     category: 'Category 15',
+        //     expense: 'expense 15',
+        //     valueUAH: 17.98
+        // },
+        // {
+        //     id: '7',
+        //     date: 1531991436550,
+        //     category: 'Category 16',
+        //     expense: '',
+        //     valueUAH: 73.22
+        // },
+        // {
+        //     id: '6',
+        //     date: 1531991436550,
+        //     category: 'Category 17',
+        //     expense: 'expense 17',
+        //     valueUAH: 21.75
+        // },
+        // {
+        //     id: '5',
+        //     date: 1531991436550,
+        //     category: 'Category 18',
+        //     expense: '',
+        //     valueUAH: 18.00
+        // },
+        // {
+        //     id: '4',
+        //     date: 1531991436550,
+        //     category: 'Category 19',
+        //     expense: 'expense 19',
+        //     valueUAH: 19.19
+        // },
+        // {
+        //     id: '3',
+        //     date: 1531991436550,
+        //     category: 'Category 20',
+        //     expense: '',
+        //     valueUAH: 20.20
+        // },
+        // {
+        //     id: '2',
+        //     date: 1531991436550,
+        //     category: 'Category 21',
+        //     expense: 'expense 21',
+        //     valueUAH: 21.21
+        // },
+        // {
+        //     id: '1',
+        //     date: 1531991436550,
+        //     category: 'Category 22',
+        //     expense: '',
+        //     valueUAH: 22.00
+        // },
+        // {
+        //     id: '0',
+        //     date: 1531991436550,
+        //     category: 'Category 23',
+        //     expense: 'expense 23',
+        //     valueUAH: 23.23
+        // },
     ],
     userEmail: 'testUserEmailFromState',
     userPassword: 'testUserPasswordFromState',

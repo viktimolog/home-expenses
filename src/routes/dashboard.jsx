@@ -19,6 +19,7 @@ import EmailVerification from "views/EmailVerification/EmailVerification.jsx";
 import Config from "views/Config/Config.jsx";
 import CategoriesContainer from "containers/CategoriesContainer";
 import DashboardContainer from "containers/DashboardContainer";
+import ReportsContainer from "containers/ReportsContainer";
 
 const dashboardRoutes = [
     {
@@ -58,6 +59,13 @@ const dashboardRoutes = [
     // component: DashboardPage
     component: DashboardContainer
   },
+    {
+        path: "/reports",
+        sidebarName: "Reports",
+        navbarName: "Reports",
+        icon: LibraryBooks,
+        component: ReportsContainer
+    },
   {
     path: "/user",
     sidebarName: "User Profile",

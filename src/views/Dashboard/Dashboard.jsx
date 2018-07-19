@@ -106,13 +106,24 @@ handleAddExpenses = () => {
         return
     }
 
+    if(this.props.categories.length <= 0){
+        alert('Please, add category!')
+        return
+    }
+
 const newExpense = {
     id: Math.floor(Date.now() / 1000),
+    idCategory: this.state.curCategory.id,
     date: Date.now(),
     category: this.state.curCategory.name,
     expense: this.state.expense,
-    valueUAH: Number(this.state.uah)
+    valueUAH: Number(this.state.uah),
 }
+    this.setState({
+        uah: '',
+        expense: '',
+        // curCategory:{}
+    })
         this.props.addExpenses(newExpense);
 };
 
