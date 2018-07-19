@@ -9,7 +9,8 @@ import {
     SUBCATEGORY_DOWN,
     SUBCATEGORY_UP,
     DEL_SUBCATEGORY,
-    ADD_SUBCATEGORY
+    ADD_SUBCATEGORY,
+    ADD_EXPENSES
 } from 'actions/actionTypes'
 import {
     GetItems
@@ -100,5 +101,12 @@ export const addSubCategory = (category, newSubCategory) => dispatch => {
         type: ADD_SUBCATEGORY,
         category,
         newSubCategory
+    })
+}
+
+export const addExpenses = newExpense => dispatch => {
+    dispatch({
+        type: ADD_EXPENSES,
+        newExpense
     })
 }

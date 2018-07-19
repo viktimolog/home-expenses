@@ -100,7 +100,7 @@ class SelectDialogAddSubCategory extends React.Component {
                                 <Select
                                     native
                                     // value={this.state.nameCategory}
-                                    onChange={this.handleChange('nameCategory')}
+                                    onChange={this.handleChange('nameCategory')}//todo
                                     input={<Input id="age-native-simple"/>}
                                 >
                                     {

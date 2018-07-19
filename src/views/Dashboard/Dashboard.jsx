@@ -49,11 +49,28 @@ const styles = {
 
 class Dashboard extends React.Component {
 
-  state = {
-    uah: ''
-  }
+    state = {
+        uah: '',
+        expense: '',
+        curCategory:{}
+    }
 
-    stringHandler1 = name => event => {
+    componentDidMount(){
+
+        let curCat;
+
+        {
+            (this.props.categories.length>0)
+            ? curCat = this.props.categories[0]
+                : curCat = {}
+        }
+
+        this.setState({
+            curCategory: curCat
+        })
+    }
+
+    stringHandler = name => event => {
         this.setState({
             [name]: event.target.value
         })
@@ -75,14 +92,35 @@ class Dashboard extends React.Component {
         })
     }
 
-    salaryHandler = val => {
+    handleChange = event => {
         this.setState({
-            // salary: val.replace(/[^0-9]/g, '')
-            salary: val.replace(/[^0-9]*[.][0-9]/g, '')
-        })
+            curCategory: this.props.categories.find(cat => cat.id === event.target.value)
+        });
+    };
+
+
+handleAddExpenses = () => {
+
+    if(this.state.uah ===''){
+        alert('Please, fill the textfield UAH')
+        return
     }
 
-// ^[0-9]*[.,][0-9]+$
+const newExpense = {
+    id: Math.floor(Date.now() / 1000),
+    date: Date.now(),
+    category: this.state.curCategory.name,
+    expense: this.state.expense,
+    valueUAH: Number(this.state.uah)
+}
+        this.props.addExpenses(newExpense);
+};
+
+getDate = value => {
+    const dateFormat = require('dateformat');
+    const date = dateFormat(value, 'dddd, mmmm dS, yyyy, h:MM:ss TT')
+    return date;
+}
 
 render()
 {
@@ -103,24 +141,33 @@ render()
                                 <Select
                                     style={{top: '45%'}}
                                     native
-                                    // value={this.state.nameCategory}
-                                    // onChange={this.handleChange('nameCategory')}
+                                    onChange={this.handleChange}
                                     input={<Input id="age-native-simple"/>}
                                 >
-                                    <option value='qwerty'>
-                                        {'qwerty'}
-                                    </option>
-
-
+                                    {
+                                        this.props.categories
+                                            .map(category => {
+                                                    return (
+                                                        <option value={category.id}>
+                                                            {category.name}
+                                                        </option>
+                                                    )
+                                                }
+                                            )
+                                    }
                                 </Select>
                             </GridItem>
                             <GridItem xs={12} sm={12} md={4}>
                                 <CustomInput
                                     labelText="Description"
-                                    id="description"
-                                    formControlProps={{
-                                        fullWidth: true
-                                    }}
+                                    id="expense"
+                                    formControlProps={{fullWidth: true}}
+                                    inputProps={
+                                        {
+                                            value: this.state.expense,
+                                            onChange: this.stringHandler('expense'),
+                                        }
+                                    }
                                 />
                             </GridItem>
                             <GridItem xs={12} sm={12} md={2}>
@@ -139,7 +186,7 @@ render()
                             <GridItem xs={12} sm={12} md={2}>
                                 <Button
                                     color="primary"
-                                    onClick={() => alert('click')}//todo
+                                    onClick={this.handleAddExpenses}//todo
                                     style={{top: '35%'}}
                                 >ADD EXPENSES</Button>
                             </GridItem>
@@ -174,13 +221,13 @@ render()
                             </TableHead>
                             <TableBody>
                                 {this.props.expenses
-                                    .sort((a, b) => a.date > b.date)
+                                    .sort((a, b) => a.date < b.date)
                                     .slice(0, 20)
                                     .map(expense => {
                                         return (
                                             <TableRow key={expense.id}>
                                                 <TableCell component="th" scope="row">
-                                                    {expense.date}
+                                                    {this.getDate(expense.date)}
                                                 </TableCell>
                                                 <TableCell component="th" scope="row">
                                                     {expense.category}
