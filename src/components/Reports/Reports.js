@@ -462,7 +462,6 @@ class Reports extends React.Component {
                                         <TableCell component="th" scope="row"
                                                    style={{color: 'blue', fontSize: '16px'}}>
                                             <ModalDialogDatePickers
-                                                label={'From: '}
                                                 beginDay={this.state.beginDate}
                                                 endDay={this.state.endDate}
                                                 // setBeginDay={this.setBeginDay}

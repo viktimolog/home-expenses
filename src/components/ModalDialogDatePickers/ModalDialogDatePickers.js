@@ -55,9 +55,17 @@ class ModalDialogDatePickers extends React.Component {
     handleTmpEnd = val => this.setState({tmpEnd: val})
 
     handleOK = () => {
-        // debugger
-        // alert(this.state.tmpBegin)
-        this.props.setPeriod(this.state.tmpBegin, this.state.endDay)//endDay => tmpEnd
+        if(isNaN(this.state.tmpBegin) || isNaN(this.state.tmpEnd)){
+            alert('Please, fill all the datepickers')
+            return
+        }
+
+        if(this.state.tmpBegin > this.state.tmpEnd){
+            this.props.setPeriod(this.state.tmpEnd, this.state.tmpBegin)
+            this.handleClose()
+            return
+        }
+        this.props.setPeriod(this.state.tmpBegin, this.state.tmpEnd)
         this.handleClose()
     }
 
@@ -102,14 +110,24 @@ class ModalDialogDatePickers extends React.Component {
                                         </p>
                                     </CardHeader>
                                     <CardBody>
-<DatePickerReports
-    label = {this.props.label}
-    beginDay={this.state.beginDay}
-    handleBeginDay = {this.handleBeginDay}
-    handleTmpBegin={this.handleTmpBegin}
-    tmpBegin={this.state.tmpBegin}
-    // setPeriod={this.props.setPeriod }//вызвать его когда ОК нажмет юзер
-/>
+                                        <DatePickerReports
+                                            label={'From: '}
+                                            beginDay={this.state.beginDay}
+                                            handleBeginDay={this.handleBeginDay}
+                                            handleTmpBegin={this.handleTmpBegin}
+                                            tmpBegin={this.state.tmpBegin}
+                                        />
+                                    </CardBody>
+                                    <CardBody>
+                                        <DatePickerReports
+                                            label={'To: '}
+                                            beginDay={this.state.endDay}
+                                            handleBeginDay={this.handleEndDay}
+                                            handleTmpBegin={this.handleTmpEnd}
+                                            tmpBegin={this.state.tmpEnd}
+                                        />
+                                    </CardBody>
+                                    <CardBody>
                                         <Button color="primary" onClick={this.handleOK}>
                                             OK
                                         </Button>

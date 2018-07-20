@@ -27,11 +27,6 @@ class DatePickerReports extends React.Component {
         date: this.getDate(Date.now())
     }
 
-// handleDate = event => {
-//        this.setState({date: event.target.value})
-//     this.props.handleBeginDay(event.target.value)
-// }
-
     handleDate = event => {
 
         //event.target.value - 2018-07-02
