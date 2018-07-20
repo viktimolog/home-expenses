@@ -463,8 +463,9 @@ const mainReducer = (state = initialState, action) => {
                 ...state,
                 categories: [...state.categories.filter(category => category.id !== action.category.id)],
                 subCategories: [...state.subCategories
-                    .filter(subCategory => subCategory.idParent !== action.category.id)//her from subCategory
-                    .filter(subCategory => subCategory.idCategory !== action.category.id)]//all her
+                    .filter(subCategory => subCategory.idParent !== action.category.id)// del her from subCategory
+                    .filter(subCategory => subCategory.idCategory !== action.category.id)],//del all her subCategory
+                expenses: [...state.expenses.filter(expense => expense.idCategory !== action.category.id)]
             }
         }
 
