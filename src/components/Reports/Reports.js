@@ -148,7 +148,7 @@ class Reports extends React.Component {
                                 {curCategory.name}
                             </TableCell>
                             <TableCell component="th" scope="row">
-                                {newSum}
+                                {newSum.toFixed(2)}
                             </TableCell>
                         </TableRow>
                         : <TableRow key={curCategory.id}>
@@ -156,7 +156,7 @@ class Reports extends React.Component {
                                 {curCategory.name}
                             </TableCell>
                             <TableCell component="th" scope="row">
-                                {sum}
+                                {sum.toFixed(2)}
                             </TableCell>
                         </TableRow>
                 }
