@@ -93,7 +93,7 @@ class SelectDialogAddSubCategory extends React.Component {
                     open={this.state.open}
                     onClose={this.handleClose}
                 >
-                    <DialogTitle>Chose new subcategory</DialogTitle>
+                    <DialogTitle>Choice new subcategory</DialogTitle>
                     <DialogContent>
                         <form className={classes.container}>
                             <FormControl className={classes.formControl}>

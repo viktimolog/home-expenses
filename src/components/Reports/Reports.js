@@ -17,6 +17,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CategoryReports from 'components/CategoryReports/CategoryReports'
+import ModalDialogDatePickers from 'components/ModalDialogDatePickers/ModalDialogDatePickers'
 
 const styles = {
     cardCategoryWhite: {
@@ -364,9 +365,8 @@ class Reports extends React.Component {
                                         </TableCell>
                                         <TableCell component="th" scope="row"
                                                    style={{color: 'blue', fontSize: '16px'}}>
-                                            <Button color="primary" onClick={this.handleAddExpenses}>
-                                                PERIOD
-                                            </Button>
+                                            <ModalDialogDatePickers />
+                                            //todo
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>
