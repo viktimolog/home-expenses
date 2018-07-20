@@ -61,17 +61,16 @@ const dayTime = 86400000;
 
 class Reports extends React.Component {
 
-    //4-5 znak - day
     state = {
         beginDate: 1541391436550,
         endDate: 1541991436550,
         mode: 'period'
     }
 
-    setPeriod = (begin, end) => {
 
+    setPeriod = (begin, end) => {
         this.setState({
-            beginDay: begin,
+            beginDate: begin,
             endDate: end
         })
     }

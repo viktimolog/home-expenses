@@ -33,7 +33,14 @@ class DatePickerReports extends React.Component {
 // }
 
     handleDate = event => {
+
+        //event.target.value - 2018-07-02
+
+        // console.log('consolelog event.target.value = ',new Date(event.target.value).getTime())
+
+        console.log('consolelog event.target.value = ',event.target.value)
         this.setState({date: event.target.value})
+        this.props.handleTmpBegin(new Date(event.target.value).getTime())
     }
 
 
@@ -53,6 +60,7 @@ render()
                 className={classes.textField}
                 onChange={this.handleDate}
                 value={this.state.date}
+                // value={this.props.tmpBegin}
                 InputLabelProps={{
                     shrink: true,
                 }}

@@ -45,12 +45,20 @@ class ModalDialogDatePickers extends React.Component {
     state = {
         open: false,
         beginDay: this.props.beginDay,
-        endDay: this.props.endDay
+        endDay: this.props.endDay,
+        tmpBegin: {},
+        tmpEnd: {}
     }
 
+    handleTmpBegin = val => this.setState({tmpBegin: val})
+
+    handleTmpEnd = val => this.setState({tmpEnd: val})
+
     handleOK = () => {
-        this.props.setPeriod(this.state.beginDay, this.state.endDay)
-        // this.handleClose()
+        // debugger
+        // alert(this.state.tmpBegin)
+        this.props.setPeriod(this.state.tmpBegin, this.state.endDay)//endDay => tmpEnd
+        this.handleClose()
     }
 
     handleBeginDay = val => this.setState({beginDay: val})
@@ -98,6 +106,8 @@ class ModalDialogDatePickers extends React.Component {
     label = {this.props.label}
     beginDay={this.state.beginDay}
     handleBeginDay = {this.handleBeginDay}
+    handleTmpBegin={this.handleTmpBegin}
+    tmpBegin={this.state.tmpBegin}
     // setPeriod={this.props.setPeriod }//вызвать его когда ОК нажмет юзер
 />
                                         <Button color="primary" onClick={this.handleOK}>
