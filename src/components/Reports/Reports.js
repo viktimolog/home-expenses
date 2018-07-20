@@ -7,16 +7,16 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
-import Select from '@material-ui/core/Select';
-import Input from '@material-ui/core/Input';
 import {ArrowLeft, ArrowRight} from "@material-ui/icons";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import CategoryReports from 'components/CategoryReports/CategoryReports'
 
 const styles = {
     cardCategoryWhite: {
@@ -50,7 +50,7 @@ const styles = {
 
 const Styles = {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     alignContent: 'center'
@@ -58,9 +58,70 @@ const Styles = {
 
 class Reports extends React.Component {
 
+    //4-5 znak - day
     state = {
-        beginDate: 1521991436550,
+        beginDate: 1531391436550,
         endDate: 1541991436550
+    }
+
+    handleMonth = () => {
+        let date = new Date();
+        let firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+        let lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+        this.setState({
+            beginDate: firstDay,
+            endDate: lastDay
+        })
+    }
+
+    handleWeek =() => {
+
+        function getMonday(d) {
+            d = new Date(d);
+            const day = d.getDay(),
+                diff = d.getDate() - day + (day == 0 ? -6:1);
+            return new Date(d.setDate(diff))
+        }
+
+        const Monday = getMonday(new Date());//monday.getTime() ok
+
+
+        //Прибавили неделю
+
+        let Sunday = new Date();
+
+        Sunday.setDate(Monday.getDate()+6); //Sunday.getTime());//ok
+        //
+        //-----Прибавили неделю
+
+        this.setState({
+            beginDate: Monday,
+            endDate: Sunday
+        })
+    }
+
+    handleDay =() => {
+        this.setState({
+            beginDate: Date.now(),
+            endDate: Date.now()
+        })
+    }
+
+    handleLeft = () => {
+        const delta = this.state.endDate -this.state.beginDate;
+        this.setState({
+            beginDate: this.state.beginDate - delta,
+            endDate: this.state.endDate - delta
+        })
+    }
+
+    handleRight = () => {
+        const delta = this.state.endDate -this.state.beginDate;
+        this.setState({
+            beginDate: this.state.beginDate + delta,
+            endDate: this.state.endDate + delta
+        })
     }
 
     stringHandler = name => event => {
@@ -139,45 +200,32 @@ class Reports extends React.Component {
         if (this.trueExpense(expense))
             newSum += expense.valueUAH;
 
+        const Styles1 = {
+            display: 'flex',
+            // position: 'absolute',
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+            alignContent: 'center'
+        }
+
         return (
-            <div style={Styles}>
+            <div style={Styles1}>
                 {
                     expense
-                        ? <TableRow key={curCategory.id}>
-                            <TableCell component="th" scope="row">
-                                {curCategory.name}
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                {newSum.toFixed(2)}
-                            </TableCell>
-                        </TableRow>
-                        : <TableRow key={curCategory.id}>
-                            <TableCell component="th" scope="row">
-                                {curCategory.name}
-                            </TableCell>
-                            <TableCell component="th" scope="row">
-                                {sum.toFixed(2)}
-                            </TableCell>
-                        </TableRow>
-                }
-                {
-                    (sum > 0)
-                        ? arrViewExpenses
-                            .map(expense => {
-                                return (
-                                    <div style={{marginLeft: '30px', color: 'blue'}}>
-                                        <TableRow key={expense.id}>
-                                            <TableCell component="th" scope="row">
-                                                {expense.category}
-                                            </TableCell>
-                                            <TableCell component="th" scope="row">
-                                                {expense.expense}
-                                            </TableCell>
-                                        </TableRow>
-                                    </div>
-                                );
-                            })
-                        : null
+                        ? <CategoryReports
+                                category={curCategory}
+                                sum={newSum}
+                                arrViewExpenses={arrViewExpenses}
+                                // expense={expense}
+                          />
+
+                        : <CategoryReports
+                            category={curCategory}
+                            sum={sum}
+                            arrViewExpenses={arrViewExpenses}
+                            // expense={expense}
+                          />
                 }
             </div>
         )
@@ -190,10 +238,7 @@ class Reports extends React.Component {
 
         // console.log('consolelog curCategory = ',curCategory)//OK
 
-        var sum = 0;
-        var arrSubExpenses = [];
-
-        var arrViewExpenses = [];
+        let sum = 0, arrSubExpenses = [], arrViewExpenses = [];
 
         if (curCategory.parent) {
             //Нашли все подкатегории текущей категории, array
@@ -230,14 +275,37 @@ class Reports extends React.Component {
             //todo
             if (this.trueExpense(expense)) {
                 return (
-                    <TableRow key={expense.id}>
-                        <TableCell component="th" scope="row">
-                            {curCategory.name}
-                        </TableCell>
-                        <TableCell component="th" scope="row">
-                            {expense.valueUAH}
-                        </TableCell>
-                    </TableRow>
+                    <Card style={Styles}>
+                        <CardContent>
+                            <TableCell component="th" scope="row">
+                            <Typography
+                                color="inherit"
+                                gutterBottom variant="title"
+                                component="h2"
+                            >
+                                {curCategory.name}
+                            </Typography>
+                            </TableCell>
+                                <TableCell component="th" scope="row">
+                            <Typography
+                                color="inherit"
+                                gutterBottom variant="title"
+                                component="h2"
+                            >
+                                {expense.valueUAH}
+                            </Typography>
+                                </TableCell>
+                        </CardContent>
+                    </Card>
+
+                    // <TableRow key={expense.id}>
+                    //     <TableCell component="th" scope="row">
+                    //         {curCategory.name}
+                    //     </TableCell>
+                    //     <TableCell component="th" scope="row">
+                    //         {expense.valueUAH}
+                    //     </TableCell>
+                    // </TableRow>
                 )
             }
         }
@@ -267,30 +335,30 @@ class Reports extends React.Component {
 
                                         </TableCell>
                                         <TableCell component="th" scope="row">
-                                            <Button color="primary" onClick={this.handleAddExpenses}>
+                                            <Button color="primary" onClick={this.handleLeft}>
                                                 {'<'}
                                             </Button>
                                         </TableCell>
                                         <TableCell component="th" scope="row">
-                                            <Button color="primary" onClick={this.handleAddExpenses}>
+                                            <Button color="primary" onClick={this.handleRight}>
                                                 {'>'}
                                             </Button>
                                         </TableCell>
                                         <TableCell component="th" scope="row"
                                                    style={{color: 'blue', fontSize: '16px'}}>
-                                            <Button color="primary" onClick={this.handleAddExpenses}>
+                                            <Button color="primary" onClick={this.handleDay}>
                                                 DAY
                                             </Button>
                                         </TableCell>
                                         <TableCell component="th" scope="row"
                                                    style={{color: 'blue', fontSize: '16px'}}>
-                                            <Button color="primary" onClick={this.handleAddExpenses}>
+                                            <Button color="primary" onClick={this.handleWeek}>
                                                 WEEK
                                             </Button>
                                         </TableCell>
                                         <TableCell component="th" scope="row"
                                                    style={{color: 'blue', fontSize: '16px'}}>
-                                            <Button color="primary" onClick={this.handleAddExpenses}>
+                                            <Button color="primary" onClick={this.handleMonth}>
                                                 MONTH
                                             </Button>
                                         </TableCell>
@@ -314,20 +382,13 @@ class Reports extends React.Component {
                                         .sort((a, b) => a.date < b.date)
                                         .slice(0, 20)
                                         .map(expense => {
-                                            return this.getTrueExpenses(expense)
-                                            // return this.test1(expense)//ok
-                                            // if (this.trueExpense(expense))
-                                            // return (
-                                            //     <TableRow key={expense.id}>
-                                            //         <TableCell component="th" scope="row">
-                                            //             {expense.category}
-                                            //         </TableCell>
-                                            //         <TableCell component="th" scope="row">
-                                            //             {expense.expense}
-                                            //         </TableCell>
-                                            //     </TableRow>
-                                            // );
-                                            // return null
+                                            return (
+                                                <TableRow key={expense.id}>
+                                                    {/*<TableCell component="th" scope="row">*/}
+                                                        {this.getTrueExpenses(expense)}
+                                                    {/*</TableCell>*/}
+                                                </TableRow>
+                                            )
                                         })}
                                 </TableBody>
                             </Table>
@@ -339,9 +400,4 @@ class Reports extends React.Component {
     }
 }
 
-export default withStyles(styles)
-
-(
-    Reports
-)
-;
+export default withStyles(styles)(Reports)
