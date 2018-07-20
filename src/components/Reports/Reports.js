@@ -57,22 +57,37 @@ const Styles = {
     alignContent: 'center'
 }
 
+const dayTime = 86400000;
+
 class Reports extends React.Component {
 
     //4-5 znak - day
     state = {
-        beginDate: 1531391436550,
-        endDate: 1541991436550
+        beginDate: 1541391436550,
+        endDate: 1541991436550,
+        mode: 'period'
     }
+
+    setPeriod = (begin, end) => {
+
+        this.setState({
+            beginDay: begin,
+            endDate: end
+        })
+    }
+
+    // setBeginDay = val => this.setState({beginDay: val})
+    // setEndDay = val => this.setState({endDate: val})
 
     handleMonth = () => {
         let date = new Date();
-        let firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-        let lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        let firstDay = new Date(date.getFullYear(), date.getMonth(), 1).getTime();
+        let lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getTime();
 
         this.setState({
             beginDate: firstDay,
-            endDate: lastDay
+            endDate: lastDay,
+            mode: 'month'
         })
     }
 
@@ -85,45 +100,156 @@ class Reports extends React.Component {
             return new Date(d.setDate(diff))
         }
 
-        const Monday = getMonday(new Date());//monday.getTime() ok
+        const Monday = getMonday(new Date());
 
 
         //Прибавили неделю
 
         let Sunday = new Date();
 
-        Sunday.setDate(Monday.getDate()+6); //Sunday.getTime());//ok
+        Sunday.setDate(Monday.getDate()+6);
         //
         //-----Прибавили неделю
 
         this.setState({
-            beginDate: Monday,
-            endDate: Sunday
+            beginDate: Monday.getTime(),
+            endDate: Sunday.getTime(),
+            mode: 'week'
         })
     }
 
     handleDay =() => {
         this.setState({
             beginDate: Date.now(),
-            endDate: Date.now()
+            endDate: Date.now(),
+            mode: 'day'
         })
     }
-
+//todo
     handleLeft = () => {
-        const delta = this.state.endDate -this.state.beginDate;
-        this.setState({
-            beginDate: this.state.beginDate - delta,
-            endDate: this.state.endDate - delta
-        })
+
+        switch (this.state.mode) {
+
+            case 'period':{
+                this.setState({
+                    beginDate: 2*this.state.beginDate - this.state.endDate,
+                    endDate: this.state.beginDate
+                })
+                break;
+            }
+
+            case 'month': {
+                let date = new Date(this.state.beginDate);
+                let firstDayPrevMonth = new Date(date.getFullYear(), date.getMonth() - 1, 1);//первый день предыдущего месяца
+                let firstDayCurMonth = new Date(date.getFullYear(), date.getMonth(), 1);//первый день текущего
+                let endDayPrevMonth = firstDayCurMonth.getTime() - dayTime
+                this.setState({
+                    beginDate: firstDayPrevMonth,
+                    endDate: endDayPrevMonth,
+                })
+                break;
+            }
+
+            case 'week': {
+                this.setState({
+                    beginDate: this.state.beginDate - dayTime * 7,
+                    endDate: this.state.endDate - dayTime * 7
+                })
+                break;
+            }
+
+            case 'day': {
+                let beginDay = this.state.beginDate - dayTime;
+                beginDay = new Date(beginDay);
+                beginDay = beginDay.setHours(0);
+                beginDay = new Date(beginDay);
+                beginDay = beginDay.setMinutes(0);
+                beginDay = new Date(beginDay);
+                beginDay = beginDay.setSeconds(0);
+                beginDay = new Date(beginDay);
+                beginDay = beginDay.setMilliseconds(0);
+
+                let endDay = this.state.endDate - dayTime;
+                endDay = new Date(endDay);
+                endDay = endDay.setHours(23);
+                endDay = new Date(endDay);
+                endDay = endDay.setMinutes(59);
+                endDay = new Date(endDay);
+                endDay = endDay.setSeconds(59);
+                endDay = new Date(endDay);
+                endDay = endDay.setMilliseconds(999);
+
+                this.setState({
+                    beginDate: beginDay,
+                    endDate: endDay
+                })
+                break;
+            }
+        }
     }
 
     handleRight = () => {
-        const delta = this.state.endDate -this.state.beginDate;
-        this.setState({
-            beginDate: this.state.beginDate + delta,
-            endDate: this.state.endDate + delta
-        })
+        switch (this.state.mode) {
+
+            case 'period':{
+                this.setState({
+                    beginDate: this.state.endDate,
+                    endDate: 2*this.state.endDate - this.state.beginDate
+                })
+                break;
+            }
+
+            case 'month': {
+
+                let firstDayNextMonth = this.state.endDate + dayTime;//первый день следующего
+
+                let monthEndDay = new Date(new Date(firstDayNextMonth).getFullYear(), new Date(firstDayNextMonth).getMonth() + 1, 0);//последний день следующего
+
+                this.setState({
+                    beginDate: firstDayNextMonth,
+                    endDate: monthEndDay.getTime()
+                })
+                break;
+            }
+
+            case 'week': {
+                this.setState({
+                    beginDate: this.state.beginDate + dayTime * 7,
+                    endDate: this.state.endDate + dayTime * 7
+                })
+                break;
+            }
+
+            case 'day': {
+                let beginDay = this.state.beginDate + dayTime;
+                beginDay = new Date(beginDay);
+                beginDay = beginDay.setHours(0);
+                beginDay = new Date(beginDay);
+                beginDay = beginDay.setMinutes(0);
+                beginDay = new Date(beginDay);
+                beginDay = beginDay.setSeconds(0);
+                beginDay = new Date(beginDay);
+                beginDay = beginDay.setMilliseconds(0);
+
+                let endDay = this.state.endDate + dayTime;
+                endDay = new Date(endDay);
+                endDay = endDay.setHours(23);
+                endDay = new Date(endDay);
+                endDay = endDay.setMinutes(59);
+                endDay = new Date(endDay);
+                endDay = endDay.setSeconds(59);
+                endDay = new Date(endDay);
+                endDay = endDay.setMilliseconds(999);
+
+                this.setState({
+                    beginDate: beginDay,
+                    endDate: endDay
+                })
+                break;
+            }
+        }
     }
+
 
     stringHandler = name => event => {
         this.setState({
@@ -153,43 +279,13 @@ class Reports extends React.Component {
         });
     };
 
-
-    handleAddExpenses = () => {
-
-
-            alert('CLICK')
-            return
-
-
-        if (this.props.categories.length <= 0) {
-            alert('Please, add category!')
-            return
-        }
-
-        const newExpense = {
-            id: Math.floor(Date.now() / 1000),
-            idCategory: this.state.curCategory.id,
-            date: Date.now(),
-            category: this.state.curCategory.name,
-            expense: this.state.expense,
-            valueUAH: Number(this.state.uah),
-        }
-        this.setState({
-            uah: '',
-            expense: '',
-            // curCategory:{}
-        })
-        this.props.addExpenses(newExpense);
-    };
-
     getDate = value => {
         const dateFormat = require('dateformat');
         const date = dateFormat(value, 'ddd mmm d yyyy')
         return date;
     }
 
-    trueExpense = expense => (expense.date >= this.state.beginDate && expense.date <= this.state.endDate)
-
+    trueExpense = expense => expense.date >= this.state.beginDate && expense.date <= this.state.endDate
 
     //todo
     catSubCatsToString = (sum, curCategory, arrViewExpenses, expense) => {
@@ -203,7 +299,6 @@ class Reports extends React.Component {
 
         const Styles1 = {
             display: 'flex',
-            // position: 'absolute',
             flexDirection: 'row',
             justifyContent: 'space-around',
             alignItems: 'center',
@@ -313,6 +408,8 @@ class Reports extends React.Component {
     }
 
     render() {
+        // alert('RenderReports this.getDate(this.state.beginDate) = '+this.getDate(this.state.beginDate))
+
         const {classes} = this.props;
         return (
             <Grid container>
@@ -365,7 +462,13 @@ class Reports extends React.Component {
                                         </TableCell>
                                         <TableCell component="th" scope="row"
                                                    style={{color: 'blue', fontSize: '16px'}}>
-                                            <ModalDialogDatePickers />
+                                            <ModalDialogDatePickers
+                                                label={'From: '}
+                                                beginDay={this.state.beginDate}
+                                                endDay={this.state.endDate}
+                                                // setBeginDay={this.setBeginDay}
+                                                setPeriod={this.setPeriod}
+                                            />
                                             //todo
                                         </TableCell>
                                     </TableRow>

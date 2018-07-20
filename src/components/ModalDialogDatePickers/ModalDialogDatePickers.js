@@ -17,9 +17,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
-
-import SubCategoriesEdit from "components/SubCategoriesEdit/SubCategoriesEdit";
-import SelectDialogAddSubCategory from "components/SelectDialogAddSubCategory/SelectDialogAddSubCategory";
+import DatePickerReports from "components/DatePickerReports/DatePickerReports";
 
 function getModalStyle() {
     const top = 50
@@ -46,7 +44,17 @@ class ModalDialogDatePickers extends React.Component {
 
     state = {
         open: false,
+        beginDay: this.props.beginDay,
+        endDay: this.props.endDay
     }
+
+    handleOK = () => {
+        this.props.setPeriod(this.state.beginDay, this.state.endDay)
+        // this.handleClose()
+    }
+
+    handleBeginDay = val => this.setState({beginDay: val})
+    handleEndDay = val => this.setState({endDay: val})
 
     handleOpen = () => {
         this.setState({open: true});
@@ -58,7 +66,7 @@ class ModalDialogDatePickers extends React.Component {
 
     render() {
         const {classes} = this.props;
-
+// alert('this.state.beginDay in ModalDialogDatePicker = ' + this.state.beginDay)//ok
         return (
             <div>
                 <Button color="primary" onClick={this.handleOpen}>
@@ -72,21 +80,29 @@ class ModalDialogDatePickers extends React.Component {
                 >
                     <div style={getModalStyle()} className={classes.paper}>
                         <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                            <Button onClick={this.handleClose}>Cancel</Button>
+                            <Button color="secondary" onClick={this.handleClose}>Cancel</Button>
                         </div>
 
                         <Grid container>
                             <GridItem xs={12} sm={12} md={12}>
                                 <Card>
                                     <CardHeader color="primary">
-                                        <h4 className={classes.cardTitleWhite}>Edit
-                                            Category: ..........</h4>
+                                        <h4 className={classes.cardTitleWhite}>
+                                            Choice period for reports</h4>
                                         <p className={classes.cardCategoryWhite}>
-                                            Please, config your subcategories ........
+                                            Please, choice period
                                         </p>
                                     </CardHeader>
                                     <CardBody>
-
+<DatePickerReports
+    label = {this.props.label}
+    beginDay={this.state.beginDay}
+    handleBeginDay = {this.handleBeginDay}
+    // setPeriod={this.props.setPeriod }//вызвать его когда ОК нажмет юзер
+/>
+                                        <Button color="primary" onClick={this.handleOK}>
+                                            OK
+                                        </Button>
                                     </CardBody>
                                 </Card>
                             </GridItem>
