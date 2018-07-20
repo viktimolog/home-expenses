@@ -4,12 +4,11 @@ import PropTypes from 'prop-types'
 import {createSelector} from 'reselect'
 import {
     // getItems,
-    // addExpenses
     getCategories,
     getSubCategories,
     getExpenses
 } from 'actions/actionCreator'
-import Reports from 'components/Reports/Reports'//todo
+import Reports from 'components/Reports/Reports'
 
 class ReportsContainer extends React.Component {
 
@@ -26,7 +25,7 @@ class ReportsContainer extends React.Component {
                     categories={this.props.categories}
                     subCategories={this.props.subCategories}
                     expenses={this.props.expenses}
-                    // addExpenses = {this.props.addExpenses}//func
+                    //func
                 />
             </div>)
     }

@@ -2,12 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-// import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
 
 // @material-ui/core components
 import Grid from "@material-ui/core/Grid";
@@ -46,8 +41,8 @@ class ModalDialogDatePickers extends React.Component {
         open: false,
         beginDay: this.props.beginDay,
         endDay: this.props.endDay,
-        tmpBegin: {},
-        tmpEnd: {}
+        tmpBegin: Date.now(),
+        tmpEnd: Date.now()
     }
 
     handleTmpBegin = val => this.setState({tmpBegin: val})
@@ -55,12 +50,12 @@ class ModalDialogDatePickers extends React.Component {
     handleTmpEnd = val => this.setState({tmpEnd: val})
 
     handleOK = () => {
-        if(isNaN(this.state.tmpBegin) || isNaN(this.state.tmpEnd)){
+        if (isNaN(this.state.tmpBegin) || isNaN(this.state.tmpEnd)) {
             alert('Please, fill all the datepickers')
             return
         }
 
-        if(this.state.tmpBegin > this.state.tmpEnd){
+        if (this.state.tmpBegin > this.state.tmpEnd) {
             this.props.setPeriod(this.state.tmpEnd, this.state.tmpBegin)
             this.handleClose()
             return
@@ -82,7 +77,6 @@ class ModalDialogDatePickers extends React.Component {
 
     render() {
         const {classes} = this.props;
-// alert('this.state.beginDay in ModalDialogDatePicker = ' + this.state.beginDay)//ok
         return (
             <div>
                 <Button color="primary" onClick={this.handleOpen}>
@@ -98,7 +92,6 @@ class ModalDialogDatePickers extends React.Component {
                         <div style={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Button color="secondary" onClick={this.handleClose}>Cancel</Button>
                         </div>
-
                         <Grid container>
                             <GridItem xs={12} sm={12} md={12}>
                                 <Card>
@@ -109,29 +102,39 @@ class ModalDialogDatePickers extends React.Component {
                                             Please, choice period
                                         </p>
                                     </CardHeader>
-                                    <CardBody>
-                                        <DatePickerReports
-                                            label={'From: '}
-                                            beginDay={this.state.beginDay}
-                                            handleBeginDay={this.handleBeginDay}
-                                            handleTmpBegin={this.handleTmpBegin}
-                                            tmpBegin={this.state.tmpBegin}
-                                        />
-                                    </CardBody>
-                                    <CardBody>
-                                        <DatePickerReports
-                                            label={'To: '}
-                                            beginDay={this.state.endDay}
-                                            handleBeginDay={this.handleEndDay}
-                                            handleTmpBegin={this.handleTmpEnd}
-                                            tmpBegin={this.state.tmpEnd}
-                                        />
-                                    </CardBody>
-                                    <CardBody>
-                                        <Button color="primary" onClick={this.handleOK}>
-                                            OK
-                                        </Button>
-                                    </CardBody>
+                                    <Grid container>
+                                        <GridItem xs={12} sm={12} md={4}>
+                                            <CardBody>
+                                                <DatePickerReports
+                                                    label={'From: '}
+                                                    beginDay={this.state.beginDay}
+                                                    handleBeginDay={this.handleBeginDay}
+                                                    handleTmpBegin={this.handleTmpBegin}
+                                                    tmpBegin={this.state.tmpBegin}
+                                                />
+                                            </CardBody>
+                                        </GridItem>
+                                        <GridItem xs={12} sm={12} md={4}>
+                                            <CardBody>
+                                                <DatePickerReports
+                                                    label={'To: '}
+                                                    beginDay={this.state.endDay}
+                                                    handleBeginDay={this.handleEndDay}
+                                                    handleTmpBegin={this.handleTmpEnd}
+                                                    tmpBegin={this.state.tmpEnd}
+                                                />
+                                            </CardBody>
+                                        </GridItem>
+                                        <GridItem xs={12} sm={12} md={4}>
+                                            <CardBody>
+                                                <Button
+                                                    color="primary"
+                                                    onClick={this.handleOK}>
+                                                    OK
+                                                </Button>
+                                            </CardBody>
+                                        </GridItem>
+                                    </Grid>
                                 </Card>
                             </GridItem>
                         </Grid>

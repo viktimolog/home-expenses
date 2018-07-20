@@ -1,47 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import TableCell from '@material-ui/core/TableCell';
+import Grid from "@material-ui/core/Grid";
+// core components
+import GridItem from "components/Grid/GridItem.jsx";
 
-
-const Styles = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    alignContent: 'center',
-}
-
-
-const SubCategoryReports = ({expense}) => {
-
-    return (
-        <Card style={Styles}>
-            <CardContent>
-                <TableCell component="th" scope="row">
-                <Typography
-                    color="inherit"
-                    gutterBottom variant="title"
-                    component="h2"
-                >
-                    {expense.category}
-                </Typography>
-                </TableCell>
-                <TableCell component="th" scope="row">
-                <Typography
-                    color="inherit"
-                    gutterBottom variant="title"
-                    component="h2"
-                >
-                    {expense.expense}
-                </Typography>
-                </TableCell>
-            </CardContent>
-        </Card>
+const SubCategoryReports = ({expense}) =>
+    (
+        <Grid container>
+            <GridItem xs={12} sm={12} md={2}>
+            </GridItem>
+            <GridItem xs={12} sm={12} md={4}>
+                <Card>
+                    <Typography
+                        color="inherit"
+                        gutterBottom variant="title"
+                        component="h2"
+                    >
+                        {expense.category}
+                    </Typography>
+                </Card>
+            </GridItem>
+            <GridItem xs={12} sm={12} md={4}>
+                <Card>
+                    <Typography
+                        color="inherit"
+                        gutterBottom variant="title"
+                        component="h2"
+                    >
+                        {expense.expense}
+                    </Typography>
+                </Card>
+            </GridItem>
+        </Grid>
     )
-}
 
 SubCategoryReports.propTypes = {
     category: PropTypes.object.isRequired,
