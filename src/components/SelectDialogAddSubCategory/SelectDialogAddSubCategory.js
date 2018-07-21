@@ -26,7 +26,8 @@ class SelectDialogAddSubCategory extends React.Component {
     state = {
         open: false,
         // nameCategory: '',
-        curCategory: null
+        curCategory: this.props.clearCategories
+            .filter(cat => cat.id !== this.props.category.id)[0]
     }
 
     handleChange = name => event => {
@@ -42,12 +43,12 @@ class SelectDialogAddSubCategory extends React.Component {
     handleClose = () => {
         this.setState({
             open: false,
-            curCategory: null
+            curCategory: this.props.clearCategories
+                .filter(cat => cat.id !== this.props.category.id)[0]
         });
     };
 
     handleAddSubCategory = () => {
-
         if (this.props.clearCategories.length <= 0) {
             this.handleClose();
             return;
@@ -105,6 +106,7 @@ class SelectDialogAddSubCategory extends React.Component {
                                 >
                                     {
                                         this.props.clearCategories
+                                            .filter(cat => cat.id !== this.props.category.id)
                                             .map(category => {
                                                     return (
                                                         <option value={category.id}>

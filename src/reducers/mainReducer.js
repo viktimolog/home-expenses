@@ -21,7 +21,7 @@ import {
 
 //1531991436550
 const initialState = {
-    expenses:[
+    expenses: [
         {
             id: '22',
             date: 1531991436550,
@@ -343,7 +343,7 @@ const mainReducer = (state = initialState, action) => {
             }
 
             const newSubCategory = {
-                id: Math.floor(Date.now() / 1000),
+                id: Math.floor(Date.now() / 1000)+'',
                 idCategory: action.category.id,
                 name: action.newSubCategory.name,
                 rating: maxRating + 1,
@@ -378,14 +378,15 @@ const mainReducer = (state = initialState, action) => {
             }
 
             const countSubCatSelectedCategory = [...state.subCategories
-                .filter(sub => sub.idParent === selectedCategory.id)].length
+                .filter(sub => sub.idCategory === action.category.id)].length
 
             const updateParentCategory = {
                 id: action.category.id,
                 name: action.category.name,
                 rating: action.category.rating,
                 parent: countSubCatSelectedCategory !== 1,
-                child: action.category.child
+                // child: action.category.child
+                child: false
             }
 
             return {
@@ -441,16 +442,21 @@ const mainReducer = (state = initialState, action) => {
         case ADD_CATEGORY: {
             let maxRating = 0;
 
-            if (action.categories.length !== 0)
+            if (action.categories.length === 1)
+                maxRating = action.categories[0].rating;
+
+            if (action.categories.length > 1)
                 maxRating = action.categories.sort((a, b) => a.rating < b.rating)[0].rating;
 
             const newCategory = {
-                id: Math.floor(Date.now() / 1000),
+                id: Math.floor(Date.now() / 1000)+'',
                 name: '',
                 rating: maxRating + 1,
                 parent: false,
                 child: false
             }
+
+            // console.log('consolelog newCategory',newCategory)//ok
 
             return {
                 ...state,
@@ -471,7 +477,7 @@ const mainReducer = (state = initialState, action) => {
 
         case CATEGORY_UP: {
 
-            if([...state.categories].length === 1) return {...state};
+            if ([...state.categories].length === 1) return {...state};
 
             const minRating = [...state.categories.sort((a, b) => a.rating > b.rating)][0].rating;
             if (action.rating === minRating) return {...state};
@@ -506,7 +512,7 @@ const mainReducer = (state = initialState, action) => {
         }
 
         case CATEGORY_DOWN: {
-            if([...state.categories].length === 1) return {...state};
+            if ([...state.categories].length === 1) return {...state};
             const maxRating = action.categories.sort((a, b) => a.rating < b.rating)[0].rating;
 
             if (action.rating === maxRating) return {...state};
@@ -544,7 +550,7 @@ const mainReducer = (state = initialState, action) => {
             const curSubCategories = [...state.subCategories
                 .filter(subCategory => subCategory.idCategory === action.subCategory.idCategory)]
 
-            if(curSubCategories.length === 1) return {...state};
+            if (curSubCategories.length === 1) return {...state};
 
             const maxRating = curSubCategories.sort((a, b) => a.rating < b.rating)[0].rating;
 
@@ -586,7 +592,7 @@ const mainReducer = (state = initialState, action) => {
             const curSubCategories = [...state.subCategories
                 .filter(subCategory => subCategory.idCategory === action.subCategory.idCategory)]
 
-            if(curSubCategories.length === 1) return {...state};
+            if (curSubCategories.length === 1) return {...state};
 
             const minRating = curSubCategories.sort((a, b) => a.rating > b.rating)[0].rating;
             if (action.subCategory === minRating) return {...state};
