@@ -28,20 +28,10 @@ const styles = theme => ({
 });
 
 class ModalDialogEditCategoryName extends React.Component {
-    // constructor(props) {
-    //     super(props)
-    //
-    //     this.state = {
-    //         open: false,
-    //         newName: props.category.name,
-    //     }
-    // }
-
-    //TODO ?
-
     state = {
         open: false,
-        newName: this.props.category.name,
+        newName: this.props.category.name
+
     }
 
     handleOpen = () => {
@@ -68,7 +58,7 @@ class ModalDialogEditCategoryName extends React.Component {
 
         return (
             <div>
-                <Button onClick={this.handleOpen}>{this.state.newName}</Button>
+                <Button onClick={this.handleOpen}>{this.props.category.name}</Button>
                 <Modal
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
@@ -77,7 +67,7 @@ class ModalDialogEditCategoryName extends React.Component {
                 >
                     <div style={getModalStyle()} className={classes.paper}>
                         <Typography variant="title" id="modal-title">
-                            Please, edit the category
+                            Please, edit the category name
                         </Typography>
                         <CustomInput
                             id="editCategoryName"

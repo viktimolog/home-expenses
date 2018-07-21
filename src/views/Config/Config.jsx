@@ -87,7 +87,7 @@ const TableList = props => {
                                                     />
                                                 </TableCell>
                                             </TableRow>
-                                        );
+                                        )
                                     })}
                                 <TableRow>
                                     <TableCell component="th" scope="row">

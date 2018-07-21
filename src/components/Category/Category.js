@@ -65,7 +65,7 @@ const Category = ({
                         gutterBottom variant="title"
                         component="h2"
                     >
-                        <ModalDialogEditCategoryName //TODO
+                        <ModalDialogEditCategoryName
                             category={category}
                             updateCategoryName={updateCategoryName}
                         />
@@ -80,7 +80,6 @@ const Category = ({
                             onClick={UPhandler}
                         >
                             Up
-
                         </Button>
                     </CardActions>
                     <CardActions>
