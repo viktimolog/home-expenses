@@ -23,11 +23,23 @@ const styles = theme => ({
 
 class SelectDialogAddSubCategory extends React.Component {
 
+    // static getDerivedStateFromProps(props, state) {
+    // }
+
     state = {
         open: false,
-        // nameCategory: '',
         curCategory: this.props.clearCategories
             .filter(cat => cat.id !== this.props.category.id)[0]
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.clearCategories.length !== nextProps.clearCategories.length) {
+            this.setState({
+                curCategory:
+                    nextProps.clearCategories
+                        .filter(cat => cat.id !== nextProps.category.id)[0]
+            });
+        }
     }
 
     handleChange = name => event => {
