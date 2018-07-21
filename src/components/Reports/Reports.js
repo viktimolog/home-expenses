@@ -98,8 +98,17 @@ class Reports extends React.Component {
     }
 
     handleDay = () => {
+        let beginDay = new Date()
+        beginDay = beginDay.setHours(0);
+        beginDay = new Date(beginDay);
+        beginDay = beginDay.setMinutes(0);
+        beginDay = new Date(beginDay);
+        beginDay = beginDay.setSeconds(0);
+        beginDay = new Date(beginDay);
+        beginDay = beginDay.setMilliseconds(0);
+
         this.setState({
-            beginDate: Date.now(),
+            beginDate: beginDay,
             endDate: Date.now(),
             mode: 'day'
         })
@@ -117,9 +126,10 @@ class Reports extends React.Component {
 
             case 'month': {
                 let date = new Date(this.state.beginDate);
-                let firstDayPrevMonth = new Date(date.getFullYear(), date.getMonth() - 1, 1);
+                let firstDayPrevMonth = new Date(date.getFullYear(), date.getMonth() - 1, 1).getTime();
                 let firstDayCurMonth = new Date(date.getFullYear(), date.getMonth(), 1);
                 let endDayPrevMonth = firstDayCurMonth.getTime() - dayTime
+
                 this.setState({
                     beginDate: firstDayPrevMonth,
                     endDate: endDayPrevMonth,
@@ -179,6 +189,7 @@ class Reports extends React.Component {
                 let firstDayNextMonth = this.state.endDate + dayTime;
                 let monthEndDay = new Date(new Date(firstDayNextMonth).getFullYear()
                     , new Date(firstDayNextMonth).getMonth() + 1, 0);
+
                 this.setState({
                     beginDate: firstDayNextMonth,
                     endDate: monthEndDay.getTime()
