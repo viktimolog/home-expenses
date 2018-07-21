@@ -470,7 +470,11 @@ const mainReducer = (state = initialState, action) => {
         }
 
         case CATEGORY_UP: {
-            if (action.rating === 0) return {...state};
+
+            if([...state.categories].length === 1) return {...state};
+
+            const minRating = [...state.categories.sort((a, b) => a.rating > b.rating)][0].rating;
+            if (action.rating === minRating) return {...state};
 
             const ratingUPcategory = action.categories.find(category => category.rating === action.rating);
             const ratingDOWNcategory = action.categories.find(category => category.rating === action.rating - 1);
@@ -502,6 +506,7 @@ const mainReducer = (state = initialState, action) => {
         }
 
         case CATEGORY_DOWN: {
+            if([...state.categories].length === 1) return {...state};
             const maxRating = action.categories.sort((a, b) => a.rating < b.rating)[0].rating;
 
             if (action.rating === maxRating) return {...state};
@@ -538,6 +543,8 @@ const mainReducer = (state = initialState, action) => {
         case SUBCATEGORY_DOWN: {
             const curSubCategories = [...state.subCategories
                 .filter(subCategory => subCategory.idCategory === action.subCategory.idCategory)]
+
+            if(curSubCategories.length === 1) return {...state};
 
             const maxRating = curSubCategories.sort((a, b) => a.rating < b.rating)[0].rating;
 
@@ -576,10 +583,13 @@ const mainReducer = (state = initialState, action) => {
         }
 
         case SUBCATEGORY_UP: {
-            if (action.subCategory.rating === 0) return {...state};
-
             const curSubCategories = [...state.subCategories
                 .filter(subCategory => subCategory.idCategory === action.subCategory.idCategory)]
+
+            if(curSubCategories.length === 1) return {...state};
+
+            const minRating = curSubCategories.sort((a, b) => a.rating > b.rating)[0].rating;
+            if (action.subCategory === minRating) return {...state};
 
 
             const ratingUPcategory = curSubCategories
