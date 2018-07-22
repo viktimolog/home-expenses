@@ -13,7 +13,8 @@ import {
     ADD_EXPENSES,
     GET_CATEGORIES,
     GET_SUBCATEGORIES,
-    GET_EXPENSES
+    GET_EXPENSES,
+    SIGNOUT
 } from 'actions/actionTypes'
 
 // beginDate: 1521991436550,
@@ -192,8 +193,9 @@ const initialState = {
         //     valueUAH: 23.23
         // },
     ],
-    userEmail: 'testUserEmailFromState',
-    userPassword: 'testUserPasswordFromState',
+    email: 'testUserEmailFromState',
+    isUser: 'true',
+    token: '',
     // categories: [],
     categories: [
         {
@@ -281,6 +283,18 @@ const initialState = {
 const mainReducer = (state = initialState, action) => {
     switch (action.type) {
 
+        case SIGNOUT: {
+            return {
+                ...state,
+                email: '',
+                isUser: 'false',
+                token: '',
+                categories: [],
+                subCategories: [],
+                expenses: []
+            }
+        }
+
         case GET_CATEGORIES: {
             return {
                 ...state,
@@ -343,7 +357,7 @@ const mainReducer = (state = initialState, action) => {
             }
 
             const newSubCategory = {
-                id: Math.floor(Date.now() / 1000)+'',
+                id: Math.floor(Date.now() / 1000) + '',
                 idCategory: action.category.id,
                 name: action.newSubCategory.name,
                 rating: maxRating + 1,
@@ -449,7 +463,7 @@ const mainReducer = (state = initialState, action) => {
                 maxRating = action.categories.sort((a, b) => a.rating < b.rating)[0].rating;
 
             const newCategory = {
-                id: Math.floor(Date.now() / 1000)+'',
+                id: Math.floor(Date.now() / 1000) + '',
                 name: '',
                 rating: maxRating + 1,
                 parent: false,

@@ -196,7 +196,7 @@ class Dashboard extends React.Component {
                                 <GridItem xs={12} sm={12} md={2}>
                                     <Button
                                         color="primary"
-                                        onClick={this.handleAddExpenses}//todo
+                                        onClick={this.handleAddExpenses}
                                         style={{top: '35%'}}
                                     >ADD EXPENSES</Button>
                                 </GridItem>

@@ -14,6 +14,7 @@ import {
     GET_CATEGORIES,
     GET_SUBCATEGORIES,
     GET_EXPENSES,
+    SIGNOUT
 } from 'actions/actionTypes'
 import {
     GetItems
@@ -133,4 +134,10 @@ export const getExpenses = () => dispatch => {
             type: GET_EXPENSES,
             //data from DB
         })
-    }
+}
+
+export const signOut = () => dispatch => {
+    dispatch({
+        type: SIGNOUT,
+    })
+}

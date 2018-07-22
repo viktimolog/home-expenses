@@ -1,8 +1,8 @@
 import React from "react";
+import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
 import classNames from "classnames";
 import {Manager, Target, Popper} from "react-popper";
-// import { Manager, Target, Popper } from '@snowcoders/react-popper'
-import Grid from "@material-ui/core/Grid";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -12,20 +12,17 @@ import Paper from "@material-ui/core/Paper";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Hidden from "@material-ui/core/Hidden";
 // @material-ui/icons
-import Person from "@material-ui/icons/Person";
-import Notifications from "@material-ui/icons/Notifications";
-import Dashboard from "@material-ui/icons/Dashboard";
-import Search from "@material-ui/icons/Search";
 // core components
-import CustomInput from "components/CustomInput/CustomInput.jsx";
+import Person from "@material-ui/icons/Person";
+import FormLabel from "@material-ui/core/FormLabel";
+import AccountCircle from "@material-ui/icons/AccountCircle";
 import Button from "components/CustomButtons/Button.jsx";
-import Card from "components/Card/Card.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import GridItem from "components/Grid/GridItem.jsx";
-import Typography from '@material-ui/core/Typography';
-import {Link, withRouter} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle";
+import {
+    signOut
+} from 'actions/actionCreator'
 
 
 class HeaderLinks extends React.Component {
@@ -41,12 +38,21 @@ class HeaderLinks extends React.Component {
         this.setState({open: !this.state.open});
     };
 
+    handleSignOut = () => {
+        this.props.signOut();
+        this.handleClose();
+    }
 
     render() {
-        const {classes} = this.props;
+        const {classes, isUser, email} = this.props;
         const {open} = this.state;
         return (
             <div>
+                {isUser && (
+                    <FormLabel className={classes.emailLabel}>
+                        {email}
+                    </FormLabel>
+                )}
                 <Manager className={classes.manager}>
                     <Target>
                         <Button
@@ -57,8 +63,8 @@ class HeaderLinks extends React.Component {
                             className={classes.buttonLink}
                             onClick={this.handleClick}
                         >
-                            <Person className={classes.icons}/>
-
+                            {isUser && <AccountCircle className={classes.icons}/>}
+                            {!isUser && <Person className={classes.icons}/>}
                             <Hidden mdUp>
                                 <p className={classes.linkText}>Profile</p>
                             </Hidden>
@@ -84,22 +90,38 @@ class HeaderLinks extends React.Component {
                             >
                                 <Paper className={classes.dropdown}>
                                     <MenuList role="menu">
-                                        <Link to='/signin'>
-                                            <MenuItem
-                                                className={classes.dropdownItem}
-                                                onClick={this.handleClose}
-                                            >
-                                                Sign In
-                                            </MenuItem>
-                                        </Link>
-                                        <Link to='/signup'>
-                                            <MenuItem
-                                                className={classes.dropdownItem}
-                                                onClick={this.handleClose}
-                                            >
-                                                Sign Up
-                                            </MenuItem>
-                                        </Link>
+                                        {
+                                            !isUser &&
+                                            (<React.Fragment>
+                                                <Link to='/signin'>
+                                                    <MenuItem
+                                                        className={classes.dropdownItem}
+                                                        onClick={this.handleClose}
+                                                    >
+                                                        Sign In
+                                                    </MenuItem>
+                                                </Link>
+                                                < Link to='/signup'>
+                                                    <MenuItem
+                                                        className={classes.dropdownItem}
+                                                        onClick={this.handleClose}
+                                                    >
+                                                        Sign Up
+                                                    </MenuItem>
+                                                </Link>
+                                            </React.Fragment>)
+                                        }
+                                        {
+                                            isUser &&
+                                            (<Link to='/signin'>
+                                                <MenuItem
+                                                    className={classes.dropdownItem}
+                                                    onClick={this.handleSignOut}
+                                                >
+                                                    Sign Out
+                                                </MenuItem>
+                                            </Link>)
+                                        }
                                     </MenuList>
                                 </Paper>
                             </Grow>
@@ -111,4 +133,22 @@ class HeaderLinks extends React.Component {
     }
 }
 
-export default withStyles(headerLinksStyle)(HeaderLinks);
+// export default withStyles(headerLinksStyle)(HeaderLinks);
+
+HeaderLinks.propTypes = {
+    isUser: PropTypes.string.isRequired,
+    signOut: PropTypes.func.isRequired,
+    email: PropTypes.string.isRequired
+}
+
+const mapStateToProps = state => ({
+    isUser: state.mainReducer.isUser,
+    email: state.mainReducer.email
+})
+
+const mapDispatchToProps = {
+    signOut
+}
+
+export default connect(mapStateToProps,
+    mapDispatchToProps)(withStyles(headerLinksStyle)(HeaderLinks))
