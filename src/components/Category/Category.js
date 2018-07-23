@@ -41,7 +41,8 @@ const Category = ({
                       subCategoryDOWN,
                       delSubCategory,
                       addSubCategory,
-                      clearCategories
+                      clearCategories,
+                      updateCategory
                   }) => {
 
     const UPhandler = () => {
@@ -67,7 +68,7 @@ const Category = ({
                     >
                         <ModalDialogEditCategoryName
                             category={category}
-                            updateCategoryName={updateCategoryName}
+                            updateCategory={updateCategory}
                         />
                     </Typography>
                 </CardContent>
@@ -106,8 +107,10 @@ const Category = ({
                             subCategoryDOWN={subCategoryDOWN}
                             delSubCategory={delSubCategory}
                             addSubCategory={addSubCategory}
-                            categories={categories}
                             clearCategories={clearCategories}
+                            updateCategory={updateCategory}
+                            categories={categories}
+
                         />
                     </CardActions>
                 </div>
@@ -121,17 +124,18 @@ const Category = ({
                             <Table>
                                 <TableBody>
                                     {subCategories
-                                        .filter(subCategory => subCategory.idCategory === category.id)
+                                        .filter(subCategory => subCategory.idCategory === category._id)
                                         .sort((a, b) => a.rating > b.rating)
                                         .map(subCategory => {
                                             return (
-                                                <TableRow key={category.id}>
+                                                <TableRow key={category._id}>
                                                     <TableCell component="th" scope="row">
                                                         <SubCategory
                                                             subCategories={subCategories}
                                                             subCategory={subCategory}
                                                             subCategoryUP={subCategoryUP}
                                                             subCategoryDOWN={subCategoryDOWN}
+                                                            categories={categories}
                                                         />
                                                     </TableCell>
                                                 </TableRow>

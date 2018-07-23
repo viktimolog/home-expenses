@@ -43,7 +43,17 @@ class ModalDialogEditCategoryName extends React.Component {
     };
 
     handleUpdateCategoryname = () => {
-        this.props.updateCategoryName(this.props.category, this.state.newName.trim());
+        const getCategorySetName = category => {
+            const categorySetName = {
+                name: this.state.newName.trim(),
+                rating: category.rating,
+                parent: category.parent,
+                child: category.child
+            }
+            return categorySetName;
+        }
+
+        this.props.updateCategory(this.props.category._id, getCategorySetName(this.props.category));
         this.handleClose();
     };
 

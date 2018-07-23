@@ -28,7 +28,7 @@ class SelectDialogAddSubCategory extends React.Component {
             return {
                 curCategory:
                     nextProps.clearCategories
-                        .filter(cat => cat.id !== nextProps.category.id)[0]
+                        .filter(cat => cat._id !== nextProps.category._id)[0]
             }
         }
     }
@@ -36,7 +36,7 @@ class SelectDialogAddSubCategory extends React.Component {
     state = {
         open: false,
         curCategory: this.props.clearCategories
-            .filter(cat => cat.id !== this.props.category.id)[0],
+            .filter(cat => cat._id !== this.props.category._id)[0],
         clearCategories: this.props.clearCategories//only for getDerivedStateFromProps
     }
 
@@ -53,7 +53,7 @@ class SelectDialogAddSubCategory extends React.Component {
 
     handleChange = name => event => {
         this.setState({
-            curCategory: this.props.clearCategories.find(cat => cat.id === event.target.value)
+            curCategory: this.props.clearCategories.find(cat => cat._id === event.target.value)
         });
     };
 
@@ -65,33 +65,81 @@ class SelectDialogAddSubCategory extends React.Component {
         this.setState({
             open: false,
             curCategory: this.props.clearCategories
-                .filter(cat => cat.id !== this.props.category.id)[0]
+                .filter(cat => cat._id !== this.props.category._id)[0]
         });
     };
 
+    //todo
     handleAddSubCategory = () => {
+
+        let maxRating = 0;
+
+        if (this.props.subCategories.length === 1)
+            maxRating = this.props.subCategories[0].rating;
+
+        if (this.props.subCategories.length > 1)
+            maxRating = this.props.subCategories.sort((a, b) => a.rating < b.rating)[0].rating;
+
+        const getNewSubCategory = (category, curCategory) => {
+        const newSubCategory = {
+            idCategory: category._id,
+            rating: maxRating,
+            idParent: curCategory._id
+            }
+            return newSubCategory;
+        }
+
+        const getCategorySetChild = newSubCategory => {
+            const categorySetChild = {
+                name: newSubCategory.name,
+                rating: newSubCategory.rating,
+                parent: newSubCategory.parent,
+                child: true
+            }
+            return categorySetChild;
+        }
+
+        const getCategorySetParent = category => {
+            const categorySetParent = {
+                name: category.name,
+                rating: category.rating,
+                parent: true,
+                child: category.child
+            }
+            return categorySetParent;
+        }
+
+        const pushToDB = (category, curCategory) => {
+
+            this.props.updateCategory(category._id, getCategorySetParent(category));
+            //
+            this.props.updateCategory(curCategory._id, getCategorySetChild(curCategory));
+
+            this.props.addSubCategory(getNewSubCategory(category, curCategory));
+        }
+
         if (this.props.clearCategories.length <= 0) {
             this.handleClose();
             return;
         }
 
         if (this.state.curCategory !== null) {
-            if (this.props.category.id === this.state.curCategory.id
+            if (this.props.category._id === this.state.curCategory._id
                 || this.props.category.child) {
                 this.handleClose();
                 return;
             }
-            this.props.addSubCategory(this.props.category, this.state.curCategory);
+               pushToDB(this.props.category, this.state.curCategory);
         }
 
         else {
-            if (this.props.category.id === this.props.clearCategories[0].id) {
+            if (this.props.category._id === this.props.clearCategories[0]._id) {
                 this.handleClose();
                 return;
             }
 
             if (!this.props.category.child)
-                this.props.addSubCategory(this.props.category, this.props.clearCategories[0]);
+                pushToDB(this.props.category, this.props.clearCategories[0]);
         }
         this.handleClose();
     };
@@ -127,10 +175,10 @@ class SelectDialogAddSubCategory extends React.Component {
                                 >
                                     {
                                         this.props.clearCategories
-                                            .filter(cat => cat.id !== this.props.category.id)
+                                            .filter(cat => cat._id !== this.props.category._id)
                                             .map(category => {
                                                     return (
-                                                        <option value={category.id}>
+                                                        <option value={category._id}>
                                                             {category.name}
                                                         </option>
                                                     )

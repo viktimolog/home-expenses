@@ -16,7 +16,7 @@ const Styles = {
 }
 
 
-const subCategory = ({subCategory, subCategories, subCategoryUP, subCategoryDOWN}) => {
+const subCategory = ({subCategory, subCategories, subCategoryUP, subCategoryDOWN, categories}) => {
 
     const UPhandler = () => {
         subCategoryUP(subCategory)
@@ -34,7 +34,8 @@ const subCategory = ({subCategory, subCategories, subCategoryUP, subCategoryDOWN
                     gutterBottom variant="title"
                     component="h2"
                 >
-                    {subCategory.name}
+                    {categories.filter(cat => cat._id === subCategory.idParent)[0].name}
+                    {/*{subCategory.name}*/}
                 </Typography>
             </CardContent>
             <div style={{display: 'flex'}}>

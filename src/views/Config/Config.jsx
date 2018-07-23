@@ -46,9 +46,28 @@ const styles = {
     }
 };
 
-const TableList = props => {
+const ConfigTableList = props => {
     const ADDhandler = () => {
-        props.addCategory(props.categories);
+        //todo
+
+        // alert('ADDhandler')//ok
+
+        let maxRating = 0;
+
+        if (props.categories.length === 1)
+            maxRating = props.categories[0].rating;
+
+        if (props.categories.length > 1)
+            maxRating = props.categories.sort((a, b) => a.rating < b.rating)[0].rating;
+
+        const newCategory = {
+            // id: Math.floor(Date.now() / 1000) + '',
+            name: '',
+            rating: maxRating + 1,
+            parent: false,
+            child: false
+        }
+        props.addCategory(newCategory);
     }
 
     const {classes} = props;
@@ -77,7 +96,7 @@ const TableList = props => {
                                                         categoryUP={props.categoryUP}
                                                         categoryDOWN={props.categoryDOWN}
                                                         delCategory={props.delCategory}
-                                                        updateCategoryName={props.updateCategoryName}
+                                                        updateCategory={props.updateCategory}
                                                         subCategories={props.subCategories}
                                                         subCategoryUP={props.subCategoryUP}
                                                         subCategoryDOWN={props.subCategoryDOWN}
@@ -110,14 +129,14 @@ const TableList = props => {
     );
 }
 
-export default withStyles(styles)(TableList);
+export default withStyles(styles)(ConfigTableList);
 
-TableList.propTypes = {
+ConfigTableList.propTypes = {
     categories: PropTypes.array.isRequired,
     categoryUP: PropTypes.func.isRequired,
     categoryDOWN: PropTypes.func.isRequired,
     delCategory: PropTypes.func.isRequired,
-    updateCategoryName: PropTypes.func.isRequired
+    updateCategory: PropTypes.func.isRequired
 }
 
 

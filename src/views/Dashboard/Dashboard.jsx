@@ -49,25 +49,20 @@ const styles = {
 
 class Dashboard extends React.Component {
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (prevState.categories.length !== nextProps.categories.length) {
+            return {
+                curCategory: nextProps.categories[0],
+                categories: nextProps.categories
+            }
+        }
+    }
+
     state = {
         uah: '',
         expense: '',
-        curCategory: {}
-    }
-
-    componentDidMount() {
-
-        let curCat;
-
-        {
-            (this.props.categories.length > 0)
-                ? curCat = this.props.categories[0]
-                : curCat = {}
-        }
-
-        this.setState({
-            curCategory: curCat
-        })
+        curCategory: {},
+        categories: this.props.categories
     }
 
     stringHandler = name => event => {
@@ -94,7 +89,7 @@ class Dashboard extends React.Component {
 
     handleChange = event => {
         this.setState({
-            curCategory: this.props.categories.find(cat => cat.id === event.target.value)
+            curCategory: this.props.categories.find(cat => cat._id === event.target.value)
         });
     };
 
@@ -112,8 +107,7 @@ class Dashboard extends React.Component {
         }
 
         const newExpense = {
-            id: Math.floor(Date.now() / 1000),
-            idCategory: this.state.curCategory.id,
+            idCategory: this.state.curCategory._id,
             date: Date.now(),
             category: this.state.curCategory.name,
             expense: this.state.expense,
@@ -124,7 +118,10 @@ class Dashboard extends React.Component {
             expense: '',
             // curCategory:{}
         })
-        this.props.addExpenses(newExpense);
+        // alert(newExpense.date)//ok
+        console.log('console.log this.props.addExpense = ',this.props.addExpense)
+        console.log('console.log newExpense = ',newExpense)
+        this.props.addExpense(newExpense);
     };
 
     getDate = value => {
@@ -134,6 +131,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
+        console.log('console.log this.props.categories = ',this.props.categories)//?
         const {classes} = this.props;
         return (
             <Grid container>
@@ -158,7 +156,7 @@ class Dashboard extends React.Component {
                                             this.props.categories
                                                 .map(category => {
                                                         return (
-                                                            <option value={category.id}>
+                                                            <option value={category._id}>
                                                                 {category.name}
                                                             </option>
                                                         )
@@ -235,7 +233,7 @@ class Dashboard extends React.Component {
                                         .slice(0, 20)
                                         .map(expense => {
                                             return (
-                                                <TableRow key={expense.id}>
+                                                <TableRow key={expense._id}>
                                                     <TableCell component="th" scope="row">
                                                         {this.getDate(expense.date)}
                                                     </TableCell>

@@ -6,32 +6,76 @@ import {
     // getItems,
     categoryUP,
     categoryDOWN,
-    delCategory,
-    addCategory,
-    updateCategoryName,
+    // updateCategoryName,
     subCategoryUP,
     subCategoryDOWN,
     delSubCategory,
-    addSubCategory
+    addSubCategory,
+    getCategories,
+    addCategory,
+    delCategory,
+    updateCategory,
+    getSubCategories,
+    getExpenses
 } from 'actions/actionCreator'
 import Config from 'views/Config/Config'
+import axios from 'axios'
+import Urls from 'constants/Urls'
 
 class CategoriesContainer extends React.Component {
 
-    // componentDidMount() {
-    //     this.props.getItems()
+    // async getData(url) {
+    //     try {
+    //         const response = await axios
+    //             .get(url)
+    //             .then(res => res.data)
+    //         this.props.getCategories(response)
+    //     } catch (error) {
+    //         alert('error = ' + error)
+    //     }
     // }
+    //
+    // async getSubCat(url){
+    //     try {
+    //         const response = await axios
+    //             .get(url)
+    //             .then(res => res.data)
+    //         this.props.getSubCategories(response)
+    //     } catch (error) {
+    //         alert('error = ' + error)
+    //     }
+    // }
+
+    async getInitialState(url, func){
+        try {
+            const response = await axios
+                .get(url)
+                .then(res => res.data)
+            func(response)
+        } catch (error) {
+            alert('error = ' + error)
+        }
+    }
+
+    componentDidMount() {
+        // this.getData(Urls.getCategories)
+        // this.getSubCat(Urls.getSubCategories)
+
+        this.getInitialState(Urls.getCategories, this.props.getCategories)
+        this.getInitialState(Urls.getSubCategories, this.props.getSubCategories)
+        this.getInitialState(Urls.getExpenses, this.props.getExpenses)
+    }
 
     render() {
         return (
             <div>
                 <Config
+                    delCategory={this.props.delCategory}
+                    addCategory={this.props.addCategory}
                     categories={this.props.categories}
                     categoryUP={this.props.categoryUP}
                     categoryDOWN={this.props.categoryDOWN}
-                    delCategory={this.props.delCategory}
-                    addCategory={this.props.addCategory}
-                    updateCategoryName={this.props.updateCategoryName}
+                    updateCategory={this.props.updateCategory}
                     subCategories={this.props.subCategories}
                     subCategoryUP={this.props.subCategoryUP}
                     subCategoryDOWN={this.props.subCategoryDOWN}
@@ -43,22 +87,10 @@ class CategoriesContainer extends React.Component {
     }
 }
 
-CategoriesContainer.propTypes = {
-    categories: PropTypes.array.isRequired,
-    subCategories: PropTypes.array.isRequired,
-    // getItems: PropTypes.func.isRequired,
-    categoryUP: PropTypes.func.isRequired,
-    categoryDOWN: PropTypes.func.isRequired,
-    delCategory: PropTypes.func.isRequired,
-    addCategory: PropTypes.func.isRequired,
-    delSubCategory: PropTypes.func.isRequired,
-    addSubCategory: PropTypes.func.isRequired
-}
-
-const getCategories = state => state.mainReducer.categories
+const getCategoriesFromState = state => state.mainReducer.categories
 
 const getClearCategories = createSelector(
-    getCategories,
+    getCategoriesFromState,
     (categories) => {
 
         return categories
@@ -74,17 +106,34 @@ const mapStateToProps = state => ({
     clearCategories: getClearCategories(state)
 })
 
+CategoriesContainer.propTypes = {
+    categories: PropTypes.array.isRequired,
+    subCategories: PropTypes.array.isRequired,
+    categoryUP: PropTypes.func.isRequired,
+    categoryDOWN: PropTypes.func.isRequired,
+    delCategory: PropTypes.func.isRequired,
+    addCategory: PropTypes.func.isRequired,
+    delSubCategory: PropTypes.func.isRequired,
+    addSubCategory: PropTypes.func.isRequired,
+    getCategories: PropTypes.func.isRequired,
+    getSubCategories: PropTypes.func.isRequired,
+    updateCategory: PropTypes.func.isRequired,
+}
+
 const mapDispatchToProps = {
     // getItems,
     categoryUP,
     categoryDOWN,
     delCategory,
     addCategory,
-    updateCategoryName,
+    updateCategory,
     subCategoryUP,
     subCategoryDOWN,
     delSubCategory,
-    addSubCategory
+    addSubCategory,
+    getCategories,
+    getSubCategories,
+    getExpenses
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoriesContainer)
