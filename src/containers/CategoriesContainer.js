@@ -16,7 +16,8 @@ import {
     delCategory,
     updateCategory,
     getSubCategories,
-    getExpenses
+    getExpenses,
+    updateExpense
 } from 'actions/actionCreator'
 import Config from 'views/Config/Config'
 import axios from 'axios'
@@ -46,7 +47,7 @@ class CategoriesContainer extends React.Component {
     //     }
     // }
 
-    async getInitialState(url, func){
+    async getInitialState(url, func) {
         try {
             const response = await axios
                 .get(url)
@@ -82,6 +83,8 @@ class CategoriesContainer extends React.Component {
                     delSubCategory={this.props.delSubCategory}
                     addSubCategory={this.props.addSubCategory}
                     clearCategories={this.props.clearCategories}
+                    expenses={this.props.expenses}
+                    updateExpense={this.props.updateExpense}
                 />
             </div>)
     }
@@ -103,6 +106,7 @@ const getClearCategories = createSelector(
 const mapStateToProps = state => ({
     categories: state.mainReducer.categories,
     subCategories: state.mainReducer.subCategories,
+    expenses: state.mainReducer.expenses,
     clearCategories: getClearCategories(state)
 })
 
@@ -118,13 +122,13 @@ CategoriesContainer.propTypes = {
     getCategories: PropTypes.func.isRequired,
     getSubCategories: PropTypes.func.isRequired,
     updateCategory: PropTypes.func.isRequired,
+    updateExpense: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = {
-    // getItems,
+    delCategory,
     categoryUP,
     categoryDOWN,
-    delCategory,
     addCategory,
     updateCategory,
     subCategoryUP,
@@ -133,7 +137,8 @@ const mapDispatchToProps = {
     addSubCategory,
     getCategories,
     getSubCategories,
-    getExpenses
+    getExpenses,
+    updateExpense
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoriesContainer)

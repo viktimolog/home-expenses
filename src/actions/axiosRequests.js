@@ -1,6 +1,11 @@
 import Urls from 'constants/Urls'
 import axios from 'axios'
 
+//Update Expense
+export const UpdateExpense = (_id, updateExpense) => {
+    return axios.put(Urls.updateExpense + _id, updateExpense)
+}
+
 //getCategories
 export const GetCategories = () => {
     return axios.get(Urls.getCategories)

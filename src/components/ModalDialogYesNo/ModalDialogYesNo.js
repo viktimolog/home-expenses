@@ -41,8 +41,76 @@ class ModalDialogYesNo extends React.Component {
     };
 
     DELhandler = () => {
-        this.props.delCategory(this.props.category);
-        this.handleClose();
+
+        const findExpensesByCategory = this.props.expenses
+            .filter(exp => exp.idCategory === this.props.category._id)
+
+        if (findExpensesByCategory.length > 0) {
+            findExpensesByCategory.map(exp => {
+                const updateExpense = {
+                    date: exp.date,
+                    category: exp.category + ' (deleted)',
+                    expense: exp.expense,
+                    valueUAH: exp.valueUAH,
+                    idCategory: exp.idCategory
+                }
+                this.props.updateExpense(exp._id, updateExpense)
+            })
+        }
+
+        if (!this.props.category.parent && !this.props.category.child) {
+            this.props.delCategory(this.props.category._id);
+            this.handleClose();
+            return;
+        }
+
+        let parents = [];
+
+        if (this.props.category.parent) {
+            const itsSubCategories = this.props.subCategories.filter(sub => sub.idCategory === this.props.category._id)
+            if (itsSubCategories.length > 0) {
+//удаляем нафиг все из subCategories
+                itsSubCategories.map(sub => {
+                    this.props.delSubCategory(sub._id)
+                    parents.push(this.props.categories.filter(cat => cat._id === sub.idParent)[0])
+                })
+            }
+//находим их парент и делаем им child=false
+            parents.map(parent => {
+                const updateParent = {
+                    name: parent.name,
+                    rating: parent.rating,
+                    parent: parent.parent,
+                    child: false
+                }
+                this.props.updateCategory(parent._id, updateParent)
+            })
+            this.props.delCategory(this.props.category._id);
+            this.handleClose();
+            return;
+        }
+
+        if (this.props.category.child) {
+            const itInSubCategories = this.props.subCategories.filter(sub => sub.idParent === this.props.category._id)[0]
+
+            const curParent = this.props.categories.filter(cat => cat._id === itInSubCategories.idCategory)[0];
+//найти все подкатегории этого парента, если она одна то апдате емк парент = фолсе
+            const subCatCurParent = this.props.subCategories.filter(sub => sub.idCategory === curParent._id)[0]
+            if (subCatCurParent.length === 1) {
+                const updateCurParent = {
+                    name: curParent.name,
+                    rating: curParent.rating,
+                    parent: false,
+                    child: curParent.child
+                }
+                this.props.updateCategory(curParent._id, updateCurParent)
+            }
+
+            this.props.delSubCategory(itInSubCategories._id)
+            this.props.delCategory(this.props.category._id);
+            this.handleClose();
+            return;
+        }
     }
 
     render() {

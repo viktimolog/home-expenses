@@ -21,8 +21,52 @@ import {
 import {TextConstants} from 'constants/TextConstants'
 import {
     GetCategories, UpdateCategory, AddCategory, DelCategory, AddSubCategory, GetSubCategories, AddExpense, GetExpenses,
-    DelSubCategory
+    DelSubCategory, UpdateExpense
 } from './axiosRequests'
+
+
+export const updateExpense = (_id, expense) => dispatch => {
+    UpdateExpense(_id, expense)
+        .then(res => {
+                // alert(res.data.success)//true, false - badly
+                if (res.data.success) {
+                    GetExpenses()
+                        .then(res =>
+                            dispatch({
+                                type: GET_EXPENSES,
+                                payload: res.data
+                            })
+                        )
+                        .catch(err => {
+                                // alert(TextConstants.SERVETNOTRESP)
+                                alert('first catch updateExpense')
+                                dispatch({
+                                    type: GET_EXPENSES,
+                                    payload: []
+                                })
+                            }
+                        )
+                }
+                else {
+                    // alert(TextConstants.SERVETNOTRESP)
+                    alert('else updateExpense')
+                    dispatch({
+                        type: GET_EXPENSES,
+                        payload: []
+                    })
+                }
+            }
+        )
+        .catch(err => {
+                // alert(TextConstants.SERVETNOTRESP)
+                alert('second catch updateExpense')
+                dispatch({
+                    type: GET_EXPENSES,
+                    payload: []
+                })
+            }
+        )
+}
 
 
 // Del SubCategory
@@ -108,7 +152,8 @@ export const addExpense = newExpense => dispatch => {
                             })
                         )
                         .catch(err => {
-                                alert(TextConstants.SERVETNOTRESP)
+                                // alert(TextConstants.SERVETNOTRESP)
+                                alert('first catch addExpense')
                                 dispatch({
                                     type: GET_EXPENSES,
                                     payload: []
@@ -119,7 +164,8 @@ export const addExpense = newExpense => dispatch => {
             }
         )
         .catch(err => {
-                alert(TextConstants.SERVETNOTRESP)
+                // alert(TextConstants.SERVETNOTRESP)
+            alert('second catch addExpense')
                 dispatch({
                     type: GET_EXPENSES,
                     payload: []
@@ -296,7 +342,8 @@ export const addCategory = newCategory => dispatch => {
                             })
                         )
                         .catch(err => {
-                                alert(TextConstants.SERVETNOTRESP)
+                                // alert(TextConstants.SERVETNOTRESP)
+                            alert('first catch addCategory')
                                 dispatch({
                                     type: GET_CATEGORIES,
                                     payload: []
@@ -309,7 +356,8 @@ export const addCategory = newCategory => dispatch => {
             }
         )
         .catch(err => {
-                alert(TextConstants.SERVETNOTRESP)
+                // alert(TextConstants.SERVETNOTRESP)
+            alert('second catch addCategory')
                 dispatch({
                     type: GET_CATEGORIES,
                     payload: []
@@ -319,8 +367,8 @@ export const addCategory = newCategory => dispatch => {
 }
 
 // Del Category
-export const delCategory = category => dispatch => {
-    DelCategory(category._id)
+export const delCategory = id => dispatch => {
+    DelCategory(id)
         .then(res => {
             if(res.data.success)
                 GetCategories()
@@ -331,7 +379,8 @@ export const delCategory = category => dispatch => {
                         })
                     )
                     .catch(err => {
-                            alert(TextConstants.SERVETNOTRESP)
+                            // alert(TextConstants.SERVETNOTRESP)
+                        alert('first catch delCategory')
                             dispatch({
                                 type: GET_CATEGORIES,
                                 payload: []
@@ -347,7 +396,8 @@ export const delCategory = category => dispatch => {
                     }
                 )
                 .catch(err => {
-                        alert(TextConstants.SERVETNOTRESP)
+                        // alert(TextConstants.SERVETNOTRESP)
+                    alert('second catch delCategory')
                         dispatch({
                             type: GET_SUBCATEGORIES,
                             payload: []
@@ -357,7 +407,8 @@ export const delCategory = category => dispatch => {
         }
     )
         .catch(err => {
-                alert(TextConstants.SERVETNOTRESP)
+                // alert(TextConstants.SERVETNOTRESP)
+            alert('third catch delCategory')
                 dispatch({
                     type: GET_CATEGORIES,
                     payload: []
@@ -365,14 +416,6 @@ export const delCategory = category => dispatch => {
             }
         )
 }
-
-// export const updateCategoryName = (category, newName) => dispatch => {
-//     dispatch({
-//         type: UPDATE_CATEGORYNAME,
-//         category,
-//         newName
-//     })
-// }
 
 export const categoryUP = (categories, rating) => dispatch => {
     dispatch({

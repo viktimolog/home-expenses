@@ -30,6 +30,8 @@ const Styles = {
 
 
 const Category = ({
+                      updateExpense,
+                      expenses,
                       subCategories,
                       category,
                       categories,
@@ -51,10 +53,6 @@ const Category = ({
 
     const DOWNhandler = () => {
         categoryDOWN(categories, category.rating)
-    }
-
-    const DELhandler = () => {
-        delCategory(category)
     }
 
     return (
@@ -95,8 +93,14 @@ const Category = ({
                     </CardActions>
                     <CardActions>
                         <ModalDialogYesNo
+                            categories={categories}
                             category={category}
                             delCategory={delCategory}
+                            updateCategory={updateCategory}
+                            subCategories={subCategories}
+                            delSubCategory={delSubCategory}
+                            expenses={expenses}
+                            updateExpense={updateExpense}
                         />
                     </CardActions>
                     <CardActions>
@@ -154,6 +158,7 @@ const Category = ({
 
 Category.propTypes = {
     category: PropTypes.object.isRequired,
+    updateExpense: PropTypes.func.isRequired
 }
 
 export default Category

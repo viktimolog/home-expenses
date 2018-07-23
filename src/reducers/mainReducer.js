@@ -98,7 +98,6 @@ const initialState = {
     expenses:[]
     // categories: [
     //     {
-    //         id: '0',
     //         name: 'category 1',
     //         rating: 0,
     //         parent: false,
@@ -156,9 +155,7 @@ const initialState = {
     // ],
     // subCategories: [
     //     {
-    //         id: '0',
     //         idCategory: '4',
-    //         name: 'category 4',
     //         rating: 0,
     //         idParent: '3'
     //     },
