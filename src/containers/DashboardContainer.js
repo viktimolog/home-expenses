@@ -7,35 +7,15 @@ import {
     getCategories,
     addExpense,
     getExpenses,
-    getSubCategories
+    getSubCategories,
+    getInitialState
 } from 'actions/actionCreator'
 import Dashboard from 'views/Dashboard/Dashboard'
 import Urls from 'constants/Urls'
 
 class DashboardContainer extends React.Component {
-    // constructor() {
-    //     super()
-    //     this.getData = this.getData.bind(this)
-    // }
-
-    async getInitialState(url, func){
-        try {
-            const response = await axios
-                .get(url)
-                .then(res => res.data)
-            func(response)
-        } catch (error) {
-            alert('error = ' + error)
-        }
-    }
-
     componentDidMount() {
-        // this.getData(Urls.getCategories)
-        // this.getSubCat(Urls.getSubCategories)
-
-        this.getInitialState(Urls.getCategories, this.props.getCategories)
-        // this.getInitialState(Urls.getSubCategories, this.props.getSubCategories)//?
-        this.getInitialState(Urls.getExpenses, this.props.getExpenses)
+        this.props.getInitialState()
     }
 
     render() {
@@ -53,7 +33,8 @@ class DashboardContainer extends React.Component {
 DashboardContainer.propTypes = {
     categories: PropTypes.array.isRequired,
     addExpense: PropTypes.func.isRequired,
-    getExpenses: PropTypes.func.isRequired
+    getExpenses: PropTypes.func.isRequired,
+    getInitialState: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -65,6 +46,7 @@ const mapDispatchToProps = {
     getCategories,
     addExpense,
     getExpenses,
+    getInitialState
     // getSubCategories// ?
 }
 

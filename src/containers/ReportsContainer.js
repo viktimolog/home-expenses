@@ -2,19 +2,17 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {
-    // getItems,
     getCategories,
     getSubCategories,
-    getExpenses
+    getExpenses,
+    getInitialState
 } from 'actions/actionCreator'
 import Reports from 'components/Reports/Reports'
 
 class ReportsContainer extends React.Component {
 
     componentDidMount() {
-        // this.props.getCategories()
-        // this.props.getSubCategories()
-        // this.props.getExpenses()
+        this.props.getInitialState()
     }
 
     render() {
@@ -34,8 +32,7 @@ ReportsContainer.propTypes = {
     categories: PropTypes.array.isRequired,
     subCategories: PropTypes.array.isRequired,
     expenses: PropTypes.array.isRequired,
-
-    // addExpenses: PropTypes.func.isRequired
+    getInitialState: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -47,7 +44,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     getCategories,
     getSubCategories,
-    getExpenses
+    getExpenses,
+    getInitialState
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReportsContainer)

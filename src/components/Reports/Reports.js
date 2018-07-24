@@ -52,17 +52,40 @@ const dayTime = 86400000;
 
 class Reports extends React.Component {
 
-    state = {
-        beginDate: 1541391436550,
-        endDate: 1541991436550,
-        mode: 'period'
+    getBeginDayMilliSeconds = begin => {
+        let beginDay = begin;
+        beginDay = beginDay.setHours(0);
+        beginDay = new Date(beginDay);
+        beginDay = beginDay.setMinutes(0);
+        beginDay = new Date(beginDay);
+        beginDay = beginDay.setSeconds(0);
+        beginDay = new Date(beginDay);
+        beginDay = beginDay.setMilliseconds(0);
+        return beginDay
     }
 
+    getEndDayMilliSeconds = end => {
+        let endDay = end;
+        endDay = endDay.setHours(23);
+        endDay = new Date(endDay);
+        endDay = endDay.setMinutes(59);
+        endDay = new Date(endDay);
+        endDay = endDay.setSeconds(59);
+        endDay = new Date(endDay);
+        endDay = endDay.setMilliseconds(999);
+        return endDay
+    }
+
+    state = {
+        beginDate: this.getBeginDayMilliSeconds(new Date()),
+        endDate: this.getEndDayMilliSeconds(new Date()),
+        mode: 'day'
+    }
 
     setPeriod = (begin, end) => {
         this.setState({
-            beginDate: begin,
-            endDate: end
+            beginDate: this.getBeginDayMilliSeconds(new Date(begin)),
+            endDate: this.getEndDayMilliSeconds(new Date(end))
         })
     }
 
@@ -273,12 +296,47 @@ class Reports extends React.Component {
     }
 
     getTrueExpenses = expense => {
-        const curCategory = this.props.categories.find(cat => cat.id === expense.idCategory);
+        // console.log('console.log this.props.categories = ',this.props.categories)
+        // console.log('console.log expense = ',expense)
+
+        const curCategory = this.props.categories.find(cat => cat._id === expense.idCategory);
 
         let sum = 0, arrSubExpenses = [], arrViewExpenses = [];
 
+        if(!curCategory) {
+            if (this.trueExpense(expense)) {
+                return (
+                    <Grid container>
+                        <GridItem xs={12} sm={12} md={6}>
+                            <Card>
+                                <Typography
+                                    color="inherit"
+                                    gutterBottom variant="title"
+                                    component="h2"
+                                >
+                                    {expense.category}
+                                </Typography>
+                            </Card>
+                        </GridItem>
+                        <GridItem xs={12} sm={12} md={6}>
+                            <Card>
+                                <Typography
+                                    color="inherit"
+                                    gutterBottom variant="title"
+                                    component="h2"
+                                >
+                                    {expense.valueUAH}
+                                </Typography>
+                            </Card>
+                        </GridItem>
+                    </Grid>
+                )
+            }
+            return
+        }
+
         if (curCategory.parent) {
-            const arrCurSubCat = this.props.subCategories.filter(subCat => subCat.idCategory === curCategory.id);
+            const arrCurSubCat = this.props.subCategories.filter(subCat => subCat.idCategory === curCategory._id);
 
             arrCurSubCat.map(curSubCat => {
                     const subExpense = this.props.expenses.filter(subExp => subExp.idCategory === curSubCat.idParent);
@@ -291,7 +349,7 @@ class Reports extends React.Component {
                         sum += curSubExp.valueUAH;
                         const viewExp = {
                             id: Math.floor(Date.now() / 1000),
-                            category: this.props.categories.find(cat => cat.id === curSubExp.idCategory).name,
+                            category: this.props.categories.find(cat => cat._id === curSubExp.idCategory).name,
                             expense: curSubExp.valueUAH
                         }
                         arrViewExpenses.push(viewExp);
@@ -421,7 +479,7 @@ class Reports extends React.Component {
                                         .slice(0, 20)
                                         .map(expense => {
                                             return (
-                                                <TableRow key={expense.id}>
+                                                <TableRow key={expense._id}>
                                                     {this.getTrueExpenses(expense)}
                                                 </TableRow>
                                             )

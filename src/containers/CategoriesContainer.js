@@ -16,7 +16,8 @@ import {
     getExpenses,
     updateExpense,
     updateCategory,
-    updateSubCategory
+    updateSubCategory,
+    getInitialState
 } from 'actions/actionCreator'
 import Config from 'views/Config/Config'
 import axios from 'axios'
@@ -24,46 +25,22 @@ import Urls from 'constants/Urls'
 
 class CategoriesContainer extends React.Component {
 
-    // async getData(url) {
+    // async getInitialState(url, func) {
     //     try {
     //         const response = await axios
     //             .get(url)
     //             .then(res => res.data)
-    //         this.props.getCategories(response)
+    //         func(response)
     //     } catch (error) {
     //         alert('error = ' + error)
     //     }
     // }
-    //
-    // async getSubCat(url){
-    //     try {
-    //         const response = await axios
-    //             .get(url)
-    //             .then(res => res.data)
-    //         this.props.getSubCategories(response)
-    //     } catch (error) {
-    //         alert('error = ' + error)
-    //     }
-    // }
-
-    async getInitialState(url, func) {
-        try {
-            const response = await axios
-                .get(url)
-                .then(res => res.data)
-            func(response)
-        } catch (error) {
-            alert('error = ' + error)
-        }
-    }
 
     componentDidMount() {
-        // this.getData(Urls.getCategories)
-        // this.getSubCat(Urls.getSubCategories)
-
-        this.getInitialState(Urls.getCategories, this.props.getCategories)
-        this.getInitialState(Urls.getSubCategories, this.props.getSubCategories)
-        this.getInitialState(Urls.getExpenses, this.props.getExpenses)
+        // this.getInitialState(Urls.getCategories, this.props.getCategories)
+        // this.getInitialState(Urls.getSubCategories, this.props.getSubCategories)
+        // this.getInitialState(Urls.getExpenses, this.props.getExpenses)
+        this.props.getInitialState()
     }
 
     render() {
@@ -140,7 +117,8 @@ const mapDispatchToProps = {
     getExpenses,
     updateExpense,
     updateCategory,
-    updateSubCategory
+    updateSubCategory,
+    getInitialState
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoriesContainer)

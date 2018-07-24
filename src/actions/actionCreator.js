@@ -135,7 +135,7 @@ export const delSubCategory = id => dispatch => {
                                 })
                             }
                         )
-                GetSubCategories()
+                    .then(res => GetSubCategories()
                     .then(res => {
                             dispatch({
                                 type: GET_SUBCATEGORIES,
@@ -151,7 +151,8 @@ export const delSubCategory = id => dispatch => {
                                 payload: []
                             })
                         }
-                    );
+                    )
+                    )
             }
         )
         .catch(err => {
@@ -241,7 +242,7 @@ export const updateCategory = (_id, category) => dispatch => {
                                 })
                             }
                         )
-                    GetSubCategories()
+                        .then(res => GetSubCategories()
                         .then(res => {
                                 dispatch({
                                     type: GET_SUBCATEGORIES,
@@ -257,7 +258,8 @@ export const updateCategory = (_id, category) => dispatch => {
                                     payload: []
                                 })
                             }
-                        );
+                        )
+                        )
                 }
                 // else {
                 //     // alert(TextConstants.SERVETNOTRESP)
@@ -300,23 +302,24 @@ export const addSubCategory = newSubCategory => dispatch => {
                                     payload: []
                                 })
                             }
-                        );
-                    GetCategories()
+                        )
+                .then(res => GetCategories()
                         .then(res =>
                             dispatch({
                                 type: GET_CATEGORIES,
                                 payload: res.data
                             })
                         )
-                        // .catch(err => {
-                        //         // alert(TextConstants.SERVETNOTRESP)
-                        //     alert('second catch addSubCategory')
-                        //         dispatch({
-                        //             type: GET_CATEGORIES,
-                        //             payload: []
-                        //         })
-                        //     }
-                        // )
+                        .catch(err => {
+                                // alert(TextConstants.SERVETNOTRESP)
+                            alert('second catch addSubCategory')
+                                dispatch({
+                                    type: GET_CATEGORIES,
+                                    payload: []
+                                })
+                            }
+                        )
+                    )
                 } else {
                     alert('SubCategory has already been added')
                 }
@@ -432,7 +435,7 @@ export const delCategory = id => dispatch => {
                             })
                         }
                     )
-            GetSubCategories()
+                .then(res => GetSubCategories()
                 .then(res => {
                         dispatch({
                             type: GET_SUBCATEGORIES,
@@ -448,7 +451,8 @@ export const delCategory = id => dispatch => {
                             payload: []
                         })
                     }
-                );
+                )
+                )
         }
     )
         .catch(err => {
@@ -459,6 +463,66 @@ export const delCategory = id => dispatch => {
                     payload: []
                 })
             }
+        )
+}
+
+export const signOut = () => dispatch => {
+    dispatch({
+        type: SIGN_OUT,
+    })
+}
+
+export const getInitialState = ()  => dispatch => {
+    GetCategories()
+        .then(res =>
+            dispatch({
+                type: GET_CATEGORIES,
+                payload: res.data
+            })
+        )
+        .catch(err => {
+                // alert(TextConstants.SERVETNOTRESP)
+                alert('first catch GetCategories')
+                dispatch({
+                    type: GET_CATEGORIES,
+                    payload: []
+                })
+            }
+        )
+        .then(res => GetSubCategories()
+            .then(res => {
+                    dispatch({
+                        type: GET_SUBCATEGORIES,
+                        payload: res.data
+                    })
+                }
+            )
+            .catch(err => {
+                    // alert(TextConstants.SERVETNOTRESP)
+                    alert('second catch GetSubCategories')
+                    dispatch({
+                        type: GET_SUBCATEGORIES,
+                        payload: []
+                    })
+                }
+            )
+        )
+        .then(res => GetExpenses()
+            .then(res =>
+                dispatch({
+                    type: GET_EXPENSES,
+                    payload: res.data
+                })
+            )
+            .catch(err => {
+                    // alert(TextConstants.SERVETNOTRESP)
+                    alert('first catch GetExpenses')
+                    dispatch({
+                        type: GET_EXPENSES,
+                        payload: []
+                    })
+                }
+            )
         )
 }
 
@@ -491,15 +555,4 @@ export const subCategoryDOWN = subCategory => dispatch => {
         type: SUBCATEGORY_DOWN,
         subCategory
     })
-}
-
-export const signOut = () => dispatch => {
-    dispatch({
-        type: SIGN_OUT,
-    })
-}
-
-export const getInitialState = () => {
-    getCategories();
-    getSubCategories();
 }

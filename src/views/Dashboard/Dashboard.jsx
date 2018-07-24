@@ -61,7 +61,7 @@ class Dashboard extends React.Component {
     state = {
         uah: '',
         expense: '',
-        curCategory: {},
+        curCategory: null,
         categories: this.props.categories
     }
 
@@ -106,17 +106,27 @@ class Dashboard extends React.Component {
             return
         }
 
+        let curCat;
+
+        if(this.state.curCategory === null){
+            curCat = this.props.categories[0];
+        }
+        else{
+            curCat = {...this.state.curCategory}
+        }
+
         const newExpense = {
-            idCategory: this.state.curCategory._id,
+            idCategory: curCat._id,
             date: Date.now(),
-            category: this.state.curCategory.name,
+            category: curCat.name,
             expense: this.state.expense,
             valueUAH: Number(this.state.uah),
         }
+
         this.setState({
             uah: '',
             expense: '',
-            // curCategory:{}
+            curCategory: null
         })
         // alert(newExpense.date)//ok
         console.log('console.log this.props.addExpense = ',this.props.addExpense)
