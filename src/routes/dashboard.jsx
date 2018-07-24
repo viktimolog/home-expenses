@@ -8,7 +8,6 @@ import LocationOn from "@material-ui/icons/LocationOn";
 import Notifications from "@material-ui/icons/Notifications";
 import Unarchive from "@material-ui/icons/Unarchive";
 // core components/views
-import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
 import TableList from "views/TableList/TableList.jsx";
 import Typography from "views/Typography/Typography.jsx";
@@ -21,6 +20,7 @@ import CategoriesContainer from "containers/CategoriesContainer";
 import DashboardContainer from "containers/DashboardContainer";
 import ReportsContainer from "containers/ReportsContainer";
 import SignInContainer from "containers/SignInContainer";
+import SignUpContainer from "containers/SignUpContainer";
 
 const dashboardRoutes = [
     {
@@ -35,7 +35,7 @@ const dashboardRoutes = [
         sidebarName: "Sign Up",
         navbarName: "Signup",
         icon: Person,
-        component: Signup
+        component: SignUpContainer
     },
     {
         path: "/emailverification",

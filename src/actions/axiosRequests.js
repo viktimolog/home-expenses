@@ -118,3 +118,6 @@ export const UpdateCategory = (_id, updateCategory, token) => {
 export const Signin = user => {
     return axios.post(Urls.signin, user)
 }
+export const Signup = user => {
+    return axios.post(Urls.signup, user)
+}

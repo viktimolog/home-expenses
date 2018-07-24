@@ -2,24 +2,24 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {
-    signin
+    signup
 } from 'actions/actionCreator'
 
-import Signin from 'views/Signin/Signin'
+import Signup from 'views/Signup/Signup'
 
-class SignInContainer extends React.Component {
+class SignUpContainer extends React.Component {
     render() {
         return (
             <div>
-                <Signin
-                    signin={this.props.signin}
+                <Signup
+                    signup={this.props.signup}
                 />
             </div>)
     }
 }
 
-SignInContainer.propTypes = {
-    signin: PropTypes.func.isRequired
+SignUpContainer.propTypes = {
+    signup: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -30,7 +30,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-    signin
+    signup
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignInContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpContainer)
