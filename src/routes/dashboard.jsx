@@ -20,6 +20,7 @@ import Config from "views/Config/Config.jsx";
 import CategoriesContainer from "containers/CategoriesContainer";
 import DashboardContainer from "containers/DashboardContainer";
 import ReportsContainer from "containers/ReportsContainer";
+import SignInContainer from "containers/SignInContainer";
 
 const dashboardRoutes = [
     {
@@ -27,7 +28,7 @@ const dashboardRoutes = [
         sidebarName: "Sign In",
         navbarName: "Signin",
         icon: Person,
-        component: Signin
+        component: SignInContainer
     },
     {
         path: "/signup",

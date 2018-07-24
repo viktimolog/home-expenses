@@ -33,8 +33,32 @@ const styles = {
   }
 };
 
-function Signup(props) {
-  const { classes } = props;
+class Signin extends React.Component {
+
+    state = {
+        email: '',
+        password: ''
+    }
+
+    handleSignin = () => {
+        const user = {
+            email: this.state.email.trim(),
+            password: this.state.password.trim()
+        }
+        this.props.signin(user)
+    }
+
+    stringHandler = name => event => {
+        this.setState({
+            [name]: event.target.value
+        })
+    }
+
+
+render()
+{
+    const {classes} = this.props;
+
     return (
         <div>
             <Grid container>
@@ -50,9 +74,13 @@ function Signup(props) {
                                     <CustomInput
                                         labelText="Email address"
                                         id="email-address"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
+                                        formControlProps={{fullWidth: true}}
+                                        inputProps={
+                                            {
+                                                value: this.state.email,
+                                                onChange: this.stringHandler('email'),
+                                            }
+                                        }
                                     />
                                 </GridItem>
                             </Grid>
@@ -61,15 +89,21 @@ function Signup(props) {
                                     <CustomInput
                                         labelText="Password"
                                         id="password"
-                                        formControlProps={{
-                                            fullWidth: true
-                                        }}
+                                        formControlProps={{fullWidth: true}}
+                                        inputProps={
+                                            {
+                                                value: this.state.password,
+                                                onChange: this.stringHandler('password'),
+                                            }
+                                        }
                                     />
                                 </GridItem>
                             </Grid>
                         </CardBody>
                         <CardFooter>
-                            <Button color="primary">SIGN IN</Button>
+                            <Button
+                                onClick={this.handleSignin}
+                                color="primary">SIGN IN</Button>
                         </CardFooter>
                         <Link style={{marginLeft: '16px'}} to='/signup'>first time user? sign-up</Link>
                     </Card>
@@ -78,5 +112,6 @@ function Signup(props) {
         </div>
     );
 }
+}
 
-export default withStyles(styles)(Signup);
+export default withStyles(styles)(Signin);

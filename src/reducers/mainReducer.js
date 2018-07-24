@@ -15,168 +15,35 @@ import {
     GET_EXPENSES,
     SIGN_OUT,
     SIGN_IN,
-    SIGN_UP
+    SIGN_UP,
 } from 'actions/actionTypes'
 
-// beginDate: 1521991436550,
-// endDate: 1541991436550
-
-//1531991436550
 const initialState = {
-    // expenses: [
-    //     {
-    //         id: '22',
-    //         date: 1531991436550,
-    //         category: 'Category 1',
-    //         expense: 'expense 1',
-    //         valueUAH: 12.34,
-    //         idCategory: '0'
-    //     },
-    //     {
-    //         id: '21',
-    //         date: 1531991436550,
-    //         category: 'Category 2',
-    //         expense: '',
-    //         valueUAH: 24.68,
-    //         idCategory: '1'
-    //     },
-    //     {
-    //         id: '20',
-    //         date: 1531991436550,
-    //         category: 'Category 3',
-    //         expense: 'expense 3',
-    //         valueUAH: 37.02,
-    //         idCategory: '2'
-    //     },
-    //     {
-    //         id: '19',
-    //         date: 1531991436550,
-    //         category: 'Category 4',
-    //         expense: '',
-    //         valueUAH: 54.07,
-    //         idCategory: '3'
-    //     },
-    //     {
-    //         id: '18',
-    //         date: 1531991436550,
-    //         category: 'Category 5',
-    //         expense: 'expense 5',
-    //         valueUAH: 49.36,
-    //         idCategory: '4'
-    //     },
-    //     {
-    //         id: '17',
-    //         date: 1531991436550,
-    //         category: 'Category 6',
-    //         expense: '',
-    //         valueUAH: 61.70,
-    //         idCategory: '5'
-    //     },
-    //     {
-    //         id: '16',
-    //         date: 1531991436550,
-    //         category: 'Category 7',
-    //         expense: 'expense 7',
-    //         valueUAH: 74.04,
-    //         idCategory: '6'
-    //     },
-    //     {
-    //         id: '15',
-    //         date: 1531991436550,
-    //         category: 'Category 8',
-    //         expense: '',
-    //         valueUAH: 86.38,
-    //         idCategory: '7'
-    //     },
-    // ],
-    email: 'testUserEmailFromState',
-    isUser: 'true',
+    // email: 'testUserEmailFromState',
+    email: '',
+    idUser:'',
     token: '',
+    avatar:'',
+    isUser: false,
     categories: [],
     subCategories: [],
     expenses:[]
-    // categories: [
-    //     {
-    //         name: 'category 1',
-    //         rating: 0,
-    //         parent: false,
-    //         child: true
-    //     },
-    //     {
-    //         id: '1',
-    //         name: 'category 2',
-    //         rating: 1,
-    //         parent: true,
-    //         child: false
-    //     },
-    //     {
-    //         id: '2',
-    //         name: 'category 3',
-    //         rating: 2,
-    //         parent: true,
-    //         child: false
-    //     },
-    //     {
-    //         id: '3',
-    //         name: 'category 4',
-    //         rating: 3,
-    //         parent: false,
-    //         child: true
-    //     },
-    //     {
-    //         id: '4',
-    //         name: 'category 5',
-    //         rating: 4,
-    //         parent: true,
-    //         child: false
-    //     },
-    //     {
-    //         id: '5',
-    //         name: 'category 6',
-    //         rating: 5,
-    //         parent: false,
-    //         child: true
-    //     },
-    //     {
-    //         id: '6',
-    //         name: 'category 7',
-    //         rating: 6,
-    //         parent: false,
-    //         child: false
-    //     },
-    //     {
-    //         id: '7',
-    //         name: 'category 8',
-    //         rating: 7,
-    //         parent: false,
-    //         child: false
-    //     }
-    // ],
-    // subCategories: [
-    //     {
-    //         idCategory: '4',
-    //         rating: 0,
-    //         idParent: '3'
-    //     },
-    //     {
-    //         id: '2',
-    //         idCategory: '1',
-    //         name: 'category 6',
-    //         rating: 1,
-    //         idParent: '5'
-    //     },
-    //     {
-    //         id: '3',
-    //         idCategory: '2',
-    //         name: 'category 1',
-    //         rating: 0,
-    //         idParent: '0'
-    //     }
-    // ]
 }
 
 const mainReducer = (state = initialState, action) => {
     switch (action.type) {
+
+        case SIGN_IN: {
+            console.log('console.log action = ',action)
+            return {
+                ...state,
+                email: action.email,
+                isUser: action.isUser,
+                token: action.token,
+                idUser: action.idUser,
+                avatar: action.avatar
+            }
+        }
 
         //action.category, only _id needed do not use ?
         // case DEL_CATEGORY: {

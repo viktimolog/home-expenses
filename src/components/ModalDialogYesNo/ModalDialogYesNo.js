@@ -42,6 +42,8 @@ class ModalDialogYesNo extends React.Component {
 
     DELhandler = () => {
 
+        console.log('console.log token ModalYesNo = ',this.props.token)
+
         const findExpensesByCategory = this.props.expenses
             .filter(exp => exp.idCategory === this.props.category._id)
 
@@ -59,7 +61,8 @@ class ModalDialogYesNo extends React.Component {
         }
 
         if (!this.props.category.parent && !this.props.category.child) {
-            this.props.delCategory(this.props.category._id);
+            // this.props.delCategory(this.props.category._id);
+            this.props.delCategory(this.props.category._id, this.props.token);
             this.handleClose();
             return;
         }
@@ -85,7 +88,8 @@ class ModalDialogYesNo extends React.Component {
                 }
                 this.props.updateCategory(parent._id, updateParent)
             })
-            this.props.delCategory(this.props.category._id);
+            // this.props.delCategory(this.props.category._id);
+            this.props.delCategory(this.props.category._id, this.props.token);
             this.handleClose();
             return;
         }
@@ -107,7 +111,7 @@ class ModalDialogYesNo extends React.Component {
             }
 
             this.props.delSubCategory(itInSubCategories._id)
-            this.props.delCategory(this.props.category._id);
+            this.props.delCategory(this.props.category._id, this.props.token);
             this.handleClose();
             return;
         }

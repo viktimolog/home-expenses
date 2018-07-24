@@ -1,6 +1,24 @@
 import Urls from 'constants/Urls'
 import axios from 'axios'
 
+// Delete Category
+// export const DelCategory = (id, token) => {
+    // return axios.delete(Urls.delCategory + id)
+// }
+
+export const DelCategory = (id, token) => {
+    return axios.delete(Urls.delCategory + id, {
+            headers: {
+                "Authorization": "Bearer "+ token
+            }
+        }
+    )
+}
+
+export const Signin = user => {
+    return axios.post(Urls.signin, user)
+}
+
 //Update Expense
 export const UpdateExpense = (_id, updateExpense) => {
     return axios.put(Urls.updateExpense + _id, updateExpense)
@@ -23,11 +41,6 @@ export const AddCategory = newCategory => {
 //Update Category
 export const UpdateCategory = (_id, updateCategory) => {
     return axios.put(Urls.updateCategory + _id, updateCategory)
-}
-
-// Delete Category
-export const DelCategory = id => {
-    return axios.delete(Urls.delCategory + id)
 }
 
 //GetSubCategories

@@ -31,6 +31,7 @@ const Styles = {
 
 
 const Category = ({
+                      token,
                       updateExpense,
                       expenses,
                       subCategories,
@@ -203,6 +204,7 @@ const Category = ({
                             delSubCategory={delSubCategory}
                             expenses={expenses}
                             updateExpense={updateExpense}
+                            token={token}
                         />
                     </CardActions>
                     <CardActions>

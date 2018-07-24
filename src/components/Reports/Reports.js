@@ -369,7 +369,7 @@ class Reports extends React.Component {
                                     gutterBottom variant="title"
                                     component="h2"
                                 >
-                                    {curCategory.name}
+                                    {expense.category}
                                 </Typography>
                             </Card>
                         </GridItem>

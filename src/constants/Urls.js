@@ -27,6 +27,8 @@ const Urls = {
     delSubCategory: baseApiUrlSubCategories + 'delSubCategory/',
     updateSubCategory: baseApiUrlSubCategories + 'updateSubCategory/',
 
+    signin: baseApiUrl + 'users/login'
+
 };
 export default Urls;
 

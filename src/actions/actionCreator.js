@@ -21,12 +21,39 @@ import {
 import {TextConstants} from 'constants/TextConstants'
 import {
     GetCategories, UpdateCategory, AddCategory, DelCategory, AddSubCategory, GetSubCategories, AddExpense, GetExpenses,
-    DelSubCategory, UpdateExpense, UpdateSubCategory
+    DelSubCategory, UpdateExpense, UpdateSubCategory, Signin
 } from './axiosRequests'
 
+export const signin = user => dispatch => {
+    Signin(user)
+        .then(res => {
+                if (res.data.success){
+                    dispatch({
+                        type: SIGN_IN,
+                        email: res.data.payload.email,
+                        isUser: true,
+                        token: res.data.token,
+                        idUser: res.data.payload.id,
+                        avatar: res.data.payload.avatar
+                    })
+                }
+                else{
+                    alert(res.data.message);
+                    console.log(res.data.message);
+                    dispatch({
+                        type: SIGN_IN,
+                        email: '',
+                        isUser: false,
+                        token: '',
+                        idUser: '',
+                        avatar: ''
+                    })
+                }
+            }
+        )
+}
+
 export const updateSubCategory = (_id, subCategory) => dispatch => {
-    console.log('console.log _id = ',_id)
-    console.log('console.log subCategory = ',subCategory)
     UpdateSubCategory(_id, subCategory)
         .then(res => {
                 // alert(res.data.success)
@@ -415,9 +442,11 @@ export const addCategory = newCategory => dispatch => {
 }
 
 // Del Category
-export const delCategory = id => dispatch => {
-    DelCategory(id)
+export const delCategory = (id, token) => dispatch => {
+    // alert('delCategory')//ok
+    DelCategory(id, token)
         .then(res => {
+            // alert('res.data.success = '+res.data.success)
             if(res.data.success)
                 GetCategories()
                     .then(res =>

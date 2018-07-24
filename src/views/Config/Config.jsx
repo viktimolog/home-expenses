@@ -106,6 +106,7 @@ const ConfigTableList = props => {
                                                         expenses={props.expenses}
                                                         updateExpense={props.updateExpense}
                                                         updateSubCategory={props.updateSubCategory}
+                                                        token={props.token}
                                                     />
                                                 </TableCell>
                                             </TableRow>

@@ -49,14 +49,14 @@ const styles = {
 
 class Dashboard extends React.Component {
 
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if (prevState.categories.length !== nextProps.categories.length) {
-            return {
-                curCategory: nextProps.categories[0],
-                categories: nextProps.categories
-            }
-        }
-    }
+    // static getDerivedStateFromProps(nextProps, prevState) {
+    //     if (prevState.categories.length !== nextProps.categories.length) {
+    //         return {
+    //             curCategory: nextProps.categories[0],
+    //             categories: nextProps.categories
+    //         }
+    //     }
+    // }
 
     state = {
         uah: '',
