@@ -19,7 +19,6 @@ import {
 } from 'actions/actionTypes'
 
 const initialState = {
-    // email: 'testUserEmailFromState',
     email: '',
     idUser:'',
     token: '',

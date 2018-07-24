@@ -15,7 +15,7 @@ const Styles = {
 }
 
 
-const SubCategoriesEdit = ({UPhandlerSubCat, DOWNhandlerSubCat, category, delSubCategory, subCategory, subCategories, subCategoryUP, subCategoryDOWN, categories, updateCategory}) => {
+const SubCategoriesEdit = ({token, UPhandlerSubCat, DOWNhandlerSubCat, category, delSubCategory, subCategory, subCategories, subCategoryUP, subCategoryDOWN, categories, updateCategory}) => {
     const UPhandler = () => {
         UPhandlerSubCat(subCategory)
     }
@@ -51,11 +51,11 @@ const SubCategoriesEdit = ({UPhandlerSubCat, DOWNhandlerSubCat, category, delSub
 
         const pushToDB = (childCat, parentCat, subCategory) => {
 
-            updateCategory(childCat._id, getCategoryChangeChild(childCat));
+            updateCategory(childCat._id, getCategoryChangeChild(childCat), token);
 
-            updateCategory(parentCat._id, getCategoryChangeParent(parentCat));
+            updateCategory(parentCat._id, getCategoryChangeParent(parentCat), token);
 
-            delSubCategory(subCategory._id);
+            delSubCategory(subCategory._id, token);
         }
         pushToDB(childCat, parentCat, subCategory)
     }

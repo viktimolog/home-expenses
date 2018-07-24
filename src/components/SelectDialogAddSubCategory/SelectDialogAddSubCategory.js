@@ -61,10 +61,10 @@ class SelectDialogAddSubCategory extends React.Component {
             maxRating = this.props.subCategories.sort((a, b) => a.rating < b.rating)[0].rating;
 
         const getNewSubCategory = (category, curCategory) => {
-        const newSubCategory = {
-            idCategory: category._id,
-            rating: maxRating+1,
-            idParent: curCategory._id
+            const newSubCategory = {
+                idCategory: category._id,
+                rating: maxRating + 1,
+                idParent: curCategory._id
             }
             return newSubCategory;
         }
@@ -91,18 +91,18 @@ class SelectDialogAddSubCategory extends React.Component {
 
         const pushToDB = (category, curCategory) => {
 
-            this.props.updateCategory(category._id, getCategorySetParent(category));
+            this.props.updateCategory(category._id, getCategorySetParent(category), this.props.token);
 
-            this.props.updateCategory(curCategory._id, getCategorySetChild(curCategory));
+            this.props.updateCategory(curCategory._id, getCategorySetChild(curCategory), this.props.token);
 
-            this.props.addSubCategory(getNewSubCategory(category, curCategory));
+            this.props.addSubCategory(getNewSubCategory(category, curCategory), this.props.token);
         }
 
 
-        if(this.state.curCategory === null){
+        if (this.state.curCategory === null) {
             pushToDB(this.props.category, this.props.clearCategories[0]);
         }
-        else{
+        else {
             pushToDB(this.props.category, this.state.curCategory);
         }
         this.handleClose();

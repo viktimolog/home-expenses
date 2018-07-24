@@ -14,13 +14,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Grid from "@material-ui/core/Grid";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import ModalDialogEditCategoryName from 'components/ModalDialogEditCategoryName/ModalDialogEditCategoryName'
 import ModalDialogYesNo from 'components/ModalDialogYesNo/ModalDialogYesNo'
 import ModalDialogEditSubCategories from 'components/ModalDialogEditSubCategories/ModalDialogEditSubCategories'
 import SubCategory from 'components/SubCategory/SubCategory'
-import subCategory from "../SubCategory/SubCategory";
 
 const Styles = {
     display: 'flex',
@@ -50,7 +48,7 @@ const Category = ({
                       updateSubCategory
                   }) => {
 
-        const UPhandler = () => {
+    const UPhandler = () => {
         if (categories.length === 1) return;
 
         const minRating = categories.sort((a, b) => a.rating > b.rating)[0].rating;
@@ -119,14 +117,14 @@ const Category = ({
             rating: subCategory.rating - 1,
             idParent: subCategory.idParent
         }
-        updateSubCategory(subCategory._id, newUPcategory)
+        updateSubCategory(subCategory._id, newUPcategory, token)
 
         const newDOWNcategory = {
             idCategory: ratingDOWNcategory.idCategory,
             rating: ratingDOWNcategory.rating + 1,
             idParent: ratingDOWNcategory.idParent
         }
-        updateSubCategory(ratingDOWNcategory._id, newDOWNcategory)
+        updateSubCategory(ratingDOWNcategory._id, newDOWNcategory, token)
     }
 
     const DOWNhandlerSubCat = subCategory => {
@@ -148,14 +146,14 @@ const Category = ({
             rating: ratingUPcategory.rating - 1,
             idParent: ratingUPcategory.idParent
         }
-        updateSubCategory(ratingUPcategory._id, newUPcategory)
+        updateSubCategory(ratingUPcategory._id, newUPcategory, token)
 
         const newDOWNcategory = {
             idCategory: subCategory.idCategory,
             rating: subCategory.rating + 1,
             idParent: subCategory.idParent
         }
-        updateSubCategory(subCategory._id, newDOWNcategory)
+        updateSubCategory(subCategory._id, newDOWNcategory, token)
     }
 
     return (
@@ -221,6 +219,7 @@ const Category = ({
                             categories={categories}
                             UPhandlerSubCat={UPhandlerSubCat}
                             DOWNhandlerSubCat={DOWNhandlerSubCat}
+                            token={token}
                         />
                     </CardActions>
                 </div>
@@ -249,6 +248,7 @@ const Category = ({
                                                             // updateSubCategory={updateSubCategory}
                                                             DOWNhandlerSubCat={DOWNhandlerSubCat}
                                                             UPhandlerSubCat={UPhandlerSubCat}
+                                                            token={token}
                                                         />
                                                     </TableCell>
                                                 </TableRow>

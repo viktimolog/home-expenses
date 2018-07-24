@@ -12,7 +12,7 @@ import Reports from 'components/Reports/Reports'
 class ReportsContainer extends React.Component {
 
     componentDidMount() {
-        this.props.getInitialState()
+        this.props.getInitialState(this.props.token)
     }
 
     render() {
@@ -22,6 +22,7 @@ class ReportsContainer extends React.Component {
                     categories={this.props.categories}
                     subCategories={this.props.subCategories}
                     expenses={this.props.expenses}
+                    token={this.props.token}
                     //func
                 />
             </div>)
@@ -38,7 +39,8 @@ ReportsContainer.propTypes = {
 const mapStateToProps = state => ({
     categories: state.mainReducer.categories,
     subCategories: state.mainReducer.subCategories,
-    expenses: state.mainReducer.expenses
+    expenses: state.mainReducer.expenses,
+    token: state.mainReducer.token
 })
 
 const mapDispatchToProps = {

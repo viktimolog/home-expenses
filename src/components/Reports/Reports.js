@@ -296,9 +296,6 @@ class Reports extends React.Component {
     }
 
     getTrueExpenses = expense => {
-        // console.log('console.log this.props.categories = ',this.props.categories)
-        // console.log('console.log expense = ',expense)
-
         const curCategory = this.props.categories.find(cat => cat._id === expense.idCategory);
 
         let sum = 0, arrSubExpenses = [], arrViewExpenses = [];

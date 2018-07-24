@@ -49,20 +49,11 @@ const styles = {
 
 class Dashboard extends React.Component {
 
-    // static getDerivedStateFromProps(nextProps, prevState) {
-    //     if (prevState.categories.length !== nextProps.categories.length) {
-    //         return {
-    //             curCategory: nextProps.categories[0],
-    //             categories: nextProps.categories
-    //         }
-    //     }
-    // }
-
     state = {
         uah: '',
         expense: '',
         curCategory: null,
-        categories: this.props.categories
+        // categories: this.props.categories
     }
 
     stringHandler = name => event => {
@@ -128,10 +119,7 @@ class Dashboard extends React.Component {
             expense: '',
             curCategory: null
         })
-        // alert(newExpense.date)//ok
-        console.log('console.log this.props.addExpense = ',this.props.addExpense)
-        console.log('console.log newExpense = ',newExpense)
-        this.props.addExpense(newExpense);
+        this.props.addExpense(newExpense, this.props.token);
     };
 
     getDate = value => {
@@ -141,7 +129,6 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        console.log('console.log this.props.categories = ',this.props.categories)//?
         const {classes} = this.props;
         return (
             <Grid container>

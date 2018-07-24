@@ -42,7 +42,7 @@ class ModalDialogYesNo extends React.Component {
 
     DELhandler = () => {
 
-        console.log('console.log token ModalYesNo = ',this.props.token)
+        console.log('console.log token ModalYesNo = ', this.props.token)
 
         const findExpensesByCategory = this.props.expenses
             .filter(exp => exp.idCategory === this.props.category._id)
@@ -61,7 +61,6 @@ class ModalDialogYesNo extends React.Component {
         }
 
         if (!this.props.category.parent && !this.props.category.child) {
-            // this.props.delCategory(this.props.category._id);
             this.props.delCategory(this.props.category._id, this.props.token);
             this.handleClose();
             return;
@@ -74,7 +73,7 @@ class ModalDialogYesNo extends React.Component {
             if (itsSubCategories.length > 0) {
 //удаляем нафиг все из subCategories
                 itsSubCategories.map(sub => {
-                    this.props.delSubCategory(sub._id)
+                    this.props.delSubCategory(sub._id, this.props.token)
                     parents.push(this.props.categories.filter(cat => cat._id === sub.idParent)[0])
                 })
             }
@@ -86,9 +85,8 @@ class ModalDialogYesNo extends React.Component {
                     parent: parent.parent,
                     child: false
                 }
-                this.props.updateCategory(parent._id, updateParent)
+                this.props.updateCategory(parent._id, updateParent, this.props.token)
             })
-            // this.props.delCategory(this.props.category._id);
             this.props.delCategory(this.props.category._id, this.props.token);
             this.handleClose();
             return;
@@ -107,10 +105,10 @@ class ModalDialogYesNo extends React.Component {
                     parent: false,
                     child: curParent.child
                 }
-                this.props.updateCategory(curParent._id, updateCurParent)
+                this.props.updateCategory(curParent._id, updateCurParent, this.props.token)
             }
 
-            this.props.delSubCategory(itInSubCategories._id)
+            this.props.delSubCategory(itInSubCategories._id, this.props.token)
             this.props.delCategory(this.props.category._id, this.props.token);
             this.handleClose();
             return;
