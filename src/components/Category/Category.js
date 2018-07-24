@@ -47,12 +47,55 @@ const Category = ({
                       updateCategory
                   }) => {
 
-    const UPhandler = () => {
-        categoryUP(categories, category.rating)
+        const UPhandler = () => {
+        if (categories.length === 1) return;
+
+        const minRating = categories.sort((a, b) => a.rating > b.rating)[0].rating;
+        if (category.rating === minRating) return;
+
+        const ratingDOWNcategory = categories.find(cat => cat.rating === category.rating - 1);
+
+        const newUPcategory = {
+            name: category.name,
+            rating: category.rating - 1,
+            parent: category.parent,
+            child: category.child
+        }
+
+        updateCategory(category._id, newUPcategory);
+
+        const newDOWNcategory = {
+            name: ratingDOWNcategory.name,
+            rating: ratingDOWNcategory.rating + 1,
+            parent: ratingDOWNcategory.parent,
+            child: ratingDOWNcategory.child
+        }
+        updateCategory(ratingDOWNcategory._id, newDOWNcategory);
     }
 
     const DOWNhandler = () => {
-        categoryDOWN(categories, category.rating)
+        if (categories.length === 1) return;
+        const maxRating = categories.sort((a, b) => a.rating < b.rating)[0].rating;
+
+        if (category.rating === maxRating) return;
+
+        const ratingUPcategory = categories.find(cat => cat.rating === category.rating + 1);
+
+        const newUPcategory = {
+            name: ratingUPcategory.name,
+            rating: ratingUPcategory.rating - 1,
+            parent: ratingUPcategory.parent,
+            child: ratingUPcategory.child
+        }
+        updateCategory(ratingUPcategory._id, newUPcategory);
+
+        const newDOWNcategory = {
+            name: category.name,
+            rating: category.rating + 1,
+            parent: category.parent,
+            child: category.child
+        }
+        updateCategory(category._id, newDOWNcategory);
     }
 
     return (

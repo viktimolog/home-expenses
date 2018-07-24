@@ -3,10 +3,8 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {createSelector} from 'reselect'
 import {
-    // getItems,
     categoryUP,
     categoryDOWN,
-    // updateCategoryName,
     subCategoryUP,
     subCategoryDOWN,
     delSubCategory,
@@ -14,10 +12,10 @@ import {
     getCategories,
     addCategory,
     delCategory,
-    updateCategory,
     getSubCategories,
     getExpenses,
-    updateExpense
+    updateExpense,
+    updateCategory
 } from 'actions/actionCreator'
 import Config from 'views/Config/Config'
 import axios from 'axios'
@@ -121,8 +119,8 @@ CategoriesContainer.propTypes = {
     addSubCategory: PropTypes.func.isRequired,
     getCategories: PropTypes.func.isRequired,
     getSubCategories: PropTypes.func.isRequired,
-    updateCategory: PropTypes.func.isRequired,
     updateExpense: PropTypes.func.isRequired,
+    updateCategory: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = {
@@ -130,7 +128,6 @@ const mapDispatchToProps = {
     categoryUP,
     categoryDOWN,
     addCategory,
-    updateCategory,
     subCategoryUP,
     subCategoryDOWN,
     delSubCategory,
@@ -138,7 +135,8 @@ const mapDispatchToProps = {
     getCategories,
     getSubCategories,
     getExpenses,
-    updateExpense
+    updateExpense,
+    updateCategory,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoriesContainer)

@@ -417,6 +417,7 @@ export const delCategory = id => dispatch => {
         )
 }
 
+//todo
 export const categoryUP = (categories, rating) => dispatch => {
     dispatch({
         type: CATEGORY_UP,

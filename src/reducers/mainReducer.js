@@ -5,7 +5,6 @@ import {
     CATEGORY_UP,
     DEL_CATEGORY,
     ADD_CATEGORY,
-    UPDATE_CATEGORYNAME,
     SUBCATEGORY_DOWN,
     SUBCATEGORY_UP,
     DEL_SUBCATEGORY,
@@ -364,41 +363,41 @@ const mainReducer = (state = initialState, action) => {
             // }
         // }
 
-        case CATEGORY_UP: {
-
-            if ([...state.categories].length === 1) return {...state};
-
-            const minRating = [...state.categories.sort((a, b) => a.rating > b.rating)][0].rating;
-            if (action.rating === minRating) return {...state};
-
-            const ratingUPcategory = action.categories.find(category => category.rating === action.rating);
-            const ratingDOWNcategory = action.categories.find(category => category.rating === action.rating - 1);
-
-            const newUPcategory = {
-                id: ratingUPcategory.id,
-                name: ratingUPcategory.name,
-                rating: ratingUPcategory.rating - 1,
-                parent: ratingUPcategory.parent,
-                child: ratingUPcategory.child
-            }
-
-            const newDOWNcategory = {
-                id: ratingDOWNcategory.id,
-                name: ratingDOWNcategory.name,
-                rating: ratingDOWNcategory.rating + 1,
-                parent: ratingDOWNcategory.parent,
-                child: ratingDOWNcategory.child
-            }
-
-
-            return {
-                ...state,
-                categories: [...state.categories
-                    .filter(category => category.rating !== action.rating)
-                    .filter(category => category.rating !== action.rating - 1),
-                    newUPcategory, newDOWNcategory]
-            }
-        }
+        // case CATEGORY_UP: {
+        //
+        //     if ([...state.categories].length === 1) return {...state};
+        //
+        //     const minRating = [...state.categories.sort((a, b) => a.rating > b.rating)][0].rating;
+        //     if (action.rating === minRating) return {...state};
+        //
+        //     const ratingUPcategory = action.categories.find(category => category.rating === action.rating);
+        //     const ratingDOWNcategory = action.categories.find(category => category.rating === action.rating - 1);
+        //
+        //     const newUPcategory = {
+        //         id: ratingUPcategory.id,
+        //         name: ratingUPcategory.name,
+        //         rating: ratingUPcategory.rating - 1,
+        //         parent: ratingUPcategory.parent,
+        //         child: ratingUPcategory.child
+        //     }
+        //
+        //     const newDOWNcategory = {
+        //         id: ratingDOWNcategory.id,
+        //         name: ratingDOWNcategory.name,
+        //         rating: ratingDOWNcategory.rating + 1,
+        //         parent: ratingDOWNcategory.parent,
+        //         child: ratingDOWNcategory.child
+        //     }
+        //
+        //
+        //     return {
+        //         ...state,
+        //         categories: [...state.categories
+        //             .filter(category => category.rating !== action.rating)
+        //             .filter(category => category.rating !== action.rating - 1),
+        //             newUPcategory, newDOWNcategory]
+        //     }
+        // }
 
         case CATEGORY_DOWN: {
             if ([...state.categories].length === 1) return {...state};
