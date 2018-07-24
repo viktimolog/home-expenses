@@ -40,7 +40,7 @@ class CategoriesContainer extends React.Component {
         // this.getInitialState(Urls.getCategories, this.props.getCategories)
         // this.getInitialState(Urls.getSubCategories, this.props.getSubCategories)
         // this.getInitialState(Urls.getExpenses, this.props.getExpenses)
-        this.props.getInitialState()
+        this.props.getInitialState(this.props.token)
     }
 
     render() {

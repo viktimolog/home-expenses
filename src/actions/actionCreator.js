@@ -248,12 +248,12 @@ export const addExpense = newExpense => dispatch => {
 
 }
 
-export const updateCategory = (_id, category) => dispatch => {
-    UpdateCategory(_id, category)
+export const updateCategory = (_id, category, token) => dispatch => {
+    UpdateCategory(_id, category, token)
         .then(res => {
             // alert(res.data.success)//true, false - badly
                 if (res.data.success) {
-                    GetCategories()
+                    GetCategories(token)
                         .then(res =>
                             dispatch({
                                 type: GET_CATEGORIES,
@@ -269,7 +269,7 @@ export const updateCategory = (_id, category) => dispatch => {
                                 })
                             }
                         )
-                        .then(res => GetSubCategories()
+                        .then(res => GetSubCategories(token)
                         .then(res => {
                                 dispatch({
                                     type: GET_SUBCATEGORIES,
@@ -385,8 +385,8 @@ export const getSubCategories = () => dispatch => {
 
 
 //Get categories
-export const getCategories = () => dispatch => {
-    GetCategories()
+export const getCategories = token => dispatch => {
+    GetCategories(token)
         .then(res =>
             dispatch({
                 type: GET_CATEGORIES,
@@ -405,8 +405,8 @@ export const getCategories = () => dispatch => {
 }
 
 // Add Category
-export const addCategory = newCategory => dispatch => {
-    AddCategory(newCategory)
+export const addCategory = (newCategory, token) => dispatch => {
+    AddCategory(newCategory, token)
         .then(res => {
                 if (res.data.success) {
                     GetCategories()
@@ -501,8 +501,8 @@ export const signOut = () => dispatch => {
     })
 }
 
-export const getInitialState = ()  => dispatch => {
-    GetCategories()
+export const getInitialState = token  => dispatch => {
+    GetCategories(token)
         .then(res =>
             dispatch({
                 type: GET_CATEGORIES,

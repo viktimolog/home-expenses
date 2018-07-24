@@ -1,10 +1,28 @@
 import Urls from 'constants/Urls'
 import axios from 'axios'
 
-// Delete Category
-// export const DelCategory = (id, token) => {
-    // return axios.delete(Urls.delCategory + id)
-// }
+// Add Category
+export const AddCategory = (newCategory, token) => {
+    // return axios.post(Urls.addCategory, newCategory)
+
+    return axios.post(Urls.addCategory, newCategory, {
+            headers: {
+                "Authorization": "Bearer "+ token
+            }
+        }
+    )
+}
+
+//getCategories
+export const GetCategories = token => {
+    // return axios.get(Urls.getCategories)
+    return axios.get(Urls.getCategories, {
+            headers: {
+                "Authorization": "Bearer "+ token
+            }
+        }
+    )
+}
 
 export const DelCategory = (id, token) => {
     return axios.delete(Urls.delCategory + id, {
@@ -15,6 +33,21 @@ export const DelCategory = (id, token) => {
     )
 }
 
+//Update Category
+export const UpdateCategory = (_id, updateCategory, token) => {
+    // return axios.put(Urls.updateCategory + _id, updateCategory)
+    return axios.put(Urls.updateCategory + _id, {
+            headers: {
+                "Authorization": "Bearer "+ token
+            }
+        }
+    )
+}
+
+export const UpdateSubCategory = (_id, updateSubCategory) => {
+    return axios.put(Urls.updateSubCategory + _id, updateSubCategory)
+}
+
 export const Signin = user => {
     return axios.post(Urls.signin, user)
 }
@@ -22,25 +55,6 @@ export const Signin = user => {
 //Update Expense
 export const UpdateExpense = (_id, updateExpense) => {
     return axios.put(Urls.updateExpense + _id, updateExpense)
-}
-
-export const UpdateSubCategory = (_id, updateSubCategory) => {
-    return axios.put(Urls.updateSubCategory + _id, updateSubCategory)
-}
-
-//getCategories
-export const GetCategories = () => {
-    return axios.get(Urls.getCategories)
-}
-
-// Add Category
-export const AddCategory = newCategory => {
-    return axios.post(Urls.addCategory, newCategory)
-}
-
-//Update Category
-export const UpdateCategory = (_id, updateCategory) => {
-    return axios.put(Urls.updateCategory + _id, updateCategory)
 }
 
 //GetSubCategories

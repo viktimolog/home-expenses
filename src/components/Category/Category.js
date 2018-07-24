@@ -65,7 +65,7 @@ const Category = ({
             child: category.child
         }
 
-        updateCategory(category._id, newUPcategory);
+        updateCategory(category._id, newUPcategory, token);
 
         const newDOWNcategory = {
             name: ratingDOWNcategory.name,
@@ -73,7 +73,7 @@ const Category = ({
             parent: ratingDOWNcategory.parent,
             child: ratingDOWNcategory.child
         }
-        updateCategory(ratingDOWNcategory._id, newDOWNcategory);
+        updateCategory(ratingDOWNcategory._id, newDOWNcategory, token);
     }
 
     const DOWNhandler = () => {
@@ -90,7 +90,7 @@ const Category = ({
             parent: ratingUPcategory.parent,
             child: ratingUPcategory.child
         }
-        updateCategory(ratingUPcategory._id, newUPcategory);
+        updateCategory(ratingUPcategory._id, newUPcategory, token);
 
         const newDOWNcategory = {
             name: category.name,
@@ -98,7 +98,7 @@ const Category = ({
             parent: category.parent,
             child: category.child
         }
-        updateCategory(category._id, newDOWNcategory);
+        updateCategory(category._id, newDOWNcategory, token);
     }
 
     const UPhandlerSubCat = subCategory => {
@@ -170,6 +170,7 @@ const Category = ({
                         <ModalDialogEditCategoryName
                             category={category}
                             updateCategory={updateCategory}
+                            token={token}
                         />
                     </Typography>
                 </CardContent>

@@ -48,9 +48,6 @@ const styles = {
 
 const ConfigTableList = props => {
     const ADDhandler = () => {
-        //todo
-
-        // alert('ADDhandler')//ok
 
         let maxRating = 0;
 
@@ -61,13 +58,13 @@ const ConfigTableList = props => {
             maxRating = props.categories.sort((a, b) => a.rating < b.rating)[0].rating;
 
         const newCategory = {
-            // id: Math.floor(Date.now() / 1000) + '',
             name: '',
             rating: maxRating + 1,
             parent: false,
             child: false
         }
-        props.addCategory(newCategory);
+        // alert(props.token)//ok
+        props.addCategory(newCategory, props.token);
     }
 
     const {classes} = props;
