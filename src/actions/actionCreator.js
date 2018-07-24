@@ -21,9 +21,54 @@ import {
 import {TextConstants} from 'constants/TextConstants'
 import {
     GetCategories, UpdateCategory, AddCategory, DelCategory, AddSubCategory, GetSubCategories, AddExpense, GetExpenses,
-    DelSubCategory, UpdateExpense
+    DelSubCategory, UpdateExpense, UpdateSubCategory
 } from './axiosRequests'
 
+export const updateSubCategory = (_id, subCategory) => dispatch => {
+    console.log('console.log _id = ',_id)
+    console.log('console.log subCategory = ',subCategory)
+    UpdateSubCategory(_id, subCategory)
+        .then(res => {
+                // alert(res.data.success)
+                if (res.data.success) {
+                    GetSubCategories()
+                        .then(res => {
+                                dispatch({
+                                    type: GET_SUBCATEGORIES,
+                                    payload: res.data
+                                })
+                            }
+                        )
+                        .catch(err => {
+                                // alert(TextConstants.SERVETNOTRESP)
+                                alert('second catch updateSubCategory')
+                                dispatch({
+                                    type: GET_SUBCATEGORIES,
+                                    payload: []
+                                })
+                            }
+                        );
+                }
+                // else {
+                //     // alert(TextConstants.SERVETNOTRESP)
+                //     alert('third catch updateSubCategory')
+                //     dispatch({
+                //         type: GET_CATEGORIES,
+                //         payload: []
+                //     })
+                // }
+            }
+        )
+        .catch(err => {
+                // alert(TextConstants.SERVETNOTRESP)
+                alert('fourth catch updateSubCategory')
+                dispatch({
+                    type: GET_SUBCATEGORIES,
+                    payload: []
+                })
+            }
+        )
+}
 
 export const updateExpense = (_id, expense) => dispatch => {
     UpdateExpense(_id, expense)
@@ -263,15 +308,15 @@ export const addSubCategory = newSubCategory => dispatch => {
                                 payload: res.data
                             })
                         )
-                        .catch(err => {
-                                // alert(TextConstants.SERVETNOTRESP)
-                            alert('second catch addSubCategory')
-                                dispatch({
-                                    type: GET_CATEGORIES,
-                                    payload: []
-                                })
-                            }
-                        )
+                        // .catch(err => {
+                        //         // alert(TextConstants.SERVETNOTRESP)
+                        //     alert('second catch addSubCategory')
+                        //         dispatch({
+                        //             type: GET_CATEGORIES,
+                        //             payload: []
+                        //         })
+                        //     }
+                        // )
                 } else {
                     alert('SubCategory has already been added')
                 }

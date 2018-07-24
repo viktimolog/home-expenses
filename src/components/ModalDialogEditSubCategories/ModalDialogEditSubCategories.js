@@ -108,6 +108,8 @@ class ModalDialogEditSubCategories extends React.Component {
                                                                         delSubCategory={this.props.delSubCategory}
                                                                         categories={this.props.categories}
                                                                         updateCategory={this.props.updateCategory}
+                                                                        UPhandlerSubCat={this.props.UPhandlerSubCat}
+                                                                        DOWNhandlerSubCat={this.props.DOWNhandlerSubCat}
                                                                     />
                                                                 </TableCell>
                                                             </TableRow>

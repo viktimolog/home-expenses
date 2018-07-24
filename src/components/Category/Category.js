@@ -20,6 +20,7 @@ import ModalDialogEditCategoryName from 'components/ModalDialogEditCategoryName/
 import ModalDialogYesNo from 'components/ModalDialogYesNo/ModalDialogYesNo'
 import ModalDialogEditSubCategories from 'components/ModalDialogEditSubCategories/ModalDialogEditSubCategories'
 import SubCategory from 'components/SubCategory/SubCategory'
+import subCategory from "../SubCategory/SubCategory";
 
 const Styles = {
     display: 'flex',
@@ -44,7 +45,8 @@ const Category = ({
                       delSubCategory,
                       addSubCategory,
                       clearCategories,
-                      updateCategory
+                      updateCategory,
+                      updateSubCategory
                   }) => {
 
         const UPhandler = () => {
@@ -96,6 +98,63 @@ const Category = ({
             child: category.child
         }
         updateCategory(category._id, newDOWNcategory);
+    }
+
+    const UPhandlerSubCat = subCategory => {
+        const curSubCategories = subCategories
+            .filter(subCat => subCat.idCategory === subCategory.idCategory)
+
+        if (curSubCategories.length === 1) return;
+
+        const minRating = curSubCategories.sort((a, b) => a.rating > b.rating)[0].rating;
+        if (subCategory.rating === minRating) return;
+
+
+        const ratingDOWNcategory = curSubCategories
+            .find(subCat => subCat.rating === subCategory.rating - 1);
+
+        const newUPcategory = {
+            idCategory: subCategory.idCategory,
+            rating: subCategory.rating - 1,
+            idParent: subCategory.idParent
+        }
+        updateSubCategory(subCategory._id, newUPcategory)
+
+        const newDOWNcategory = {
+            idCategory: ratingDOWNcategory.idCategory,
+            rating: ratingDOWNcategory.rating + 1,
+            idParent: ratingDOWNcategory.idParent
+        }
+        updateSubCategory(ratingDOWNcategory._id, newDOWNcategory)
+    }
+
+    const DOWNhandlerSubCat = subCategory => {
+        const curSubCategories = subCategories
+            .filter(subCat => subCat.idCategory === subCategory.idCategory)
+
+        if (curSubCategories.length === 1) return;
+
+        const maxRating = curSubCategories.sort((a, b) => a.rating < b.rating)[0].rating;
+
+        if (subCategory.rating === maxRating) return;
+
+
+        const ratingUPcategory = curSubCategories
+            .find(subCat => subCat.rating === subCategory.rating + 1);
+
+        const newUPcategory = {
+            idCategory: ratingUPcategory.idCategory,
+            rating: ratingUPcategory.rating - 1,
+            idParent: ratingUPcategory.idParent
+        }
+        updateSubCategory(ratingUPcategory._id, newUPcategory)
+
+        const newDOWNcategory = {
+            idCategory: subCategory.idCategory,
+            rating: subCategory.rating + 1,
+            idParent: subCategory.idParent
+        }
+        updateSubCategory(subCategory._id, newDOWNcategory)
     }
 
     return (
@@ -157,7 +216,8 @@ const Category = ({
                             clearCategories={clearCategories}
                             updateCategory={updateCategory}
                             categories={categories}
-
+                            UPhandlerSubCat={UPhandlerSubCat}
+                            DOWNhandlerSubCat={DOWNhandlerSubCat}
                         />
                     </CardActions>
                 </div>
@@ -183,6 +243,9 @@ const Category = ({
                                                             subCategoryUP={subCategoryUP}
                                                             subCategoryDOWN={subCategoryDOWN}
                                                             categories={categories}
+                                                            // updateSubCategory={updateSubCategory}
+                                                            DOWNhandlerSubCat={DOWNhandlerSubCat}
+                                                            UPhandlerSubCat={UPhandlerSubCat}
                                                         />
                                                     </TableCell>
                                                 </TableRow>

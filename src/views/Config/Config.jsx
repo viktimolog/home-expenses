@@ -105,6 +105,7 @@ const ConfigTableList = props => {
                                                         clearCategories={props.clearCategories}
                                                         expenses={props.expenses}
                                                         updateExpense={props.updateExpense}
+                                                        updateSubCategory={props.updateSubCategory}
                                                     />
                                                 </TableCell>
                                             </TableRow>

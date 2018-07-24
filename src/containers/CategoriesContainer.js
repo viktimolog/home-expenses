@@ -15,7 +15,8 @@ import {
     getSubCategories,
     getExpenses,
     updateExpense,
-    updateCategory
+    updateCategory,
+    updateSubCategory
 } from 'actions/actionCreator'
 import Config from 'views/Config/Config'
 import axios from 'axios'
@@ -83,6 +84,7 @@ class CategoriesContainer extends React.Component {
                     clearCategories={this.props.clearCategories}
                     expenses={this.props.expenses}
                     updateExpense={this.props.updateExpense}
+                    updateSubCategory={this.props.updateSubCategory}
                 />
             </div>)
     }
@@ -120,7 +122,8 @@ CategoriesContainer.propTypes = {
     getCategories: PropTypes.func.isRequired,
     getSubCategories: PropTypes.func.isRequired,
     updateExpense: PropTypes.func.isRequired,
-    updateCategory: PropTypes.func.isRequired
+    updateCategory: PropTypes.func.isRequired,
+    updateSubCategory: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = {
@@ -137,6 +140,7 @@ const mapDispatchToProps = {
     getExpenses,
     updateExpense,
     updateCategory,
+    updateSubCategory
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoriesContainer)

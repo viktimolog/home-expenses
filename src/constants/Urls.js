@@ -25,7 +25,7 @@ const Urls = {
     addSubCategory: baseApiUrlSubCategories + 'addSubCategory',
     getSubCategories: baseApiUrlSubCategories + 'getSubCategories',
     delSubCategory: baseApiUrlSubCategories + 'delSubCategory/',
-    updateSubCategory: baseApiUrlCategories + 'updateSubCategory/',
+    updateSubCategory: baseApiUrlSubCategories + 'updateSubCategory/',
 
 };
 export default Urls;

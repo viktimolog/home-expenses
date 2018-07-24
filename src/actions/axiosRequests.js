@@ -6,6 +6,10 @@ export const UpdateExpense = (_id, updateExpense) => {
     return axios.put(Urls.updateExpense + _id, updateExpense)
 }
 
+export const UpdateSubCategory = (_id, updateSubCategory) => {
+    return axios.put(Urls.updateSubCategory + _id, updateSubCategory)
+}
+
 //getCategories
 export const GetCategories = () => {
     return axios.get(Urls.getCategories)

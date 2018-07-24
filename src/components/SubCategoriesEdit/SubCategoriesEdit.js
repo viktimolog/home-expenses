@@ -6,8 +6,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from 'components/CustomButtons/Button.jsx'
 import {ArrowUpward, ArrowDownward, Close} from "@material-ui/icons";
-import subCategory from "../SubCategory/SubCategory";
-
 
 const Styles = {
     display: 'flex',
@@ -17,23 +15,19 @@ const Styles = {
 }
 
 
-const SubCategoriesEdit = ({category, delSubCategory, subCategory, subCategories, subCategoryUP, subCategoryDOWN, categories, updateCategory}) => {
+const SubCategoriesEdit = ({UPhandlerSubCat, DOWNhandlerSubCat, category, delSubCategory, subCategory, subCategories, subCategoryUP, subCategoryDOWN, categories, updateCategory}) => {
     const UPhandler = () => {
-        subCategoryUP(subCategory)
+        UPhandlerSubCat(subCategory)
     }
 
     const DOWNhandler = () => {
-        subCategoryDOWN(subCategory)
+        DOWNhandlerSubCat(subCategory)
     }
 
     const delSubCategoryHandler = () => {
 
         const parentCat = categories.filter(cat => cat._id === subCategory.idCategory)[0];
         const childCat = categories.filter(cat => cat._id === subCategory.idParent)[0];
-
-        // console.log('console.log parentCat = ', parentCat)//ok
-        // console.log('console.log childCat = ', childCat)//ok
-        // console.log('console.log subCategory._id = ', subCategory._id)//ok
 
         const getCategoryChangeChild = cat => {
             const categoryChangeChild = {
@@ -63,10 +57,7 @@ const SubCategoriesEdit = ({category, delSubCategory, subCategory, subCategories
 
             delSubCategory(subCategory._id);
         }
-
-
         pushToDB(childCat, parentCat, subCategory)
-        // delSubCategory(category, subCategory) //category need?
     }
 
     return (

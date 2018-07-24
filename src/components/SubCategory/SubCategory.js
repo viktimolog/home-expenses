@@ -16,14 +16,14 @@ const Styles = {
 }
 
 
-const subCategory = ({subCategory, subCategories, subCategoryUP, subCategoryDOWN, categories}) => {
+const subCategory = ({UPhandlerSubCat, DOWNhandlerSubCat, subCategory, subCategories, subCategoryUP, subCategoryDOWN, categories}) => {
 
     const UPhandler = () => {
-        subCategoryUP(subCategory)
+        UPhandlerSubCat(subCategory)
     }
 
     const DOWNhandler = () => {
-        subCategoryDOWN(subCategory)
+        DOWNhandlerSubCat(subCategory)
     }
 
     return (
