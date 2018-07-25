@@ -21,6 +21,8 @@ import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 import {connect} from "react-redux";
 
+// import EmailVerification from "views/EmailVerification/EmailVerification.jsx";
+
 const switchRoutes = isUser => (
   <Switch>
     {getDashboardRoutes(isUser).map((prop, key) => {
@@ -72,7 +74,10 @@ class App extends React.Component {
         <div className={classes.mainPanel} ref="mainPanel">
           <Header
             // routes={dashboardRoutes}
-            routes={getDashboardRoutes(this.props.isUser)}
+            routes={
+              getDashboardRoutes(this.props.isUser)
+                  // .filter(route => route.component !== EmailVerification)//todo
+            }
             handleDrawerToggle={this.handleDrawerToggle}
             {...rest}
           />

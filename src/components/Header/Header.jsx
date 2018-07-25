@@ -40,7 +40,9 @@ function Header({ ...props }) {
           </Button>
         </div>
         <Hidden smDown implementation="css">
-          <HeaderLinks />
+          <HeaderLinks
+              // isUser = {this.props.isUser}//todo
+          />
         </Hidden>
         <Hidden mdUp>
           <IconButton

@@ -12,10 +12,7 @@ import UserProfile from "views/UserProfile/UserProfile.jsx";
 import TableList from "views/TableList/TableList.jsx";
 import Typography from "views/Typography/Typography.jsx";
 import Icons from "views/Icons/Icons.jsx";
-import Signup from "views/Signup/Signup.jsx";
-import Signin from "views/Signin/Signin.jsx";
 import EmailVerification from "views/EmailVerification/EmailVerification.jsx";
-import Config from "views/Config/Config.jsx";
 import CategoriesContainer from "containers/CategoriesContainer";
 import DashboardContainer from "containers/DashboardContainer";
 import ReportsContainer from "containers/ReportsContainer";
@@ -119,16 +116,17 @@ const getDashboardRoutes = isUser => {
             navbarName: "Redirect",
             isUser: true
         },
-        {
-            redirect: true,
-            path: "/emailverification",
-            to: "/emailverification",
-            navbarName: "Redirect",
-            isUser: false
-        }
+        // {
+        //     redirect: true,
+        //     path: "/emailverification/:email/:verifyKey",
+        //     to: "/emailverification/:email/:verifyKey",
+        //     navbarName: "Redirect",
+        //     isUser: false
+        // }
     ]
+    // return dashboardRoutes.filter(route => route.isUser === isUser)
+    //     .filter(route => route.component !== EmailVerification)
     return dashboardRoutes.filter(route => route.isUser === isUser)
-        // .filter(route => route.component !== EmailVerification)
 }
 
 export default getDashboardRoutes;
