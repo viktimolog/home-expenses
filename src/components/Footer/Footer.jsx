@@ -16,18 +16,20 @@ function Footer({...props}) {
                 <div className={classes.left}>
                     <List className={classes.list}>
                         {
-                            props.routes.map(route =>
-                                <ListItem className={classes.inlineBlock}>
-                                    <Link className={classes.block} to={route.path}>{route.sidebarName}</Link>
-                                </ListItem>
-                            )
+                            props.routes
+                                .filter(route => route.navbarName !== 'Email verification')
+                                .map(route =>
+                                    <ListItem className={classes.inlineBlock}>
+                                        <Link className={classes.block} to={route.path}>{route.sidebarName}</Link>
+                                    </ListItem>
+                                )
                         }
                     </List>
                 </div>
                 <p className={classes.right}>
           <span>
             &copy; {1900 + new Date().getYear()}{" "}
-              <a href="https://www.creative-tim.com" className={classes.a}>
+              <a href="https://github.com/viktimolog?tab=repositories" target="_blank" className={classes.a}>
               Koganov Alexander
             </a>, made with love for a better web
           </span>

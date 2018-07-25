@@ -19,49 +19,32 @@ import {
 import {connect} from "react-redux";
 
 const styles = {
-  cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
-  },
-  cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none"
-  }
+    cardCategoryWhite: {
+        color: "rgba(255,255,255,.62)",
+        margin: "0",
+        fontSize: "14px",
+        marginTop: "0",
+        marginBottom: "0"
+    },
+    cardTitleWhite: {
+        color: "#FFFFFF",
+        marginTop: "0px",
+        minHeight: "auto",
+        fontWeight: "300",
+        fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+        marginBottom: "3px",
+        textDecoration: "none"
+    }
 };
 
 class EmailVerification extends React.Component {
 
-componentDidMount(){
-    // console.log('console.log this.props = ',this.props)
-    //
-    // console.log('console.log this.props.match.params.email = ',this.props.match.params.email)
-    // console.log('console.log this.props.match.params.verifyKey = ',this.props.match.params.verifyKey)
-
-    // const newUser ={
-    //     email: 'test1@test.net',
-    //     verifyKey: '1234567'
-    // }
-
-    // const path = `http://localhost:3000/emailverification/${newUser.email}/${newUser.verifyKey}`
-    // console.log('console.log path = ',path)
-
-
-
-    this.setState({
-        email: this.props.match.params.email,
-        verifyKey: this.props.match.params.verifyKey
-    })
-
-    // console.log('console.log this.props.verify = ',this.props.verify)//ok
-}
+    componentDidMount() {
+        this.setState({
+            email: this.props.match.params.email,
+            verifyKey: this.props.match.params.verifyKey
+        })
+    }
 
     state = {
         email: '',
@@ -69,7 +52,6 @@ componentDidMount(){
     }
 
     handleVerify = () => {
-    // alert('handleVerify')//ok
         const user = {
             email: this.state.email,
             verifyKey: this.state.verifyKey
@@ -78,8 +60,7 @@ componentDidMount(){
     }
 
 
-render()
-    {
+    render() {
         const {classes} = this.props;
         return (
             <div>
@@ -119,6 +100,7 @@ render()
                                             }}
                                             inputProps={
                                                 {
+                                                    type: 'hidden',
                                                     disabled: true,
                                                     value: this.state.verifyKey
                                                 }

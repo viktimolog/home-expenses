@@ -32,7 +32,6 @@ export const signup = user => dispatch => {
                 }
                 else {
                     alert(res.data.message);
-                    console.log(res.data.message);
                     dispatch({
                         type: SIGN_IN,
                         email: '',
@@ -44,12 +43,23 @@ export const signup = user => dispatch => {
                 }
             }
         )
+        .catch(err => {
+                alert(err);
+                dispatch({
+                    type: SIGN_IN,
+                    email: '',
+                    isUser: false,
+                    token: '',
+                    idUser: '',
+                    avatar: ''
+                })
+            }
+        )
 }
 
 export const verify = user => dispatch => {
     Verify(user)
         .then(res => {
-            // alert('res.data.success='+ res.data.success)
                 if (res.data.success) {
                     dispatch({
                         type: SIGN_IN,
@@ -62,7 +72,6 @@ export const verify = user => dispatch => {
                 }
                 else {
                     alert(res.data.message);
-                    console.log(res.data.message);
                     dispatch({
                         type: SIGN_IN,
                         email: '',
@@ -72,6 +81,18 @@ export const verify = user => dispatch => {
                         avatar: ''
                     })
                 }
+            }
+        )
+        .catch(err => {
+                alert(err);
+                dispatch({
+                    type: SIGN_IN,
+                    email: '',
+                    isUser: false,
+                    token: '',
+                    idUser: '',
+                    avatar: ''
+                })
             }
         )
 }
@@ -91,7 +112,6 @@ export const signin = user => dispatch => {
                 }
                 else {
                     alert(res.data.message);
-                    console.log(res.data.message);
                     dispatch({
                         type: SIGN_IN,
                         email: '',
@@ -103,12 +123,23 @@ export const signin = user => dispatch => {
                 }
             }
         )
+        .catch(err => {
+                alert(err);
+                dispatch({
+                    type: SIGN_IN,
+                    email: '',
+                    isUser: false,
+                    token: '',
+                    idUser: '',
+                    avatar: ''
+                })
+            }
+        )
 }
 
 export const updateSubCategory = (_id, subCategory, token) => dispatch => {
     UpdateSubCategory(_id, subCategory, token)
         .then(res => {
-                // alert(res.data.success)
                 if (res.data.success) {
                     GetSubCategories(token)
                         .then(res => {
@@ -119,28 +150,25 @@ export const updateSubCategory = (_id, subCategory, token) => dispatch => {
                             }
                         )
                         .catch(err => {
-                                // alert(TextConstants.SERVETNOTRESP)
-                                alert('second catch updateSubCategory')
+                                alert(err)
                                 dispatch({
                                     type: GET_SUBCATEGORIES,
                                     payload: []
                                 })
                             }
-                        );
+                        )
                 }
-                // else {
-                //     // alert(TextConstants.SERVETNOTRESP)
-                //     alert('third catch updateSubCategory')
-                //     dispatch({
-                //         type: GET_CATEGORIES,
-                //         payload: []
-                //     })
-                // }
+                else {
+                    alert(res.data.message);
+                    dispatch({
+                        type: GET_SUBCATEGORIES,
+                        payload: []
+                    })
+                }
             }
         )
         .catch(err => {
-                // alert(TextConstants.SERVETNOTRESP)
-                alert('fourth catch updateSubCategory')
+                alert(err)
                 dispatch({
                     type: GET_SUBCATEGORIES,
                     payload: []
@@ -152,7 +180,6 @@ export const updateSubCategory = (_id, subCategory, token) => dispatch => {
 export const updateExpense = (_id, expense, token) => dispatch => {
     UpdateExpense(_id, expense, token)
         .then(res => {
-                // alert(res.data.success)//true, false - badly
                 if (res.data.success) {
                     GetExpenses(token)
                         .then(res =>
@@ -162,8 +189,7 @@ export const updateExpense = (_id, expense, token) => dispatch => {
                             })
                         )
                         .catch(err => {
-                                // alert(TextConstants.SERVETNOTRESP)
-                                alert('first catch updateExpense')
+                                alert(err)
                                 dispatch({
                                     type: GET_EXPENSES,
                                     payload: []
@@ -172,8 +198,7 @@ export const updateExpense = (_id, expense, token) => dispatch => {
                         )
                 }
                 else {
-                    // alert(TextConstants.SERVETNOTRESP)
-                    alert('else updateExpense')
+                    alert(res.data.message)
                     dispatch({
                         type: GET_EXPENSES,
                         payload: []
@@ -182,8 +207,7 @@ export const updateExpense = (_id, expense, token) => dispatch => {
             }
         )
         .catch(err => {
-                // alert(TextConstants.SERVETNOTRESP)
-                alert('second catch updateExpense')
+                alert(err)
                 dispatch({
                     type: GET_EXPENSES,
                     payload: []
@@ -206,8 +230,7 @@ export const delSubCategory = (id, token) => dispatch => {
                             })
                         )
                         .catch(err => {
-                                // alert(TextConstants.SERVETNOTRESP)
-                                alert('first catch delSubCategory')
+                                alert(err)
                                 dispatch({
                                     type: GET_CATEGORIES,
                                     payload: []
@@ -223,8 +246,7 @@ export const delSubCategory = (id, token) => dispatch => {
                                 }
                             )
                             .catch(err => {
-                                    // alert(TextConstants.SERVETNOTRESP)
-                                    alert('second catch delSubCategory')
+                                    alert(err)
                                     dispatch({
                                         type: GET_SUBCATEGORIES,
                                         payload: []
@@ -235,10 +257,9 @@ export const delSubCategory = (id, token) => dispatch => {
             }
         )
         .catch(err => {
-                // alert(TextConstants.SERVETNOTRESP)
-                alert('third catch delSubCategory')
+                alert(err)
                 dispatch({
-                    type: GET_CATEGORIES,
+                    type: GET_SUBCATEGORIES,
                     payload: []
                 })
             }

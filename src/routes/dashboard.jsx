@@ -4,9 +4,6 @@ import Person from "@material-ui/icons/Person";
 import ContentPaste from "@material-ui/icons/ContentPaste";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import BubbleChart from "@material-ui/icons/BubbleChart";
-import LocationOn from "@material-ui/icons/LocationOn";
-import Notifications from "@material-ui/icons/Notifications";
-import Unarchive from "@material-ui/icons/Unarchive";
 // core components/views
 import UserProfile from "views/UserProfile/UserProfile.jsx";
 import TableList from "views/TableList/TableList.jsx";
@@ -41,7 +38,6 @@ const getDashboardRoutes = isUser => {
         },
         {
             path: "/emailverification/:email/:verifyKey",
-            // path: "/emailverification",
             sidebarName: "Email verification",
             navbarName: "Email verification",
             icon: Person,
@@ -115,17 +111,8 @@ const getDashboardRoutes = isUser => {
             to: "/dashboard",
             navbarName: "Redirect",
             isUser: true
-        },
-        // {
-        //     redirect: true,
-        //     path: "/emailverification/:email/:verifyKey",
-        //     to: "/emailverification/:email/:verifyKey",
-        //     navbarName: "Redirect",
-        //     isUser: false
-        // }
+        }
     ]
-    // return dashboardRoutes.filter(route => route.isUser === isUser)
-    //     .filter(route => route.component !== EmailVerification)
     return dashboardRoutes.filter(route => route.isUser === isUser)
 }
 

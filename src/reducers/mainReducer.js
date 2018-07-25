@@ -20,20 +20,20 @@ import {
 
 const initialState = {
     email: '',
-    idUser:'',
+    idUser: '',
     token: '',
-    avatar:'',
+    avatar: '',
     isUser: false,
     categories: [],
     subCategories: [],
-    expenses:[]
+    expenses: []
 }
 
 const mainReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case SIGN_IN: {
-            // console.log('console.log action = ',action)
+            localStorage.setItem('token', action.token)
             return {
                 ...state,
                 email: action.email,
@@ -177,56 +177,56 @@ const mainReducer = (state = initialState, action) => {
         //         name: action.category.name,
         //         rating: action.category.rating,
         //         parent: countSubCatSelectedCategory !== 1,
-                // child: false
-            // }
-            //
-            // return {
-            //     ...state,
-            //     categories: [...state.categories
-            //         .filter(category => category.id !== selectedCategory.id)
-            //         .filter(category => category.id !== action.category.id)
-            //         , updateCategory, updateParentCategory],
-            //     subCategories: [...state.subCategories
-            //         .filter(subCategory => subCategory.id !== action.subCategory.id)]
-            // }
+        // child: false
+        // }
+        //
+        // return {
+        //     ...state,
+        //     categories: [...state.categories
+        //         .filter(category => category.id !== selectedCategory.id)
+        //         .filter(category => category.id !== action.category.id)
+        //         , updateCategory, updateParentCategory],
+        //     subCategories: [...state.subCategories
+        //         .filter(subCategory => subCategory.id !== action.subCategory.id)]
+        // }
         // }
 
         //action.category + action.newName do not use?
         // case UPDATE_CATEGORYNAME: {
         //
-            // const curSubCategories = [...state.subCategories
-            //     .filter(subCategory => subCategory.idParent === action.category.id)]
-            //
-            // let renameCurSubCategories = [];
-            //
-            // curSubCategories.map(subCategory => {
-            //
-            //         const newSubCategory = {
-            //             id: subCategory.id,
-            //             idCategory: subCategory.idCategory,
-            //             name: action.newName,
-            //             rating: subCategory.rating,
-            //             idParent: subCategory.idParent
-            //         }
-            //         renameCurSubCategories.push(newSubCategory)
-            //     }
-            // )
-            //
-            // const updateCategory = {
-            //     id: action.category.id,
-            //     name: action.newName,
-            //     rating: action.category.rating,
-            //     parent: action.category.parent,
-            //     child: action.category.child
-            // }
-            //
-            // return {
-            //     ...state,
-            //     categories: [...state.categories.filter(category => category.id !== action.category.id), updateCategory],
-            //     subCategories: [...state.subCategories
-            //         .filter(subCategory => subCategory.idParent !== action.category.id)]
-            //         .concat(renameCurSubCategories)
-            // }
+        // const curSubCategories = [...state.subCategories
+        //     .filter(subCategory => subCategory.idParent === action.category.id)]
+        //
+        // let renameCurSubCategories = [];
+        //
+        // curSubCategories.map(subCategory => {
+        //
+        //         const newSubCategory = {
+        //             id: subCategory.id,
+        //             idCategory: subCategory.idCategory,
+        //             name: action.newName,
+        //             rating: subCategory.rating,
+        //             idParent: subCategory.idParent
+        //         }
+        //         renameCurSubCategories.push(newSubCategory)
+        //     }
+        // )
+        //
+        // const updateCategory = {
+        //     id: action.category.id,
+        //     name: action.newName,
+        //     rating: action.category.rating,
+        //     parent: action.category.parent,
+        //     child: action.category.child
+        // }
+        //
+        // return {
+        //     ...state,
+        //     categories: [...state.categories.filter(category => category.id !== action.category.id), updateCategory],
+        //     subCategories: [...state.subCategories
+        //         .filter(subCategory => subCategory.idParent !== action.category.id)]
+        //         .concat(renameCurSubCategories)
+        // }
         // }
 
         // case CATEGORY_UP: {

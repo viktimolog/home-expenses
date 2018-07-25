@@ -23,7 +23,9 @@ const Sidebar = ({ ...props }) => {
   const { classes, color, logo, image, logoText, routes } = props;
   var links = (
     <List className={classes.list}>
-      {routes.map((prop, key) => {
+      {routes
+          .filter(route => route.navbarName !== 'Email verification')
+          .map((prop, key) => {
         if (prop.redirect) return null;
         var activePro = " ";
         var listItemClasses;
