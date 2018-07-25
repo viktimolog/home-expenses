@@ -25,9 +25,7 @@ class SelectDialogAddSubCategory extends React.Component {
 
     state = {
         open: false,
-        // curCategory: null,
-        curCategory: this.props.clearCategories
-            .filter(cat => cat._id !== this.props.category._id)[0]
+        curCategory: null
     }
 
     handleChange = name => event => {
@@ -43,9 +41,7 @@ class SelectDialogAddSubCategory extends React.Component {
     handleClose = () => {
         this.setState({
             open: false,
-            // curCategory: null,
-            curCategory: this.props.clearCategories
-                .filter(cat => cat._id !== this.props.category._id)[0]
+            curCategory: null
         });
     };
 
@@ -106,16 +102,13 @@ class SelectDialogAddSubCategory extends React.Component {
         }
 
 
-        // if (this.state.curCategory === null) {
-        //     pushToDB(this.props.category, this.props.clearCategories[0]);
-        // }
-        // else {
-        //     pushToDB(this.props.category, this.state.curCategory);
-        // }
-
-        // alert(this.state.curCategory.name)
-
-        pushToDB(this.props.category, this.state.curCategory);
+        if (this.state.curCategory === null) {
+            pushToDB(this.props.category, this.props.clearCategories
+                .filter(cat => cat._id !== this.props.category._id)[0]);
+        }
+        else {
+            pushToDB(this.props.category, this.state.curCategory);
+        }
         this.handleClose();
     };
 
