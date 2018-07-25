@@ -107,6 +107,7 @@ class Dashboard extends React.Component {
         }
 
         const newExpense = {
+            idUser: this.props.idUser,
             idCategory: curCat._id,
             date: Date.now(),
             category: curCat.name,

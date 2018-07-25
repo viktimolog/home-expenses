@@ -29,6 +29,7 @@ const Styles = {
 
 
 const Category = ({
+                      idUser,
                       token,
                       updateExpense,
                       expenses,
@@ -38,7 +39,6 @@ const Category = ({
                       categoryUP,
                       categoryDOWN,
                       delCategory,
-                      updateCategoryName,
                       subCategoryUP,
                       subCategoryDOWN,
                       delSubCategory,
@@ -57,6 +57,7 @@ const Category = ({
         const ratingDOWNcategory = categories.find(cat => cat.rating === category.rating - 1);
 
         const newUPcategory = {
+            idUser: category.idUser,
             name: category.name,
             rating: category.rating - 1,
             parent: category.parent,
@@ -66,6 +67,7 @@ const Category = ({
         updateCategory(category._id, newUPcategory, token);
 
         const newDOWNcategory = {
+            idUser: ratingDOWNcategory.idUser,
             name: ratingDOWNcategory.name,
             rating: ratingDOWNcategory.rating + 1,
             parent: ratingDOWNcategory.parent,
@@ -83,6 +85,7 @@ const Category = ({
         const ratingUPcategory = categories.find(cat => cat.rating === category.rating + 1);
 
         const newUPcategory = {
+            idUser: ratingUPcategory.idUser,
             name: ratingUPcategory.name,
             rating: ratingUPcategory.rating - 1,
             parent: ratingUPcategory.parent,
@@ -91,6 +94,7 @@ const Category = ({
         updateCategory(ratingUPcategory._id, newUPcategory, token);
 
         const newDOWNcategory = {
+            idUser: category.idUser,
             name: category.name,
             rating: category.rating + 1,
             parent: category.parent,
@@ -113,6 +117,7 @@ const Category = ({
             .find(subCat => subCat.rating === subCategory.rating - 1);
 
         const newUPcategory = {
+            idUser: subCategory.idUser,
             idCategory: subCategory.idCategory,
             rating: subCategory.rating - 1,
             idParent: subCategory.idParent
@@ -120,6 +125,7 @@ const Category = ({
         updateSubCategory(subCategory._id, newUPcategory, token)
 
         const newDOWNcategory = {
+            idUser: ratingDOWNcategory.idUser,
             idCategory: ratingDOWNcategory.idCategory,
             rating: ratingDOWNcategory.rating + 1,
             idParent: ratingDOWNcategory.idParent
@@ -142,6 +148,7 @@ const Category = ({
             .find(subCat => subCat.rating === subCategory.rating + 1);
 
         const newUPcategory = {
+            idUser: ratingUPcategory.idUser,
             idCategory: ratingUPcategory.idCategory,
             rating: ratingUPcategory.rating - 1,
             idParent: ratingUPcategory.idParent
@@ -149,6 +156,7 @@ const Category = ({
         updateSubCategory(ratingUPcategory._id, newUPcategory, token)
 
         const newDOWNcategory = {
+            idUser: subCategory.idUser,
             idCategory: subCategory.idCategory,
             rating: subCategory.rating + 1,
             idParent: subCategory.idParent

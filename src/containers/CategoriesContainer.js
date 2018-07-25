@@ -44,6 +44,7 @@ class CategoriesContainer extends React.Component {
     }
 
     render() {
+        // alert(this.props.idUser)//ok
         return (
             <div>
                 <Config
@@ -63,6 +64,7 @@ class CategoriesContainer extends React.Component {
                     updateExpense={this.props.updateExpense}
                     updateSubCategory={this.props.updateSubCategory}
                     token={this.props.token}
+                    idUser={this.props.idUser}
                 />
             </div>)
     }
@@ -86,12 +88,14 @@ const mapStateToProps = state => ({
     subCategories: state.mainReducer.subCategories,
     expenses: state.mainReducer.expenses,
     token: state.mainReducer.token,
+    idUser: state.mainReducer.idUser,
     clearCategories: getClearCategories(state)
 })
 
 CategoriesContainer.propTypes = {
     categories: PropTypes.array.isRequired,
     token: PropTypes.string.isRequired,
+    idUser: PropTypes.string.isRequired,
     subCategories: PropTypes.array.isRequired,
     categoryUP: PropTypes.func.isRequired,
     categoryDOWN: PropTypes.func.isRequired,

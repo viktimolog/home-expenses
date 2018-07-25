@@ -31,6 +31,7 @@ const SubCategoriesEdit = ({token, UPhandlerSubCat, DOWNhandlerSubCat, category,
 
         const getCategoryChangeChild = cat => {
             const categoryChangeChild = {
+                idUser: cat.idUser,
                 name: cat.name,
                 rating: cat.rating,
                 parent: cat.parent,
@@ -41,6 +42,7 @@ const SubCategoriesEdit = ({token, UPhandlerSubCat, DOWNhandlerSubCat, category,
 
         const getCategoryChangeParent = category => {
             const categoryChangeParent = {
+                idUser: category.idUser,
                 name: category.name,
                 rating: category.rating,
                 parent: false,

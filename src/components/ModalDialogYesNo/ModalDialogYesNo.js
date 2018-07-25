@@ -50,6 +50,7 @@ class ModalDialogYesNo extends React.Component {
         if (findExpensesByCategory.length > 0) {
             findExpensesByCategory.map(exp => {
                 const updateExpense = {
+                    idUser: exp.idUser,
                     date: exp.date,
                     category: exp.category + ' (deleted)',
                     expense: exp.expense,
@@ -80,6 +81,7 @@ class ModalDialogYesNo extends React.Component {
 //находим их парент и делаем им child=false
             parents.map(parent => {
                 const updateParent = {
+                    idUser: parent.idUser,
                     name: parent.name,
                     rating: parent.rating,
                     parent: parent.parent,
@@ -100,6 +102,7 @@ class ModalDialogYesNo extends React.Component {
             const subCatCurParent = this.props.subCategories.filter(sub => sub.idCategory === curParent._id)[0]
             if (subCatCurParent.length === 1) {
                 const updateCurParent = {
+                    idUser: curParent.idUser,
                     name: curParent.name,
                     rating: curParent.rating,
                     parent: false,

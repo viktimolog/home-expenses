@@ -25,7 +25,9 @@ class SelectDialogAddSubCategory extends React.Component {
 
     state = {
         open: false,
-        curCategory: null
+        // curCategory: null,
+        curCategory: this.props.clearCategories
+            .filter(cat => cat._id !== this.props.category._id)[0]
     }
 
     handleChange = name => event => {
@@ -41,7 +43,9 @@ class SelectDialogAddSubCategory extends React.Component {
     handleClose = () => {
         this.setState({
             open: false,
-            curCategory: null
+            // curCategory: null,
+            curCategory: this.props.clearCategories
+                .filter(cat => cat._id !== this.props.category._id)[0]
         });
     };
 
@@ -62,6 +66,7 @@ class SelectDialogAddSubCategory extends React.Component {
 
         const getNewSubCategory = (category, curCategory) => {
             const newSubCategory = {
+                idUser: category.idUser,
                 idCategory: category._id,
                 rating: maxRating + 1,
                 idParent: curCategory._id
@@ -71,6 +76,7 @@ class SelectDialogAddSubCategory extends React.Component {
 
         const getCategorySetChild = newSubCategory => {
             const categorySetChild = {
+                idUser: newSubCategory.idUser,
                 name: newSubCategory.name,
                 rating: newSubCategory.rating,
                 parent: newSubCategory.parent,
@@ -81,6 +87,7 @@ class SelectDialogAddSubCategory extends React.Component {
 
         const getCategorySetParent = category => {
             const categorySetParent = {
+                idUser: category.idUser,
                 name: category.name,
                 rating: category.rating,
                 parent: true,
@@ -99,12 +106,16 @@ class SelectDialogAddSubCategory extends React.Component {
         }
 
 
-        if (this.state.curCategory === null) {
-            pushToDB(this.props.category, this.props.clearCategories[0]);
-        }
-        else {
-            pushToDB(this.props.category, this.state.curCategory);
-        }
+        // if (this.state.curCategory === null) {
+        //     pushToDB(this.props.category, this.props.clearCategories[0]);
+        // }
+        // else {
+        //     pushToDB(this.props.category, this.state.curCategory);
+        // }
+
+        // alert(this.state.curCategory.name)
+
+        pushToDB(this.props.category, this.state.curCategory);
         this.handleClose();
     };
 

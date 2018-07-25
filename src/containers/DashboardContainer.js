@@ -23,6 +23,7 @@ class DashboardContainer extends React.Component {
                     categories={this.props.categories}
                     addExpense={this.props.addExpense}
                     token={this.props.token}
+                    idUser={this.props.idUser}
                 />
             </div>)
     }
@@ -38,7 +39,8 @@ DashboardContainer.propTypes = {
 const mapStateToProps = state => ({
     categories: state.mainReducer.categories,
     expenses: state.mainReducer.expenses,
-    token: state.mainReducer.token
+    token: state.mainReducer.token,
+    idUser: state.mainReducer.idUser
 })
 
 const mapDispatchToProps = {

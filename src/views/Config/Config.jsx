@@ -58,6 +58,7 @@ const ConfigTableList = props => {
             maxRating = props.categories.sort((a, b) => a.rating < b.rating)[0].rating;
 
         const newCategory = {
+            idUser: props.idUser,
             name: '',
             rating: maxRating + 1,
             parent: false,

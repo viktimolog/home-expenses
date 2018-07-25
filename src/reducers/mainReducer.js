@@ -33,7 +33,7 @@ const mainReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case SIGN_IN: {
-            console.log('console.log action = ',action)
+            // console.log('console.log action = ',action)
             return {
                 ...state,
                 email: action.email,
