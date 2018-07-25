@@ -76,7 +76,7 @@ const mainReducer = (state = initialState, action) => {
             return {
                 ...state,
                 email: '',
-                isUser: 'false',
+                isUser: false,
                 token: '',
                 categories: [],
                 subCategories: [],

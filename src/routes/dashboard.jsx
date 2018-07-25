@@ -22,80 +22,113 @@ import ReportsContainer from "containers/ReportsContainer";
 import SignInContainer from "containers/SignInContainer";
 import SignUpContainer from "containers/SignUpContainer";
 
-const dashboardRoutes = [
-    {
-        path: "/signin",
-        sidebarName: "Sign In",
-        navbarName: "Signin",
-        icon: Person,
-        component: SignInContainer
-    },
-    {
-        path: "/signup",
-        sidebarName: "Sign Up",
-        navbarName: "Signup",
-        icon: Person,
-        component: SignUpContainer
-    },
-    {
-        path: "/emailverification",
-        sidebarName: "Email verification",
-        navbarName: "Email verification",
-        icon: Person,
-        component: EmailVerification
-    },
-    {
-        path: "/config",
-        sidebarName: "Config",
-        navbarName: "Config",
-        icon: Person,
-        // component: Config
-        component: CategoriesContainer
-    },
-  {
-    path: "/dashboard",
-    sidebarName: "Dashboard",
-    navbarName: "Dashboard",
-    icon: Dashboard,
-    // component: DashboardPage
-    component: DashboardContainer
-  },
-    {
-        path: "/reports",
-        sidebarName: "Reports",
-        navbarName: "Reports",
-        icon: LibraryBooks,
-        component: ReportsContainer
-    },
-  {
-    path: "/user",
-    sidebarName: "User Profile",
-    navbarName: "Profile",
-    icon: Person,
-    component: UserProfile
-  },
-  {
-    path: "/table",
-    sidebarName: "Table List",
-    navbarName: "Table List",
-    icon: ContentPaste,
-    component: TableList
-  },
-  {
-    path: "/typography",
-    sidebarName: "Typography",
-    navbarName: "Typography",
-    icon: LibraryBooks,
-    component: Typography
-  },
-  {
-    path: "/icons",
-    sidebarName: "Icons",
-    navbarName: "Icons",
-    icon: BubbleChart,
-    component: Icons
-  },
-  { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
-];
+const getDashboardRoutes = isUser => {
 
-export default dashboardRoutes;
+
+    const dashboardRoutes = [
+        {
+            path: "/signin",
+            sidebarName: "Sign In",
+            navbarName: "Signin",
+            icon: Person,
+            component: SignInContainer,
+            isUser: false
+        },
+        {
+            path: "/signup",
+            sidebarName: "Sign Up",
+            navbarName: "Signup",
+            icon: Person,
+            component: SignUpContainer,
+            isUser: false
+        },
+        {
+            path: "/emailverification/:email/:verifyKey",
+            // path: "/emailverification",
+            sidebarName: "Email verification",
+            navbarName: "Email verification",
+            icon: Person,
+            component: EmailVerification,
+            isUser: false
+        },
+        {
+            path: "/config",
+            sidebarName: "Config",
+            navbarName: "Config",
+            icon: Person,
+            component: CategoriesContainer,
+            isUser: true
+        },
+        {
+            path: "/dashboard",
+            sidebarName: "Dashboard",
+            navbarName: "Dashboard",
+            icon: Dashboard,
+            component: DashboardContainer,
+            isUser: true
+        },
+        {
+            path: "/reports",
+            sidebarName: "Reports",
+            navbarName: "Reports",
+            icon: LibraryBooks,
+            component: ReportsContainer,
+            isUser: true
+        },
+//delete-----------------------------------------------
+        {
+            path: "/user",
+            sidebarName: "User Profile",
+            navbarName: "Profile",
+            icon: Person,
+            component: UserProfile
+        },
+        {
+            path: "/table",
+            sidebarName: "Table List",
+            navbarName: "Table List",
+            icon: ContentPaste,
+            component: TableList
+        },
+        {
+            path: "/typography",
+            sidebarName: "Typography",
+            navbarName: "Typography",
+            icon: LibraryBooks,
+            component: Typography
+        },
+        {
+            path: "/icons",
+            sidebarName: "Icons",
+            navbarName: "Icons",
+            icon: BubbleChart,
+            component: Icons
+        },
+//delete-----------------------------------------------
+        {
+            redirect: true,
+            path: "/",
+            to: "/signin",
+            navbarName: "Redirect",
+            isUser: false
+        },
+        {
+            redirect: true,
+            path: "/",
+            to: "/dashboard",
+            navbarName: "Redirect",
+            isUser: true
+        },
+        {
+            redirect: true,
+            path: "/emailverification",
+            to: "/emailverification",
+            navbarName: "Redirect",
+            isUser: false
+        }
+    ]
+    return dashboardRoutes.filter(route => route.isUser === isUser)
+        // .filter(route => route.component !== EmailVerification)
+}
+
+export default getDashboardRoutes;

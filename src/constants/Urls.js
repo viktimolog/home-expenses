@@ -28,7 +28,8 @@ const Urls = {
     updateSubCategory: baseApiUrlSubCategories + 'updateSubCategory/',
 
     signin: baseApiUrl + 'users/login',
-    signup: baseApiUrl + 'users/register'
+    signup: baseApiUrl + 'users/register',
+    verify: baseApiUrl + 'users/verify'
 
 };
 export default Urls;

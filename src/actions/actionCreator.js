@@ -21,14 +21,14 @@ import {
 import {TextConstants} from 'constants/TextConstants'
 import {
     GetCategories, UpdateCategory, AddCategory, DelCategory, AddSubCategory, GetSubCategories, AddExpense, GetExpenses,
-    DelSubCategory, UpdateExpense, UpdateSubCategory, Signin, Signup
+    DelSubCategory, UpdateExpense, UpdateSubCategory, Signin, Signup, Verify
 } from './axiosRequests'
 
 export const signup = user => dispatch => {
     Signup(user)
         .then(res => {
                 // if (res.data.success) {
-                    alert('success signup')
+                //     alert('success signup')
                     dispatch({
                         // type: SIGN_IN,
                         // email: res.data.payload.email,
@@ -50,6 +50,36 @@ export const signup = user => dispatch => {
                 //         avatar: ''
                 //     })
                 // }
+            }
+        )
+}
+
+export const verify = user => dispatch => {
+    Verify(user)
+        .then(res => {
+            // alert('res.data.success='+ res.data.success)
+                if (res.data.success) {
+                    dispatch({
+                        type: SIGN_IN,
+                        email: res.data.payload.email,
+                        isUser: true,
+                        token: res.data.token,
+                        idUser: res.data.payload.id,
+                        avatar: res.data.payload.avatar
+                    })
+                }
+                else {
+                    alert(res.data.message);
+                    console.log(res.data.message);
+                    dispatch({
+                        type: SIGN_IN,
+                        email: '',
+                        isUser: false,
+                        token: '',
+                        idUser: '',
+                        avatar: ''
+                    })
+                }
             }
         )
 }

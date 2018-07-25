@@ -12,16 +12,18 @@ import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 
-import dashboardRoutes from "routes/dashboard.jsx";
+// import dashboardRoutes from "routes/dashboard.jsx";
+import getDashboardRoutes from "routes/dashboard.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
 
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
+import {connect} from "react-redux";
 
-const switchRoutes = (
+const switchRoutes = isUser => (
   <Switch>
-    {dashboardRoutes.map((prop, key) => {
+    {getDashboardRoutes(isUser).map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key} />;
       return <Route path={prop.path} component={prop.component} key={key} />;
@@ -57,7 +59,8 @@ class App extends React.Component {
     return (
       <div className={classes.wrapper}>
         <Sidebar
-          routes={dashboardRoutes}
+          // routes={dashboardRoutes}
+            routes={getDashboardRoutes(this.props.isUser)}
           logoText={"HOME EXPENSES"}
           logo={logo}
           image={image}
@@ -68,19 +71,23 @@ class App extends React.Component {
         />
         <div className={classes.mainPanel} ref="mainPanel">
           <Header
-            routes={dashboardRoutes}
+            // routes={dashboardRoutes}
+            routes={getDashboardRoutes(this.props.isUser)}
             handleDrawerToggle={this.handleDrawerToggle}
             {...rest}
           />
           {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
           {this.getRoute() ? (
             <div className={classes.content}>
-              <div className={classes.container}>{switchRoutes}</div>
+              <div className={classes.container}>{switchRoutes(this.props.isUser)}</div>
             </div>
           ) : (
-            <div className={classes.map}>{switchRoutes}</div>
+            <div className={classes.map}>{switchRoutes(this.props.isUser)}</div>
           )}
-          {this.getRoute() ? <Footer routes={dashboardRoutes}/> : null}
+          {this.getRoute() ? <Footer
+              // routes={dashboardRoutes}
+              routes={getDashboardRoutes(this.props.isUser)}
+          /> : null}
         </div>
       </div>
     );
@@ -88,7 +95,17 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+    isUser: PropTypes.bool.isRequired
 };
 
-export default withStyles(dashboardStyle)(App);
+const mapStateToProps = state => ({
+    isUser: state.mainReducer.isUser
+})
+
+const mapDispatchToProps = {
+}
+
+//привязаться к стору получить isUser
+// export default withStyles(dashboardStyle)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(dashboardStyle)(App))

@@ -118,7 +118,7 @@ class Dashboard extends React.Component {
         this.setState({
             uah: '',
             expense: '',
-            // curCategory: null//mustn't use, lose current category in select
+            // curCategory: null//mustn't use, lose value of current category in select, but user sees it
         })
         this.props.addExpense(newExpense, this.props.token);
     };
