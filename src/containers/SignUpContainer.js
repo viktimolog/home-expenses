@@ -22,15 +22,8 @@ SignUpContainer.propTypes = {
     signup: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({
-    // email: state.mainReducer.email,
-    // idUser: state.mainReducer.idUser,
-    // token: state.mainReducer.idUser,
-    // avatar: state.mainReducer.idUser
-})
-
 const mapDispatchToProps = {
     signup
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpContainer)
+export default connect(null, mapDispatchToProps)(SignUpContainer)

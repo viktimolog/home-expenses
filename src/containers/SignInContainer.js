@@ -22,15 +22,8 @@ SignInContainer.propTypes = {
     signin: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({
-    // email: state.mainReducer.email,
-    // idUser: state.mainReducer.idUser,
-    // token: state.mainReducer.idUser,
-    // avatar: state.mainReducer.idUser
-})
-
 const mapDispatchToProps = {
     signin
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignInContainer)
+export default connect(null, mapDispatchToProps)(SignInContainer)

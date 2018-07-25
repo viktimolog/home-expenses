@@ -68,7 +68,6 @@ class HeaderLinks extends React.Component {
                             <Hidden mdUp>
                                 <p className={classes.linkText}>Profile</p>
                             </Hidden>
-
                         </Button>
 
                     </Target>
@@ -132,8 +131,6 @@ class HeaderLinks extends React.Component {
         );
     }
 }
-
-// export default withStyles(headerLinksStyle)(HeaderLinks);
 
 HeaderLinks.propTypes = {
     isUser: PropTypes.string.isRequired,
