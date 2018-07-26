@@ -1,16 +1,28 @@
 import Urls from 'constants/Urls'
 import axios from 'axios'
 
-const Axios = axios.create({
+let Axios = axios.create({
     baseURL: Urls.baseApiUrl,
-    headers: {
-        "Authorization": "Bearer " + localStorage.getItem('token')
-    }
 });
+
+Axios.interceptors.request.use(
+        config => {
+            config.headers.authorization = "Bearer " + localStorage.getItem('token');
+            return config;
+        },
+        error => Promise.reject(error)
+);
+
+
+//getCurrentUserByToken
+export const GetCurrentUserByToken = () => {
+    return Axios.post(Urls.token)
+}
 
 //getCategories
 export const GetCategories = () => {
     return Axios.get(Urls.getCategories)
+    // return axiosInstance.get(Urls.getCategories)
 }
 
 // Add Category

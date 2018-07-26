@@ -6,13 +6,20 @@ import {
     addExpense,
     getExpenses,
     getSubCategories,
-    getInitialState
+    getInitialState,
+    // getCurrentUserByToken
 } from 'actions/actionCreator'
 import Dashboard from 'views/Dashboard/Dashboard'
 
 class DashboardContainer extends React.Component {
     componentDidMount() {
-        this.props.getInitialState(this.props.token)
+
+        // alert('didmount DashboardContainer')
+
+        // if(localStorage.getItem('token'))
+        // this.props.getCurrentUserByToken()
+
+        this.props.getInitialState()
     }
 
     render() {
@@ -22,7 +29,6 @@ class DashboardContainer extends React.Component {
                     expenses={this.props.expenses}
                     categories={this.props.categories}
                     addExpense={this.props.addExpense}
-                    token={this.props.token}
                     idUser={this.props.idUser}
                 />
             </div>)
@@ -39,7 +45,6 @@ DashboardContainer.propTypes = {
 const mapStateToProps = state => ({
     categories: state.mainReducer.categories,
     expenses: state.mainReducer.expenses,
-    token: state.mainReducer.token,
     idUser: state.mainReducer.idUser
 })
 
@@ -47,7 +52,8 @@ const mapDispatchToProps = {
     getCategories,
     addExpense,
     getExpenses,
-    getInitialState
+    getInitialState,
+    // getCurrentUserByToken
     // getSubCategories// ?
 }
 

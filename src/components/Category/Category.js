@@ -30,7 +30,6 @@ const Styles = {
 
 const Category = ({
                       idUser,
-                      token,
                       updateExpense,
                       expenses,
                       subCategories,
@@ -64,7 +63,7 @@ const Category = ({
             child: category.child
         }
 
-        updateCategory(category._id, newUPcategory, token);
+        updateCategory(category._id, newUPcategory);
 
         const newDOWNcategory = {
             idUser: ratingDOWNcategory.idUser,
@@ -73,7 +72,7 @@ const Category = ({
             parent: ratingDOWNcategory.parent,
             child: ratingDOWNcategory.child
         }
-        updateCategory(ratingDOWNcategory._id, newDOWNcategory, token);
+        updateCategory(ratingDOWNcategory._id, newDOWNcategory);
     }
 
     const DOWNhandler = () => {
@@ -91,7 +90,7 @@ const Category = ({
             parent: ratingUPcategory.parent,
             child: ratingUPcategory.child
         }
-        updateCategory(ratingUPcategory._id, newUPcategory, token);
+        updateCategory(ratingUPcategory._id, newUPcategory);
 
         const newDOWNcategory = {
             idUser: category.idUser,
@@ -100,7 +99,7 @@ const Category = ({
             parent: category.parent,
             child: category.child
         }
-        updateCategory(category._id, newDOWNcategory, token);
+        updateCategory(category._id, newDOWNcategory);
     }
 
     const UPhandlerSubCat = subCategory => {
@@ -122,7 +121,7 @@ const Category = ({
             rating: subCategory.rating - 1,
             idParent: subCategory.idParent
         }
-        updateSubCategory(subCategory._id, newUPcategory, token)
+        updateSubCategory(subCategory._id, newUPcategory)
 
         const newDOWNcategory = {
             idUser: ratingDOWNcategory.idUser,
@@ -130,7 +129,7 @@ const Category = ({
             rating: ratingDOWNcategory.rating + 1,
             idParent: ratingDOWNcategory.idParent
         }
-        updateSubCategory(ratingDOWNcategory._id, newDOWNcategory, token)
+        updateSubCategory(ratingDOWNcategory._id, newDOWNcategory)
     }
 
     const DOWNhandlerSubCat = subCategory => {
@@ -153,7 +152,7 @@ const Category = ({
             rating: ratingUPcategory.rating - 1,
             idParent: ratingUPcategory.idParent
         }
-        updateSubCategory(ratingUPcategory._id, newUPcategory, token)
+        updateSubCategory(ratingUPcategory._id, newUPcategory)
 
         const newDOWNcategory = {
             idUser: subCategory.idUser,
@@ -161,7 +160,7 @@ const Category = ({
             rating: subCategory.rating + 1,
             idParent: subCategory.idParent
         }
-        updateSubCategory(subCategory._id, newDOWNcategory, token)
+        updateSubCategory(subCategory._id, newDOWNcategory)
     }
 
     return (
@@ -176,7 +175,6 @@ const Category = ({
                         <ModalDialogEditCategoryName
                             category={category}
                             updateCategory={updateCategory}
-                            token={token}
                         />
                     </Typography>
                 </CardContent>
@@ -211,7 +209,6 @@ const Category = ({
                             delSubCategory={delSubCategory}
                             expenses={expenses}
                             updateExpense={updateExpense}
-                            token={token}
                         />
                     </CardActions>
                     <CardActions>
@@ -227,7 +224,6 @@ const Category = ({
                             categories={categories}
                             UPhandlerSubCat={UPhandlerSubCat}
                             DOWNhandlerSubCat={DOWNhandlerSubCat}
-                            token={token}
                         />
                     </CardActions>
                 </div>
@@ -253,10 +249,8 @@ const Category = ({
                                                             subCategoryUP={subCategoryUP}
                                                             subCategoryDOWN={subCategoryDOWN}
                                                             categories={categories}
-                                                            // updateSubCategory={updateSubCategory}
                                                             DOWNhandlerSubCat={DOWNhandlerSubCat}
                                                             UPhandlerSubCat={UPhandlerSubCat}
-                                                            token={token}
                                                         />
                                                     </TableCell>
                                                 </TableRow>

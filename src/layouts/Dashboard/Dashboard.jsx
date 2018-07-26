@@ -46,6 +46,8 @@ class App extends React.Component {
         if (navigator.platform.indexOf("Win") > -1) {
             const ps = new PerfectScrollbar(this.refs.mainPanel);
         }
+        // if(localStorage.getItem('token'))
+        //     this.props.GetCurrentUserByToken()
     }
 
     componentDidUpdate(e) {

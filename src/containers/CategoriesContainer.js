@@ -20,31 +20,14 @@ import {
     getInitialState
 } from 'actions/actionCreator'
 import Config from 'views/Config/Config'
-import axios from 'axios'
-import Urls from 'constants/Urls'
 
 class CategoriesContainer extends React.Component {
 
-    // async getInitialState(url, func) {
-    //     try {
-    //         const response = await axios
-    //             .get(url)
-    //             .then(res => res.data)
-    //         func(response)
-    //     } catch (error) {
-    //         alert('error = ' + error)
-    //     }
-    // }
-
     componentDidMount() {
-        // this.getInitialState(Urls.getCategories, this.props.getCategories)
-        // this.getInitialState(Urls.getSubCategories, this.props.getSubCategories)
-        // this.getInitialState(Urls.getExpenses, this.props.getExpenses)
-        this.props.getInitialState(this.props.token)
+        this.props.getInitialState()
     }
 
     render() {
-        // alert(this.props.idUser)//ok
         return (
             <div>
                 <Config
@@ -63,7 +46,6 @@ class CategoriesContainer extends React.Component {
                     expenses={this.props.expenses}
                     updateExpense={this.props.updateExpense}
                     updateSubCategory={this.props.updateSubCategory}
-                    token={this.props.token}
                     idUser={this.props.idUser}
                 />
             </div>)
@@ -87,14 +69,12 @@ const mapStateToProps = state => ({
     categories: state.mainReducer.categories,
     subCategories: state.mainReducer.subCategories,
     expenses: state.mainReducer.expenses,
-    token: state.mainReducer.token,
     idUser: state.mainReducer.idUser,
     clearCategories: getClearCategories(state)
 })
 
 CategoriesContainer.propTypes = {
     categories: PropTypes.array.isRequired,
-    token: PropTypes.string.isRequired,
     idUser: PropTypes.string.isRequired,
     subCategories: PropTypes.array.isRequired,
     categoryUP: PropTypes.func.isRequired,

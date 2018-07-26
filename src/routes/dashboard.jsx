@@ -18,6 +18,15 @@ import SignUpContainer from "containers/SignUpContainer";
 
 const getDashboardRoutes = isUser => {
 
+    // localStorage.clear()
+
+const token = Boolean(localStorage.getItem('token'))
+
+    console.log('console.log token = ',token)
+    // console.log('console.log token1 = ',localStorage.getItem('token'))
+
+    // alert('token = '+token)
+
 
     const dashboardRoutes = [
         {
@@ -26,7 +35,8 @@ const getDashboardRoutes = isUser => {
             navbarName: "Signin",
             icon: Person,
             component: SignInContainer,
-            isUser: false
+            // isUser: false
+            token: false
         },
         {
             path: "/signup",
@@ -34,7 +44,8 @@ const getDashboardRoutes = isUser => {
             navbarName: "Signup",
             icon: Person,
             component: SignUpContainer,
-            isUser: false
+            // isUser: false
+            token: false
         },
         {
             path: "/emailverification/:email/:verifyKey",
@@ -42,7 +53,8 @@ const getDashboardRoutes = isUser => {
             navbarName: "Email verification",
             icon: Person,
             component: EmailVerification,
-            isUser: false
+            // isUser: false
+            token: false
         },
         {
             path: "/config",
@@ -50,7 +62,8 @@ const getDashboardRoutes = isUser => {
             navbarName: "Config",
             icon: Person,
             component: CategoriesContainer,
-            isUser: true
+            // isUser: true
+            token: true
         },
         {
             path: "/dashboard",
@@ -58,7 +71,8 @@ const getDashboardRoutes = isUser => {
             navbarName: "Dashboard",
             icon: Dashboard,
             component: DashboardContainer,
-            isUser: true
+            // isUser: true
+            token: true
         },
         {
             path: "/reports",
@@ -66,7 +80,8 @@ const getDashboardRoutes = isUser => {
             navbarName: "Reports",
             icon: LibraryBooks,
             component: ReportsContainer,
-            isUser: true
+            // isUser: true
+            token: true
         },
 //delete-----------------------------------------------
         {
@@ -103,17 +118,20 @@ const getDashboardRoutes = isUser => {
             path: "/",
             to: "/signin",
             navbarName: "Redirect",
-            isUser: false
+            // isUser: false
+            token: false
         },
         {
             redirect: true,
             path: "/",
             to: "/dashboard",
             navbarName: "Redirect",
-            isUser: true
+            // isUser: true
+            token: true
         }
     ]
-    return dashboardRoutes.filter(route => route.isUser === isUser)
+    // return dashboardRoutes.filter(route => route.isUser === isUser)
+    return dashboardRoutes.filter(route => route.token === token)
 }
 
 export default getDashboardRoutes;

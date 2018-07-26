@@ -18,7 +18,8 @@ const Urls = {
 
     signin: baseApiUrl + 'users/login',
     signup: baseApiUrl + 'users/register',
-    verify: baseApiUrl + 'users/verify'
+    verify: baseApiUrl + 'users/verify',
+    token: baseApiUrl + 'users/token'
 };
 export default Urls;
 

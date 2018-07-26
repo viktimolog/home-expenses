@@ -21,7 +21,7 @@ import {
 import {TextConstants} from 'constants/TextConstants'
 import {
     GetCategories, UpdateCategory, AddCategory, DelCategory, AddSubCategory, GetSubCategories, AddExpense, GetExpenses,
-    DelSubCategory, UpdateExpense, UpdateSubCategory, Signin, Signup, Verify
+    DelSubCategory, UpdateExpense, UpdateSubCategory, Signin, Signup, Verify, GetCurrentUserByToken
 } from './axiosRequests'
 
 export const signup = user => dispatch => {
@@ -97,10 +97,145 @@ export const verify = user => dispatch => {
         )
 }
 
+export const getCurrentUserByToken = () => dispatch => {
+    GetCurrentUserByToken()
+        .then(res => {
+                if (res.data.success) {
+                    dispatch({
+                        type: SIGN_IN,
+                        email: res.data.payload.email,
+                        isUser: true,
+                        token: res.data.token,
+                        idUser: res.data.payload.id,
+                        avatar: res.data.payload.avatar
+                    })
+                }
+                else {
+                    alert(res.data.message);
+                    dispatch({
+                        type: SIGN_IN,
+                        email: '',
+                        isUser: false,
+                        token: '',
+                        idUser: '',
+                        avatar: ''
+                    })
+                }
+            }
+        )
+        .catch(err => {
+                alert(err);
+                dispatch({
+                    type: SIGN_IN,
+                    email: '',
+                    isUser: false,
+                    token: '',
+                    idUser: '',
+                    avatar: ''
+                })
+            }
+        )
+}
+
+export const getInitialState = () => dispatch => {
+
+    GetCurrentUserByToken()
+        .then(res => {
+                if (res.data.success) {
+                    dispatch({
+                        type: SIGN_IN,
+                        email: res.data.payload.email,
+                        isUser: true,
+                        token: res.data.token,
+                        idUser: res.data.payload.id,
+                        avatar: res.data.payload.avatar
+                    })
+                }
+                else {
+                    alert(res.data.message);
+                    dispatch({
+                        type: SIGN_IN,
+                        email: '',
+                        isUser: false,
+                        token: '',
+                        idUser: '',
+                        avatar: ''
+                    })
+                }
+            }
+        )
+        .catch(err => {
+                alert(err);
+                dispatch({
+                    type: SIGN_IN,
+                    email: '',
+                    isUser: false,
+                    token: '',
+                    idUser: '',
+                    avatar: ''
+                })
+            }
+        )
+        .then(res => GetCategories()
+    // GetCategories()
+        .then(res =>
+            dispatch({
+                type: GET_CATEGORIES,
+                payload: res.data
+            })
+        )
+        .catch(err => {
+                // alert(TextConstants.SERVETNOTRESP)
+                alert('first catch GetCategories')
+                dispatch({
+                    type: GET_CATEGORIES,
+                    payload: []
+                })
+            }
+        )
+        )
+        .then(res => GetSubCategories()
+            .then(res => {
+                    dispatch({
+                        type: GET_SUBCATEGORIES,
+                        payload: res.data
+                    })
+                }
+            )
+            .catch(err => {
+                    // alert(TextConstants.SERVETNOTRESP)
+                    alert('second catch GetSubCategories')
+                    dispatch({
+                        type: GET_SUBCATEGORIES,
+                        payload: []
+                    })
+                }
+            )
+        )
+        .then(res => GetExpenses()
+            .then(res =>
+                dispatch({
+                    type: GET_EXPENSES,
+                    payload: res.data
+                })
+            )
+            .catch(err => {
+                    // alert(TextConstants.SERVETNOTRESP)
+                    alert('first catch GetExpenses')
+                    dispatch({
+                        type: GET_EXPENSES,
+                        payload: []
+                    })
+                }
+            )
+        )
+}
+
 export const signin = user => dispatch => {
     Signin(user)
         .then(res => {
                 if (res.data.success) {
+                    localStorage.setItem('token', res.data.token)
                     dispatch({
                         type: SIGN_IN,
                         email: res.data.payload.email,
@@ -572,60 +707,6 @@ export const signOut = () => dispatch => {
     dispatch({
         type: SIGN_OUT,
     })
-}
-
-export const getInitialState = token => dispatch => {
-    GetCategories(token)
-        .then(res =>
-            dispatch({
-                type: GET_CATEGORIES,
-                payload: res.data
-            })
-        )
-        .catch(err => {
-                // alert(TextConstants.SERVETNOTRESP)
-                alert('first catch GetCategories')
-                dispatch({
-                    type: GET_CATEGORIES,
-                    payload: []
-                })
-            }
-        )
-        .then(res => GetSubCategories(token)
-            .then(res => {
-                    dispatch({
-                        type: GET_SUBCATEGORIES,
-                        payload: res.data
-                    })
-                }
-            )
-            .catch(err => {
-                    // alert(TextConstants.SERVETNOTRESP)
-                    alert('second catch GetSubCategories')
-                    dispatch({
-                        type: GET_SUBCATEGORIES,
-                        payload: []
-                    })
-                }
-            )
-        )
-        .then(res => GetExpenses(token)
-            .then(res =>
-                dispatch({
-                    type: GET_EXPENSES,
-                    payload: res.data
-                })
-            )
-            .catch(err => {
-                    // alert(TextConstants.SERVETNOTRESP)
-                    alert('first catch GetExpenses')
-                    dispatch({
-                        type: GET_EXPENSES,
-                        payload: []
-                    })
-                }
-            )
-        )
 }
 
 //todo
