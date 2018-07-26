@@ -26,7 +26,8 @@ const initialState = {
     isUser: false,
     categories: [],
     subCategories: [],
-    expenses: []
+    expenses: [],
+    pastDescriptions: []
 }
 
 const mainReducer = (state = initialState, action) => {

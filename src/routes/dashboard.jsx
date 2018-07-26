@@ -22,10 +22,7 @@ const getDashboardRoutes = isUser => {
 
 const token = Boolean(localStorage.getItem('token'))
 
-    console.log('console.log token = ',token)
-    // console.log('console.log token1 = ',localStorage.getItem('token'))
-
-    // alert('token = '+token)
+    console.log('console.log token = ',token)//todo
 
 
     const dashboardRoutes = [

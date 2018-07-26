@@ -17,6 +17,8 @@ import CardBody from "components/Card/CardBody.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
+import Autocomplete from "views/Dashboard/Autocomplete"
+
 const styles = {
     cardCategoryWhite: {
         "&,& a,& a:hover,& a:focus": {
@@ -129,6 +131,12 @@ class Dashboard extends React.Component {
         return date;
     }
 
+    handleExpense = exp =>{
+        this.setState({
+            expense: exp
+        })
+    }
+
     render() {
         const {classes} = this.props;
         return (
@@ -145,7 +153,7 @@ class Dashboard extends React.Component {
                             <Grid container>
                                 <GridItem xs={12} sm={12} md={4}>
                                     <Select
-                                        style={{top: '45%'}}
+                                        style={{display: 'flex', paddingTop: '39px'}}
                                         native
                                         onChange={this.handleChange}
                                         input={<Input id="age-native-simple"/>}
@@ -163,18 +171,13 @@ class Dashboard extends React.Component {
                                         }
                                     </Select>
                                 </GridItem>
-                                <GridItem xs={12} sm={12} md={4}>
-                                    <CustomInput
-                                        labelText="Description"
-                                        id="expense"
-                                        formControlProps={{fullWidth: true}}
-                                        inputProps={
-                                            {
-                                                value: this.state.expense,
-                                                onChange: this.stringHandler('expense'),
-                                            }
-                                        }
+                                <GridItem xs={2} sm={12} md={4}>
+                                    <div style={{paddingTop: '43px'}}>
+                                    <Autocomplete
+                                        pastDescriptions={this.props.pastDescriptions}
+                                        setExpense={this.handleExpense}
                                     />
+                                    </div>
                                 </GridItem>
                                 <GridItem xs={12} sm={12} md={2}>
                                     <CustomInput
@@ -193,7 +196,7 @@ class Dashboard extends React.Component {
                                     <Button
                                         color="primary"
                                         onClick={this.handleAddExpenses}
-                                        style={{top: '35%'}}
+                                        style={{display: 'flex', top: '35%'}}
                                     >ADD EXPENSES</Button>
                                 </GridItem>
                             </Grid>
