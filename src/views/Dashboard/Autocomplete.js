@@ -64,10 +64,6 @@ function getSuggestionValue(suggestion) {
 
 function getSuggestions(value, suggestions) {
 
-    console.log('console.log value = ',value)
-    console.log('console.log suggestions = ',suggestions)//[]
-
-
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
     let count = 0;
@@ -141,11 +137,14 @@ class IntegrationAutosuggest extends React.Component {
         return (
             <Autosuggest
                 theme={{
-                    // container: classes.container,
-                    // suggestionsContainerOpen: classes.suggestionsContainerOpen,
-                    // suggestion: classes.suggestion,
                     suggestionsList: classes.suggestionsList,
                 }}
+                // theme={{
+                //     container: classes.container,
+                //     suggestionsContainerOpen: classes.suggestionsContainerOpen,
+                //     suggestionsList: classes.suggestionsList,
+                //     suggestion: classes.suggestion,
+                // }}
                 renderInputComponent={renderInput}
                 suggestions={this.state.suggestions}
                 onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
