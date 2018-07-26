@@ -33,7 +33,7 @@ const mainReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case SIGN_IN: {
-            // localStorage.setItem('token', action.token)
+            localStorage.setItem('token', action.token)
             return {
                 ...state,
                 email: action.email,

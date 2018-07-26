@@ -235,7 +235,7 @@ export const signin = user => dispatch => {
     Signin(user)
         .then(res => {
                 if (res.data.success) {
-                    localStorage.setItem('token', res.data.token)
+                    // localStorage.setItem('token', res.data.token)
                     dispatch({
                         type: SIGN_IN,
                         email: res.data.payload.email,
