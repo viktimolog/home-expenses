@@ -17,12 +17,56 @@ import {
     SIGN_OUT,
     SIGN_IN,
     SIGN_UP
-} from 'actions/actionTypes'
-import {TextConstants} from 'constants/TextConstants'
+} from 'actions/actionTypes';
+import {TextConstants} from 'constants/TextConstants';
 import {
     GetCategories, UpdateCategory, AddCategory, DelCategory, AddSubCategory, GetSubCategories, AddExpense, GetExpenses,
-    DelSubCategory, UpdateExpense, UpdateSubCategory, Signin, Signup, Verify, GetCurrentUserByToken
-} from './axiosRequests'
+    DelSubCategory, UpdateExpense, UpdateSubCategory, Signin, Signup, Verify, GetCurrentUserByToken, UpCategory
+} from './axiosRequests';
+
+export const upCategory = (_id, category) => dispatch => {
+    UpCategory(_id, category)
+        .then(res => {
+                // alert(res.data.success)//true, false - badly
+                if (res.data.success) {
+                    GetCategories()
+                        .then(res =>
+                            dispatch({
+                                type: GET_CATEGORIES,
+                                payload: res.data
+                            })
+                        )
+                        .catch(err => {
+                                // alert(TextConstants.SERVETNOTRESP)
+                                alert('first catch UpCategory');
+                                dispatch({
+                                    type: GET_CATEGORIES,
+                                    payload: []
+                                });
+                            }
+                        )
+                }
+                else {
+                    // alert(TextConstants.SERVETNOTRESP)
+                    alert('third catch UpCategory')
+                    dispatch({
+                        type: GET_CATEGORIES,
+                        payload: []
+                    })
+                }
+            }
+        )
+        .catch(err => {
+                // alert(TextConstants.SERVETNOTRESP)
+                alert('fourth catch UpCategory');
+                dispatch({
+                    type: GET_CATEGORIES,
+                    payload: []
+                });
+            }
+        );
+};
+
 
 export const signup = user => dispatch => {
     Signup(user)
@@ -39,7 +83,7 @@ export const signup = user => dispatch => {
                         token: '',
                         idUser: '',
                         avatar: ''
-                    })
+                    });
                 }
             }
         )
@@ -52,10 +96,10 @@ export const signup = user => dispatch => {
                     token: '',
                     idUser: '',
                     avatar: ''
-                })
+                });
             }
-        )
-}
+        );
+};
 
 export const verify = user => dispatch => {
     Verify(user)
@@ -68,7 +112,7 @@ export const verify = user => dispatch => {
                         token: res.data.token,
                         idUser: res.data.payload.id,
                         avatar: res.data.payload.avatar
-                    })
+                    });
                 }
                 else {
                     alert(res.data.message);
@@ -79,7 +123,7 @@ export const verify = user => dispatch => {
                         token: '',
                         idUser: '',
                         avatar: ''
-                    })
+                    });
                 }
             }
         )
@@ -92,10 +136,10 @@ export const verify = user => dispatch => {
                     token: '',
                     idUser: '',
                     avatar: ''
-                })
+                });
             }
-        )
-}
+        );
+};
 
 export const getCurrentUserByToken = () => dispatch => {
     GetCurrentUserByToken()
@@ -108,7 +152,7 @@ export const getCurrentUserByToken = () => dispatch => {
                         token: res.data.token,
                         idUser: res.data.payload.id,
                         avatar: res.data.payload.avatar
-                    })
+                    });
                 }
                 else {
                     alert(res.data.message);
@@ -119,7 +163,7 @@ export const getCurrentUserByToken = () => dispatch => {
                         token: '',
                         idUser: '',
                         avatar: ''
-                    })
+                    });
                 }
             }
         )
@@ -132,10 +176,10 @@ export const getCurrentUserByToken = () => dispatch => {
                     token: '',
                     idUser: '',
                     avatar: ''
-                })
+                });
             }
-        )
-}
+        );
+};
 
 export const getInitialState = () => dispatch => {
 
@@ -149,7 +193,7 @@ export const getInitialState = () => dispatch => {
                         token: res.data.token,
                         idUser: res.data.payload.id,
                         avatar: res.data.payload.avatar
-                    })
+                    });
                 }
                 else {
                     alert(res.data.message);
@@ -160,7 +204,7 @@ export const getInitialState = () => dispatch => {
                         token: '',
                         idUser: '',
                         avatar: ''
-                    })
+                    });
                 }
             }
         )
@@ -173,42 +217,42 @@ export const getInitialState = () => dispatch => {
                     token: '',
                     idUser: '',
                     avatar: ''
-                })
+                });
             }
         )
         .then(res => GetCategories()
-    // GetCategories()
-        .then(res =>
-            dispatch({
-                type: GET_CATEGORIES,
-                payload: res.data
-            })
-        )
-        .catch(err => {
-                // alert(TextConstants.SERVETNOTRESP)
-                alert('first catch GetCategories')
-                dispatch({
-                    type: GET_CATEGORIES,
-                    payload: []
-                })
-            }
-        )
+            // GetCategories()
+                .then(res =>
+                    dispatch({
+                        type: GET_CATEGORIES,
+                        payload: res.data
+                    })
+                )
+                .catch(err => {
+                        // alert(TextConstants.SERVETNOTRESP)
+                        alert('first catch GetCategories');
+                        dispatch({
+                            type: GET_CATEGORIES,
+                            payload: []
+                        });
+                    }
+                )
         )
         .then(res => GetSubCategories()
             .then(res => {
                     dispatch({
                         type: GET_SUBCATEGORIES,
                         payload: res.data
-                    })
+                    });
                 }
             )
             .catch(err => {
                     // alert(TextConstants.SERVETNOTRESP)
-                    alert('second catch GetSubCategories')
+                    alert('second catch GetSubCategories');
                     dispatch({
                         type: GET_SUBCATEGORIES,
                         payload: []
-                    })
+                    });
                 }
             )
         )
@@ -221,15 +265,15 @@ export const getInitialState = () => dispatch => {
             )
             .catch(err => {
                     // alert(TextConstants.SERVETNOTRESP)
-                    alert('first catch GetExpenses')
+                    alert('first catch GetExpenses');
                     dispatch({
                         type: GET_EXPENSES,
                         payload: []
-                    })
+                    });
                 }
             )
-        )
-}
+        );
+};
 
 export const signin = user => dispatch => {
     Signin(user)
@@ -243,7 +287,7 @@ export const signin = user => dispatch => {
                         token: res.data.token,
                         idUser: res.data.payload.id,
                         avatar: res.data.payload.avatar
-                    })
+                    });
                 }
                 else {
                     alert(res.data.message);
@@ -254,7 +298,7 @@ export const signin = user => dispatch => {
                         token: '',
                         idUser: '',
                         avatar: ''
-                    })
+                    });
                 }
             }
         )
@@ -267,10 +311,10 @@ export const signin = user => dispatch => {
                     token: '',
                     idUser: '',
                     avatar: ''
-                })
+                });
             }
-        )
-}
+        );
+};
 
 export const updateSubCategory = (_id, subCategory, token) => dispatch => {
     UpdateSubCategory(_id, subCategory, token)
@@ -281,36 +325,36 @@ export const updateSubCategory = (_id, subCategory, token) => dispatch => {
                                 dispatch({
                                     type: GET_SUBCATEGORIES,
                                     payload: res.data
-                                })
+                                });
                             }
                         )
                         .catch(err => {
-                                alert(err)
+                                alert(err);
                                 dispatch({
                                     type: GET_SUBCATEGORIES,
                                     payload: []
-                                })
+                                });
                             }
-                        )
+                        );
                 }
                 else {
                     alert(res.data.message);
                     dispatch({
                         type: GET_SUBCATEGORIES,
                         payload: []
-                    })
+                    });
                 }
             }
         )
         .catch(err => {
-                alert(err)
+                alert(err);
                 dispatch({
                     type: GET_SUBCATEGORIES,
                     payload: []
-                })
+                });
             }
-        )
-}
+        );
+};
 
 export const updateExpense = (_id, expense, token) => dispatch => {
     UpdateExpense(_id, expense, token)
@@ -324,39 +368,39 @@ export const updateExpense = (_id, expense, token) => dispatch => {
                             })
                         )
                         .catch(err => {
-                                alert(err)
+                                alert(err);
                                 dispatch({
                                     type: GET_EXPENSES,
                                     payload: []
-                                })
+                                });
                             }
-                        )
+                        );
                 }
                 else {
-                    alert(res.data.message)
+                    alert(res.data.message);
                     dispatch({
                         type: GET_EXPENSES,
                         payload: []
-                    })
+                    });
                 }
             }
         )
         .catch(err => {
-                alert(err)
+                alert(err);
                 dispatch({
                     type: GET_EXPENSES,
                     payload: []
-                })
+                });
             }
-        )
-}
+        );
+};
 
 
 // Del SubCategory
 export const delSubCategory = (id, token) => dispatch => {
     DelSubCategory(id, token)
         .then(res => {
-                if (res.data.success)
+                if (res.data.success) {
                     GetCategories(token)
                         .then(res =>
                             dispatch({
@@ -365,11 +409,11 @@ export const delSubCategory = (id, token) => dispatch => {
                             })
                         )
                         .catch(err => {
-                                alert(err)
+                                alert(err);
                                 dispatch({
                                     type: GET_CATEGORIES,
                                     payload: []
-                                })
+                                });
                             }
                         )
                         .then(res => GetSubCategories(token)
@@ -377,29 +421,30 @@ export const delSubCategory = (id, token) => dispatch => {
                                     dispatch({
                                         type: GET_SUBCATEGORIES,
                                         payload: res.data
-                                    })
+                                    });
                                 }
                             )
                             .catch(err => {
-                                    alert(err)
+                                    alert(err);
                                     dispatch({
                                         type: GET_SUBCATEGORIES,
                                         payload: []
-                                    })
+                                    });
                                 }
                             )
-                        )
+                        );
+                }
             }
         )
         .catch(err => {
-                alert(err)
+                alert(err);
                 dispatch({
                     type: GET_SUBCATEGORIES,
                     payload: []
-                })
+                });
             }
-        )
-}
+        );
+};
 
 //Get Expenses
 export const getExpenses = token => dispatch => {
@@ -412,14 +457,14 @@ export const getExpenses = token => dispatch => {
         )
         .catch(err => {
                 // alert(TextConstants.SERVETNOTRESP)
-                alert('first catch getExpenses')
+                alert('first catch getExpenses');
                 dispatch({
                     type: GET_EXPENSES,
                     payload: []
-                })
+                });
             }
-        )
-}
+        );
+};
 
 export const addExpense = (newExpense, token) => dispatch => {
     AddExpense(newExpense, token)
@@ -434,27 +479,27 @@ export const addExpense = (newExpense, token) => dispatch => {
                         )
                         .catch(err => {
                                 // alert(TextConstants.SERVETNOTRESP)
-                                alert('first catch addExpense')
+                                alert('first catch addExpense');
                                 dispatch({
                                     type: GET_EXPENSES,
                                     payload: []
-                                })
+                                });
                             }
-                        )
+                        );
                 }
             }
         )
         .catch(err => {
                 // alert(TextConstants.SERVETNOTRESP)
-                alert('second catch addExpense')
+                alert('second catch addExpense');
                 dispatch({
                     type: GET_EXPENSES,
                     payload: []
-                })
+                });
             }
-        )
+        );
 
-}
+};
 
 export const updateCategory = (_id, category, token) => dispatch => {
     UpdateCategory(_id, category, token)
@@ -470,11 +515,11 @@ export const updateCategory = (_id, category, token) => dispatch => {
                         )
                         .catch(err => {
                                 // alert(TextConstants.SERVETNOTRESP)
-                                alert('first catch updateCategory')
+                                alert('first catch updateCategory');
                                 dispatch({
                                     type: GET_CATEGORIES,
                                     payload: []
-                                })
+                                });
                             }
                         )
                         .then(res => GetSubCategories(token)
@@ -482,19 +527,19 @@ export const updateCategory = (_id, category, token) => dispatch => {
                                     dispatch({
                                         type: GET_SUBCATEGORIES,
                                         payload: res.data
-                                    })
+                                    });
                                 }
                             )
                             .catch(err => {
                                     // alert(TextConstants.SERVETNOTRESP)
-                                    alert('second catch updateCategory')
+                                    alert('second catch updateCategory');
                                     dispatch({
                                         type: GET_SUBCATEGORIES,
                                         payload: []
-                                    })
+                                    });
                                 }
                             )
-                        )
+                        );
                 }
                 // else {
                 //     // alert(TextConstants.SERVETNOTRESP)
@@ -508,14 +553,14 @@ export const updateCategory = (_id, category, token) => dispatch => {
         )
         .catch(err => {
                 // alert(TextConstants.SERVETNOTRESP)
-                alert('fourth catch updateCategory')
+                alert('fourth catch updateCategory');
                 dispatch({
                     type: GET_CATEGORIES,
                     payload: []
-                })
+                });
             }
-        )
-}
+        );
+};
 
 export const addSubCategory = (newSubCategory, token) => dispatch => {
     AddSubCategory(newSubCategory, token)
@@ -526,16 +571,16 @@ export const addSubCategory = (newSubCategory, token) => dispatch => {
                                 dispatch({
                                     type: GET_SUBCATEGORIES,
                                     payload: res.data
-                                })
+                                });
                             }
                         )
                         .catch(err => {
                                 // alert(TextConstants.SERVETNOTRESP)
-                                alert('first catch addSubCategory')
+                                alert('first catch addSubCategory');
                                 dispatch({
                                     type: GET_SUBCATEGORIES,
                                     payload: []
-                                })
+                                });
                             }
                         )
                         .then(res => GetCategories(token)
@@ -547,29 +592,29 @@ export const addSubCategory = (newSubCategory, token) => dispatch => {
                             )
                             .catch(err => {
                                     // alert(TextConstants.SERVETNOTRESP)
-                                    alert('second catch addSubCategory')
+                                    alert('second catch addSubCategory');
                                     dispatch({
                                         type: GET_CATEGORIES,
                                         payload: []
-                                    })
+                                    });
                                 }
                             )
-                        )
+                        );
                 } else {
-                    alert('SubCategory has already been added')
+                    alert('SubCategory has already been added');
                 }
             }
         )
         .catch(err => {
                 // alert(TextConstants.SERVETNOTRESP)
-                alert('third catch addSubCategory')
+                alert('third catch addSubCategory');
                 dispatch({
                     type: GET_SUBCATEGORIES,
                     payload: []
-                })
+                });
             }
-        )
-}
+        );
+};
 
 //Get SubCategories
 export const getSubCategories = token => dispatch => {
@@ -582,14 +627,14 @@ export const getSubCategories = token => dispatch => {
         )
         .catch(err => {
                 // alert(TextConstants.SERVETNOTRESP)
-                alert('first catch getSubCategories')
+                alert('first catch getSubCategories');
                 dispatch({
                     type: GET_SUBCATEGORIES,
                     payload: []
-                })
+                });
             }
-        )
-}
+        );
+};
 
 
 //Get categories
@@ -603,21 +648,21 @@ export const getCategories = token => dispatch => {
         )
         .catch(err => {
                 // alert(TextConstants.SERVETNOTRESP)
-                alert('first catch getCategories')
+                alert('first catch getCategories');
                 dispatch({
                     type: GET_CATEGORIES,
                     payload: []
-                })
+                });
             }
-        )
-}
+        );
+};
 
 // Add Category
-export const addCategory = (newCategory, token) => dispatch => {
-    AddCategory(newCategory, token)
+export const addCategory = newCategory => dispatch => {
+    AddCategory(newCategory)
         .then(res => {
                 if (res.data.success) {
-                    GetCategories(token)
+                    GetCategories()
                         .then(res =>
                             dispatch({
                                 type: GET_CATEGORIES,
@@ -626,37 +671,37 @@ export const addCategory = (newCategory, token) => dispatch => {
                         )
                         .catch(err => {
                                 // alert(TextConstants.SERVETNOTRESP)
-                                alert('first catch addCategory')
+                                alert('first catch addCategory');
                                 dispatch({
                                     type: GET_CATEGORIES,
                                     payload: []
-                                })
+                                });
                             }
-                        )
+                        );
                 } else {
-                    alert('Category has already been added')
+                    alert('Category has already been added');
                 }
             }
         )
         .catch(err => {
                 // alert(TextConstants.SERVETNOTRESP)
-                alert('second catch addCategory')
+                alert('second catch addCategory');
                 dispatch({
                     type: GET_CATEGORIES,
                     payload: []
-                })
+                });
             }
-        )
-}
+        );
+};
 
 // Del Category
-export const delCategory = (id, token) => dispatch => {
+export const delCategory = id => dispatch => {
     // alert('delCategory')//ok
-    DelCategory(id, token)
+    DelCategory(id)
         .then(res => {
                 // alert('res.data.success = '+res.data.success)
-                if (res.data.success)
-                    GetCategories(token)
+                if (res.data.success) {
+                    GetCategories()
                         .then(res =>
                             dispatch({
                                 type: GET_CATEGORIES,
@@ -665,49 +710,50 @@ export const delCategory = (id, token) => dispatch => {
                         )
                         .catch(err => {
                                 // alert(TextConstants.SERVETNOTRESP)
-                                alert('first catch delCategory')
+                                alert('first catch delCategory');
                                 dispatch({
                                     type: GET_CATEGORIES,
                                     payload: []
-                                })
+                                });
                             }
                         )
-                        .then(res => GetSubCategories(token)
+                        .then(res => GetSubCategories()
                             .then(res => {
                                     dispatch({
                                         type: GET_SUBCATEGORIES,
                                         payload: res.data
-                                    })
+                                    });
                                 }
                             )
                             .catch(err => {
                                     // alert(TextConstants.SERVETNOTRESP)
-                                    alert('second catch delCategory')
+                                    alert('second catch delCategory');
                                     dispatch({
                                         type: GET_SUBCATEGORIES,
                                         payload: []
-                                    })
+                                    });
                                 }
                             )
-                        )
+                        );
+                }
             }
         )
         .catch(err => {
                 // alert(TextConstants.SERVETNOTRESP)
-                alert('third catch delCategory')
+                alert('third catch delCategory');
                 dispatch({
                     type: GET_CATEGORIES,
                     payload: []
-                })
+                });
             }
-        )
-}
+        );
+};
 
 export const signOut = () => dispatch => {
     dispatch({
         type: SIGN_OUT,
-    })
-}
+    });
+};
 
 //todo
 export const categoryUP = (categories, rating) => dispatch => {
@@ -715,23 +761,23 @@ export const categoryUP = (categories, rating) => dispatch => {
         type: CATEGORY_UP,
         categories,
         rating
-    })
-}
+    });
+};
 
 export const categoryDOWN = (categories, rating) => dispatch => {
     dispatch({
         type: CATEGORY_DOWN,
         categories,
         rating
-    })
-}
+    });
+};
 
 export const subCategoryUP = subCategory => dispatch => {
     dispatch({
         type: SUBCATEGORY_UP,
         subCategory
-    })
-}
+    });
+};
 
 export const subCategoryDOWN = subCategory => dispatch => {
     dispatch({

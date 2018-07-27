@@ -8,65 +8,62 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 
 // @material-ui/core components
-import Grid from "@material-ui/core/Grid";
+import Grid from '@material-ui/core/Grid';
 // core components
-import GridItem from "components/Grid/GridItem.jsx";
-import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import Category from "components/Category/Category";
+import GridItem from 'components/Grid/GridItem.jsx';
+import Card from 'components/Card/Card.jsx';
+import CardHeader from 'components/Card/CardHeader.jsx';
+import CardBody from 'components/Card/CardBody.jsx';
+import Category from 'components/Category/Category';
 
 const styles = {
     cardCategoryWhite: {
-        "&,& a,& a:hover,& a:focus": {
-            color: "rgba(255,255,255,.62)",
-            margin: "0",
-            fontSize: "14px",
-            marginTop: "0",
-            marginBottom: "0"
+        '&,& a,& a:hover,& a:focus': {
+            color: 'rgba(255,255,255,.62)',
+            margin: '0',
+            fontSize: '14px',
+            marginTop: '0',
+            marginBottom: '0'
         },
-        "& a,& a:hover,& a:focus": {
-            color: "#FFFFFF"
+        '& a,& a:hover,& a:focus': {
+            color: '#FFFFFF'
         }
     },
     cardTitleWhite: {
-        color: "#FFFFFF",
-        marginTop: "0px",
-        minHeight: "auto",
-        fontWeight: "300",
-        fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-        marginBottom: "3px",
-        textDecoration: "none",
-        "& small": {
-            color: "#777",
-            fontSize: "65%",
-            fontWeight: "400",
-            lineHeight: "1"
+        color: '#FFFFFF',
+        marginTop: '0px',
+        minHeight: 'auto',
+        fontWeight: '300',
+        fontFamily: '\'Roboto\', \'Helvetica\', \'Arial\', sans-serif',
+        marginBottom: '3px',
+        textDecoration: 'none',
+        '& small': {
+            color: '#777',
+            fontSize: '65%',
+            fontWeight: '400',
+            lineHeight: '1'
         }
     }
 };
 
 const ConfigTableList = props => {
-    const ADDhandler = () => {
-
-        let maxRating = 0;
-
-        if (props.categories.length === 1)
-            maxRating = props.categories[0].rating;
-
-        if (props.categories.length > 1)
-            maxRating = props.categories.sort((a, b) => a.rating < b.rating)[0].rating;
-
-        const newCategory = {
-            idUser: props.idUser,
-            name: '',
-            rating: maxRating + 1,
-            parent: false,
-            child: false
+    const getRatingLastCategory = arr => {
+        if (arr.length > 0) {
+            return arr[arr.length - 1].rating;
         }
-        // alert(props.token)//ok
-        props.addCategory(newCategory, props.token);
-    }
+        return -1;
+    };
+
+    const ADDhandler = () => {
+        const newCategory = {
+            name: '',
+            idParent: '0',
+            isParent: false,
+            isChild: false,
+            rating: getRatingLastCategory(props.categories) + 1,
+        };
+        props.addCategory(newCategory);
+    };
 
     const {classes} = props;
     return (
@@ -83,6 +80,7 @@ const ConfigTableList = props => {
                         <Table>
                             <TableBody>
                                 {props.categories
+                                    .filter(cat => cat.idParent === '0')//те, что не дети, верхний уровень, idParent = '0'
                                     .sort((a, b) => a.rating > b.rating)
                                     .map(category => {
                                         return (
@@ -104,7 +102,6 @@ const ConfigTableList = props => {
                                                         expenses={props.expenses}
                                                         updateExpense={props.updateExpense}
                                                         updateSubCategory={props.updateSubCategory}
-                                                        token={props.token}
                                                     />
                                                 </TableCell>
                                             </TableRow>
@@ -129,7 +126,7 @@ const ConfigTableList = props => {
             </GridItem>
         </Grid>
     );
-}
+};
 
 export default withStyles(styles)(ConfigTableList);
 
@@ -139,6 +136,6 @@ ConfigTableList.propTypes = {
     categoryDOWN: PropTypes.func.isRequired,
     delCategory: PropTypes.func.isRequired,
     updateCategory: PropTypes.func.isRequired
-}
+};
 
 

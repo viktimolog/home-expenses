@@ -26,7 +26,7 @@ class SelectDialogAddSubCategory extends React.Component {
     state = {
         open: false,
         curCategory: null
-    }
+    };
 
     handleChange = name => event => {
         this.setState({
@@ -45,6 +45,7 @@ class SelectDialogAddSubCategory extends React.Component {
         });
     };
 
+    //this.props.category - кому добавляем
     handleAddSubCategory = () => {
 
         if (this.props.clearCategories.length <= 0) {
@@ -52,57 +53,50 @@ class SelectDialogAddSubCategory extends React.Component {
             return;
         }
 
-        let maxRating = 0;
+        const subCategories = this.props.categories.filter(cat => cat.idParent === this.props.category._id);
 
-        if (this.props.subCategories.length === 1)
-            maxRating = this.props.subCategories[0].rating;
+        let maxRating = -1;
 
-        if (this.props.subCategories.length > 1)
-            maxRating = this.props.subCategories.sort((a, b) => a.rating < b.rating)[0].rating;
+        if (subCategories.length === 1) {
+            maxRating = subCategories[0].rating;
+        }
+
+        if (subCategories.length > 1) {
+            maxRating = subCategories.sort((a, b) => a.rating < b.rating)[0].rating;
+        }
 
         const getNewSubCategory = (category, curCategory) => {
             const newSubCategory = {
-                idUser: category.idUser,
-                idCategory: category._id,
+                name: curCategory.name,
                 rating: maxRating + 1,
-                idParent: curCategory._id
-            }
+                isParent: curCategory.isParent,
+                isChild:true,
+                idParent: category._id,
+            };
             return newSubCategory;
-        }
+        };
 
-        const getCategorySetChild = newSubCategory => {
-            const categorySetChild = {
-                idUser: newSubCategory.idUser,
-                name: newSubCategory.name,
-                rating: newSubCategory.rating,
-                parent: newSubCategory.parent,
-                child: true
-            }
-            return categorySetChild;
-        }
-
-        const getCategorySetParent = category => {
+        const getCategorySetParent = () => {
             const categorySetParent = {
-                idUser: category.idUser,
-                name: category.name,
-                rating: category.rating,
-                parent: true,
-                child: category.child
-            }
+                name: this.props.category.name,
+                rating: this.props.category.rating,
+                isParent: true,
+                isChild: this.props.category.isChild,
+                idParent: this.props.category.idParent
+            };
             return categorySetParent;
-        }
+        };
 
         const pushToDB = (category, curCategory) => {
 
-            this.props.updateCategory(category._id, getCategorySetParent(category), this.props.token);
+            this.props.updateCategory(category._id, getCategorySetParent());//update parent
 
-            this.props.updateCategory(curCategory._id, getCategorySetChild(curCategory), this.props.token);
-
-            this.props.addSubCategory(getNewSubCategory(category, curCategory), this.props.token);
-        }
+            this.props.updateCategory(curCategory._id, getNewSubCategory(category, curCategory));//update child
+        };
 
 
         if (this.state.curCategory === null) {
+
             pushToDB(this.props.category, this.props.clearCategories
                 .filter(cat => cat._id !== this.props.category._id)[0]);
         }
@@ -148,7 +142,7 @@ class SelectDialogAddSubCategory extends React.Component {
                                                         <option value={category._id}>
                                                             {category.name}
                                                         </option>
-                                                    )
+                                                    );
                                                 }
                                             )
                                     }

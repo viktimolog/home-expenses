@@ -6,8 +6,8 @@ import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 
 function getModalStyle() {
-    const top = 50
-    const left = 50
+    const top = 50;
+    const left = 50;
 
     return {
         top: `${top}%`,
@@ -30,7 +30,7 @@ class ModalDialogYesNo extends React.Component {
 
     state = {
         open: false,
-    }
+    };
 
     handleOpen = () => {
         this.setState({open: true});
@@ -41,11 +41,17 @@ class ModalDialogYesNo extends React.Component {
     };
 
     DELhandler = () => {
+        //todo
+        // this.props.upLevelCategory() вызвать для всех child удаляемой категории
 
-        console.log('console.log token ModalYesNo = ', this.props.token)
+        this.props.delCategory(this.props.category._id);
+        this.handleClose();
+    };
+
+    DELhandler1 = () => {
 
         const findExpensesByCategory = this.props.expenses
-            .filter(exp => exp.idCategory === this.props.category._id)
+            .filter(exp => exp.idCategory === this.props.category._id);
 
         if (findExpensesByCategory.length > 0) {
             findExpensesByCategory.map(exp => {
@@ -56,13 +62,13 @@ class ModalDialogYesNo extends React.Component {
                     expense: exp.expense,
                     valueUAH: exp.valueUAH,
                     idCategory: exp.idCategory
-                }
-                this.props.updateExpense(exp._id, updateExpense)
-            })
+                };
+                this.props.updateExpense(exp._id, updateExpense);
+            });
         }
 
         if (!this.props.category.parent && !this.props.category.child) {
-            this.props.delCategory(this.props.category._id, this.props.token);
+            this.props.delCategory(this.props.category._id);
             this.handleClose();
             return;
         }
@@ -70,13 +76,13 @@ class ModalDialogYesNo extends React.Component {
         let parents = [];
 
         if (this.props.category.parent) {
-            const itsSubCategories = this.props.subCategories.filter(sub => sub.idCategory === this.props.category._id)
+            const itsSubCategories = this.props.subCategories.filter(sub => sub.idCategory === this.props.category._id);
             if (itsSubCategories.length > 0) {
 //удаляем нафиг все из subCategories
                 itsSubCategories.map(sub => {
-                    this.props.delSubCategory(sub._id, this.props.token)
-                    parents.push(this.props.categories.filter(cat => cat._id === sub.idParent)[0])
-                })
+                    this.props.delSubCategory(sub._id);
+                    parents.push(this.props.categories.filter(cat => cat._id === sub.idParent)[0]);
+                });
             }
 //находим их парент и делаем им child=false
             parents.map(parent => {
@@ -86,20 +92,20 @@ class ModalDialogYesNo extends React.Component {
                     rating: parent.rating,
                     parent: parent.parent,
                     child: false
-                }
-                this.props.updateCategory(parent._id, updateParent, this.props.token)
-            })
+                };
+                this.props.updateCategory(parent._id, updateParent, this.props.token);
+            });
             this.props.delCategory(this.props.category._id, this.props.token);
             this.handleClose();
             return;
         }
 
         if (this.props.category.child) {
-            const itInSubCategories = this.props.subCategories.filter(sub => sub.idParent === this.props.category._id)[0]
+            const itInSubCategories = this.props.subCategories.filter(sub => sub.idParent === this.props.category._id)[0];
 
             const curParent = this.props.categories.filter(cat => cat._id === itInSubCategories.idCategory)[0];
 //найти все подкатегории этого парента, если она одна то апдате емк парент = фолсе
-            const subCatCurParent = this.props.subCategories.filter(sub => sub.idCategory === curParent._id)[0]
+            const subCatCurParent = this.props.subCategories.filter(sub => sub.idCategory === curParent._id)[0];
             if (subCatCurParent.length === 1) {
                 const updateCurParent = {
                     idUser: curParent.idUser,
@@ -107,16 +113,16 @@ class ModalDialogYesNo extends React.Component {
                     rating: curParent.rating,
                     parent: false,
                     child: curParent.child
-                }
-                this.props.updateCategory(curParent._id, updateCurParent, this.props.token)
+                };
+                this.props.updateCategory(curParent._id, updateCurParent, this.props.token);
             }
 
-            this.props.delSubCategory(itInSubCategories._id, this.props.token)
+            this.props.delSubCategory(itInSubCategories._id, this.props.token);
             this.props.delCategory(this.props.category._id, this.props.token);
             this.handleClose();
             return;
         }
-    }
+    };
 
     render() {
         const {classes} = this.props;

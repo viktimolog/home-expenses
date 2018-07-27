@@ -4,11 +4,11 @@ import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-import CustomInput from "components/CustomInput/CustomInput.jsx";
+import CustomInput from 'components/CustomInput/CustomInput.jsx';
 
 function getModalStyle() {
-    const top = 50
-    const left = 50
+    const top = 50;
+    const left = 50;
 
     return {
         top: `${top}%`,
@@ -32,7 +32,7 @@ class ModalDialogEditCategoryName extends React.Component {
         open: false,
         newName: this.props.category.name
 
-    }
+    };
 
     handleOpen = () => {
         this.setState({open: true});
@@ -43,26 +43,22 @@ class ModalDialogEditCategoryName extends React.Component {
     };
 
     handleUpdateCategoryname = () => {
-        const getCategorySetName = category => {
-            const categorySetName = {
-                idUser: category.idUser,
-                name: this.state.newName.trim(),
-                rating: category.rating,
-                parent: category.parent,
-                child: category.child
-            }
-            return categorySetName;
+        const updateCat = {
+            name: this.state.newName.trim(),
+            idParent: this.props.category.idParent,
+            isParent: this.props.category.isParent,
+            isChild: this.props.category.isChild,
+            rating: this.props.category.rating
         }
-
-        this.props.updateCategory(this.props.category._id, getCategorySetName(this.props.category), this.props.token);
+        this.props.updateCategory(this.props.category._id, updateCat);
         this.handleClose();
     };
 
     stringHandler = name => event => {
         this.setState({
             [name]: event.target.value
-        })
-    }
+        });
+    };
 
     render() {
         const {classes} = this.props;

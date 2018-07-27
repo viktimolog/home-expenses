@@ -29,7 +29,6 @@ const Styles = {
 
 
 const Category = ({
-                      idUser,
                       updateExpense,
                       expenses,
                       subCategories,
@@ -44,60 +43,71 @@ const Category = ({
                       addSubCategory,
                       clearCategories,
                       updateCategory,
-                      updateSubCategory
+                      updateSubCategory,
+                      upCategory
                   }) => {
 
     const UPhandler = () => {
         if (categories.length === 1) return;
 
-        const minRating = categories.sort((a, b) => a.rating > b.rating)[0].rating;
+        const minRating = categories
+            .filter(cat => cat.idParent === category.idParent)
+            .sort((a, b) => a.rating > b.rating)[0].rating;
+
         if (category.rating === minRating) return;
 
-        const ratingDOWNcategory = categories.find(cat => cat.rating === category.rating - 1);
+        const ratingDOWNcategory = categories
+            .filter(cat => cat.idParent === category.idParent)
+            .find(cat => cat.rating === category.rating - 1);
 
         const newUPcategory = {
-            idUser: category.idUser,
             name: category.name,
             rating: category.rating - 1,
-            parent: category.parent,
-            child: category.child
+            isParent: category.isParent,
+            isChild: category.isChild,
+            idParent: category.idParent
         }
 
         updateCategory(category._id, newUPcategory);
 
         const newDOWNcategory = {
-            idUser: ratingDOWNcategory.idUser,
             name: ratingDOWNcategory.name,
             rating: ratingDOWNcategory.rating + 1,
-            parent: ratingDOWNcategory.parent,
-            child: ratingDOWNcategory.child
+            isParent: ratingDOWNcategory.isParent,
+            isChild: ratingDOWNcategory.isChild,
+            idParent: ratingDOWNcategory.idParent
         }
+
         updateCategory(ratingDOWNcategory._id, newDOWNcategory);
     }
 
     const DOWNhandler = () => {
         if (categories.length === 1) return;
-        const maxRating = categories.sort((a, b) => a.rating < b.rating)[0].rating;
+        const maxRating = categories
+            .filter(cat => cat.idParent === category.idParent)
+            .sort((a, b) => a.rating < b.rating)[0].rating;
 
         if (category.rating === maxRating) return;
 
-        const ratingUPcategory = categories.find(cat => cat.rating === category.rating + 1);
+        const ratingUPcategory = categories
+            .filter(cat => cat.idParent === category.idParent)
+            .find(cat => cat.rating === category.rating + 1);
 
         const newUPcategory = {
-            idUser: ratingUPcategory.idUser,
             name: ratingUPcategory.name,
             rating: ratingUPcategory.rating - 1,
-            parent: ratingUPcategory.parent,
-            child: ratingUPcategory.child
+            isParent: ratingUPcategory.isParent,
+            isChild: ratingUPcategory.isChild,
+            idParent: ratingUPcategory.idParent
         }
         updateCategory(ratingUPcategory._id, newUPcategory);
 
         const newDOWNcategory = {
-            idUser: category.idUser,
             name: category.name,
             rating: category.rating + 1,
-            parent: category.parent,
-            child: category.child
+            isParent: category.isParent,
+            isChild: category.isChild,
+            idParent: category.idParent
         }
         updateCategory(category._id, newDOWNcategory);
     }
@@ -230,38 +240,38 @@ const Category = ({
             </Card>
 
 
-            <Grid container>
-                <GridItem xs={12} sm={12} md={10}>
-                    <Card>
-                        <CardBody>
-                            <Table>
-                                <TableBody>
-                                    {subCategories
-                                        .filter(subCategory => subCategory.idCategory === category._id)
-                                        .sort((a, b) => a.rating > b.rating)
-                                        .map(subCategory => {
-                                            return (
-                                                <TableRow key={category._id}>
-                                                    <TableCell component="th" scope="row">
-                                                        <SubCategory
-                                                            subCategories={subCategories}
-                                                            subCategory={subCategory}
-                                                            subCategoryUP={subCategoryUP}
-                                                            subCategoryDOWN={subCategoryDOWN}
-                                                            categories={categories}
-                                                            DOWNhandlerSubCat={DOWNhandlerSubCat}
-                                                            UPhandlerSubCat={UPhandlerSubCat}
-                                                        />
-                                                    </TableCell>
-                                                </TableRow>
-                                            );
-                                        })}
-                                </TableBody>
-                            </Table>
-                        </CardBody>
-                    </Card>
-                </GridItem>
-            </Grid>
+            {/*<Grid container>*/}
+                {/*<GridItem xs={12} sm={12} md={10}>*/}
+                    {/*<Card>*/}
+                        {/*<CardBody>*/}
+                            {/*<Table>*/}
+                                {/*<TableBody>*/}
+                                    {/*{subCategories*/}
+                                        {/*.filter(subCategory => subCategory.idCategory === category._id)*/}
+                                        {/*.sort((a, b) => a.rating > b.rating)*/}
+                                        {/*.map(subCategory => {*/}
+                                            {/*return (*/}
+                                                {/*<TableRow key={category._id}>*/}
+                                                    {/*<TableCell component="th" scope="row">*/}
+                                                        {/*<SubCategory*/}
+                                                            {/*subCategories={subCategories}*/}
+                                                            {/*subCategory={subCategory}*/}
+                                                            {/*subCategoryUP={subCategoryUP}*/}
+                                                            {/*subCategoryDOWN={subCategoryDOWN}*/}
+                                                            {/*categories={categories}*/}
+                                                            {/*DOWNhandlerSubCat={DOWNhandlerSubCat}*/}
+                                                            {/*UPhandlerSubCat={UPhandlerSubCat}*/}
+                                                        {/*/>*/}
+                                                    {/*</TableCell>*/}
+                                                {/*</TableRow>*/}
+                                            {/*)*/}
+                                        {/*})}*/}
+                                {/*</TableBody>*/}
+                            {/*</Table>*/}
+                        {/*</CardBody>*/}
+                    {/*</Card>*/}
+                {/*</GridItem>*/}
+            {/*</Grid>*/}
         </div>
     )
 }

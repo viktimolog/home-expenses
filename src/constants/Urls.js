@@ -6,6 +6,7 @@ const Urls = {
     addCategory: 'categories/addCategory',
     delCategory: 'categories/delCategory/',
     updateCategory: 'categories/updateCategory/',
+    upCategory: 'categories/upCategory/',
 
     getSubCategories: 'subCategories/getSubCategories',
     addSubCategory: 'subCategories/addSubCategory',

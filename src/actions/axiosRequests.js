@@ -13,6 +13,10 @@ Axios.interceptors.request.use(
         error => Promise.reject(error)
 );
 
+//Up Category
+export const UpCategory = (_id, upCategory) => {
+    return Axios.put(Urls.upCategory + _id, upCategory)
+}
 
 //getCurrentUserByToken
 export const GetCurrentUserByToken = () => {

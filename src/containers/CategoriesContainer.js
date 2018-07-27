@@ -17,7 +17,8 @@ import {
     updateExpense,
     updateCategory,
     updateSubCategory,
-    getInitialState
+    getInitialState,
+    upCategory
 } from 'actions/actionCreator'
 import Config from 'views/Config/Config'
 
@@ -46,7 +47,8 @@ class CategoriesContainer extends React.Component {
                     expenses={this.props.expenses}
                     updateExpense={this.props.updateExpense}
                     updateSubCategory={this.props.updateSubCategory}
-                    idUser={this.props.idUser}
+                    // idUser={this.props.idUser}
+                    upCategory={this.props.upCategory}
                 />
             </div>)
     }
@@ -59,8 +61,7 @@ const getClearCategories = createSelector(
     (categories) => {
 
         return categories
-            .filter(category => category.parent === false)
-            .filter(category => category.child === false)
+            .filter(category => category.isChild === false)
 
     }
 )
@@ -69,7 +70,6 @@ const mapStateToProps = state => ({
     categories: state.mainReducer.categories,
     subCategories: state.mainReducer.subCategories,
     expenses: state.mainReducer.expenses,
-    idUser: state.mainReducer.idUser,
     clearCategories: getClearCategories(state)
 })
 
@@ -87,7 +87,8 @@ CategoriesContainer.propTypes = {
     getSubCategories: PropTypes.func.isRequired,
     updateExpense: PropTypes.func.isRequired,
     updateCategory: PropTypes.func.isRequired,
-    updateSubCategory: PropTypes.func.isRequired
+    updateSubCategory: PropTypes.func.isRequired,
+    upCategory: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = {
@@ -105,7 +106,8 @@ const mapDispatchToProps = {
     updateExpense,
     updateCategory,
     updateSubCategory,
-    getInitialState
+    getInitialState,
+    upCategory
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoriesContainer)

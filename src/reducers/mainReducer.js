@@ -74,6 +74,7 @@ const mainReducer = (state = initialState, action) => {
         }
 
         case SIGN_OUT: {
+            localStorage.clear()
             return {
                 ...state,
                 email: '',
