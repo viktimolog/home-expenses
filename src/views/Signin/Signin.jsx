@@ -88,6 +88,7 @@ class Signin extends React.Component {
                                             formControlProps={{fullWidth: true}}
                                             inputProps={
                                                 {
+                                                    type: "password",
                                                     value: this.state.password,
                                                     onChange: this.stringHandler('password'),
                                                 }

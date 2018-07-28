@@ -259,5 +259,4 @@ Dashboard.propTypes = {
     pastDescriptions: PropTypes.array.isRequired,
     expenses: PropTypes.array.isRequired,
     addExpense: PropTypes.func.isRequired
-
 };

@@ -93,6 +93,7 @@ class Signup extends React.Component {
                                             }}
                                             inputProps={
                                                 {
+                                                    type: 'password',
                                                     value: this.state.password,
                                                     onChange: this.stringHandler('password'),
                                                 }
@@ -110,6 +111,7 @@ class Signup extends React.Component {
                                             }}
                                             inputProps={
                                                 {
+                                                    type: 'password',
                                                     value: this.state.passwordRepeat,
                                                     onChange: this.stringHandler('password2'),
                                                 }

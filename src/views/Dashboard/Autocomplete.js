@@ -148,7 +148,7 @@ class IntegrationAutosuggest extends React.Component {
                 renderSuggestion={renderSuggestion}
                 inputProps={{
                     classes,
-                    placeholder: 'Add expense',
+                    placeholder: 'Description of the expense',
                     value: this.state.value,
                     onChange: this.handleChange,
                 }}
@@ -159,7 +159,8 @@ class IntegrationAutosuggest extends React.Component {
 
 IntegrationAutosuggest.propTypes = {
     classes: PropTypes.object.isRequired,
-    setExpense: PropTypes.func.isRequired
+    setExpense: PropTypes.func.isRequired,
+    pastDescriptions: PropTypes.array.isRequired
 };
 
 export default withStyles(styles)(IntegrationAutosuggest);

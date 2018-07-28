@@ -66,7 +66,7 @@ const ConfigTableList = props => {
         }
 
         const newCategory = {
-            name: '',
+            name: 'Click to edit name',
             idParent: '0',
             isParent: false,
             isChild: false,
