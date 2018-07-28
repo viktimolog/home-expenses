@@ -62,6 +62,7 @@ const getClearCategories = createSelector(
 
         return categories
             .filter(category => category.isChild === false)
+            .filter(category => category.isParent === false)
 
     }
 )

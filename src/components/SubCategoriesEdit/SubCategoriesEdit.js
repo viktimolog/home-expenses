@@ -4,63 +4,72 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Button from 'components/CustomButtons/Button.jsx'
-import {ArrowUpward, ArrowDownward, Close} from "@material-ui/icons";
+import Button from 'components/CustomButtons/Button.jsx';
+import {ArrowUpward, ArrowDownward, Close} from '@material-ui/icons';
 
 const Styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     alignContent: 'center',
-}
+};
 
 
 const SubCategoriesEdit = ({UPhandlerSubCat, DOWNhandlerSubCat, category, delSubCategory, subCategory, subCategories, subCategoryUP, subCategoryDOWN, categories, updateCategory}) => {
     const UPhandler = () => {
-        UPhandlerSubCat(subCategory)
-    }
+        UPhandlerSubCat(subCategory);
+    };
 
     const DOWNhandler = () => {
-        DOWNhandlerSubCat(subCategory)
-    }
+        DOWNhandlerSubCat(subCategory);
+    };
 
+    //todo //category // subCategory
     const delSubCategoryHandler = () => {
 
-        const parentCat = categories.filter(cat => cat._id === subCategory.idCategory)[0];
-        const childCat = categories.filter(cat => cat._id === subCategory.idParent)[0];
+        const arrNextSubCats = categories
+            .filter(cat => cat.idParent === subCategory.idParent)
+            .filter(cat => cat.rating > subCategory.rating);
 
-        const getCategoryChangeChild = cat => {
-            const categoryChangeChild = {
-                idUser: cat.idUser,
-                name: cat.name,
-                rating: cat.rating,
-                parent: cat.parent,
-                child: false
-            }
-            return categoryChangeChild;
-        }
+        if(arrNextSubCats.length)
+        arrNextSubCats.map(subCat => {
+            const newNextCategory = {
+                name: subCat.name,
+                rating: subCat.rating-1,
+                isParent: subCat.isParent,
+                isChild: subCat.isChild,
+                idParent: subCat.idParent
+            };
+            updateCategory(subCat._id, newNextCategory);
+        });
 
-        const getCategoryChangeParent = category => {
-            const categoryChangeParent = {
-                idUser: category.idUser,
+        const countSubCatsCategory = categories.filter(cat => cat.idParent === subCategory.idParent).length;
+
+        if (countSubCatsCategory === 1) {
+            const newCategory = {
                 name: category.name,
-                rating: category.rating,
-                parent: false,
-                child: category.child
-            }
-            return categoryChangeParent;
+                idParent: category.idParent,
+                isParent: false,
+                isChild: category.isChild,
+                rating: category.rating
+            };
+            updateCategory(category._id, newCategory);
         }
 
-        const pushToDB = (childCat, parentCat, subCategory) => {
+        const maxRating = categories
+            .filter(cat => cat.idParent === '0')
+            .sort((a, b) => a.rating < b.rating)[0].rating;
 
-            updateCategory(childCat._id, getCategoryChangeChild(childCat));
+        const newSubCat = {
+            name: subCategory.name,
+            idParent: '0',
+            isParent: subCategory.isParent,
+            isChild: false,
+            rating: maxRating + 1
+        };
 
-            updateCategory(parentCat._id, getCategoryChangeParent(parentCat));
-
-            delSubCategory(subCategory._id);
-        }
-        pushToDB(childCat, parentCat, subCategory)
-    }
+        updateCategory(subCategory._id, newSubCat);
+    };
 
     return (
         <Card style={Styles}>
@@ -70,7 +79,7 @@ const SubCategoriesEdit = ({UPhandlerSubCat, DOWNhandlerSubCat, category, delSub
                     gutterBottom variant="title"
                     component="h2"
                 >
-                    {categories.filter(cat => cat._id === subCategory.idParent)[0].name}
+                    {subCategory.name}
                 </Typography>
             </CardContent>
             <div style={{display: 'flex'}}>
@@ -100,11 +109,11 @@ const SubCategoriesEdit = ({UPhandlerSubCat, DOWNhandlerSubCat, category, delSub
                 </CardActions>
             </div>
         </Card>
-    )
-}
+    );
+};
 
 SubCategoriesEdit.propTypes = {
     category: PropTypes.object.isRequired,
-}
+};
 
-export default SubCategoriesEdit
+export default SubCategoriesEdit;

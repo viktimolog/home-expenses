@@ -92,7 +92,6 @@ class ModalDialogEditSubCategories extends React.Component {
                                             <TableBody>
                                                 {
                                                     this.props.subCategories
-                                                        .filter(subCategory => subCategory.idCategory === this.props.category._id)
                                                         .sort((a, b) => a.rating > b.rating)
                                                         .map(subCategory => {
                                                             return (
@@ -100,17 +99,16 @@ class ModalDialogEditSubCategories extends React.Component {
                                                                     <TableCell component="th" scope="row">
                                                                         <SubCategoriesEdit
                                                                             category={this.props.category}
-                                                                            subCategories={this.props.subCategories}
+                                                                            // subCategories={this.props.subCategories}
                                                                             categories={this.props.categories}
                                                                             subCategory={subCategory}
-                                                                            subCategoryUP={this.props.subCategoryUP}
-                                                                            subCategoryDOWN={this.props.subCategoryDOWN}
+                                                                            // subCategoryUP={this.props.subCategoryUP}
+                                                                            // subCategoryDOWN={this.props.subCategoryDOWN}
                                                                             delSubCategory={this.props.delSubCategory}
                                                                             categories={this.props.categories}
                                                                             updateCategory={this.props.updateCategory}
                                                                             UPhandlerSubCat={this.props.UPhandlerSubCat}
                                                                             DOWNhandlerSubCat={this.props.DOWNhandlerSubCat}
-                                                                            token={this.props.token}
                                                                         />
                                                                     </TableCell>
                                                                 </TableRow>

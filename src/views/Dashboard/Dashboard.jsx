@@ -54,10 +54,10 @@ class Dashboard extends React.Component {
     state = {
         uah: '',
         expense: '',
-        curCategory: null,
-        // categories: this.props.categories
+        curCategory: null
     }
 
+    //todo
     stringHandler = name => event => {
         this.setState({
             [name]: event.target.value
@@ -121,8 +121,9 @@ class Dashboard extends React.Component {
             uah: '',
             expense: '',
             // curCategory: null//mustn't use, lose value of current category in select, but user sees it
+            //todo
         })
-        this.props.addExpense(newExpense, this.props.token);
+        this.props.addExpense(newExpense);
     };
 
     getDate = value => {

@@ -34,8 +34,8 @@ const subCategory = ({UPhandlerSubCat, DOWNhandlerSubCat, subCategory, subCatego
                     gutterBottom variant="title"
                     component="h2"
                 >
-                    {categories.filter(cat => cat._id === subCategory.idParent)[0].name}
-                    {/*{subCategory.name}*/}
+                    {/*{categories.filter(cat => cat._id === subCategory.idParent)[0].name}*/}
+                    {subCategory.name}
                 </Typography>
             </CardContent>
             <div style={{display: 'flex'}}>

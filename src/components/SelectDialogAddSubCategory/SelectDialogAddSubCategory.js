@@ -94,15 +94,36 @@ class SelectDialogAddSubCategory extends React.Component {
             this.props.updateCategory(curCategory._id, getNewSubCategory(category, curCategory));//update child
         };
 
+        let curCat;
 
         if (this.state.curCategory === null) {
 
             pushToDB(this.props.category, this.props.clearCategories
                 .filter(cat => cat._id !== this.props.category._id)[0]);
+
+            curCat = this.props.clearCategories
+                .filter(cat => cat._id !== this.props.category._id)[0]
         }
         else {
             pushToDB(this.props.category, this.state.curCategory);
+            curCat = this.state.curCategory;
         }
+
+        const arrNextSubCats = this.props.categories
+            .filter(cat => cat.idParent === curCat.idParent)
+            .filter(cat => cat.rating > curCat.rating);
+
+        if(arrNextSubCats.length)
+            arrNextSubCats.map(subCat => {
+                const newNextCategory = {
+                    name: subCat.name,
+                    rating: subCat.rating-1,
+                    isParent: subCat.isParent,
+                    isChild: subCat.isChild,
+                    idParent: subCat.idParent
+                };
+                this.props.updateCategory(subCat._id, newNextCategory);
+            });
         this.handleClose();
     };
 

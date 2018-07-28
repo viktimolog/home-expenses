@@ -11,27 +11,26 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
 // @material-ui/core components
-import Grid from "@material-ui/core/Grid";
+import Grid from '@material-ui/core/Grid';
 // core components
-import GridItem from "components/Grid/GridItem.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import ModalDialogEditCategoryName from 'components/ModalDialogEditCategoryName/ModalDialogEditCategoryName'
-import ModalDialogYesNo from 'components/ModalDialogYesNo/ModalDialogYesNo'
-import ModalDialogEditSubCategories from 'components/ModalDialogEditSubCategories/ModalDialogEditSubCategories'
-import SubCategory from 'components/SubCategory/SubCategory'
+import GridItem from 'components/Grid/GridItem.jsx';
+import CardBody from 'components/Card/CardBody.jsx';
+import ModalDialogEditCategoryName from 'components/ModalDialogEditCategoryName/ModalDialogEditCategoryName';
+import ModalDialogYesNo from 'components/ModalDialogYesNo/ModalDialogYesNo';
+import ModalDialogEditSubCategories from 'components/ModalDialogEditSubCategories/ModalDialogEditSubCategories';
+import SubCategory from 'components/SubCategory/SubCategory';
 
 const Styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     alignContent: 'center',
-}
+};
 
 
 const Category = ({
                       updateExpense,
                       expenses,
-                      subCategories,
                       category,
                       categories,
                       categoryUP,
@@ -43,22 +42,30 @@ const Category = ({
                       addSubCategory,
                       clearCategories,
                       updateCategory,
-                      updateSubCategory,
-                      upCategory
                   }) => {
 
     const UPhandler = () => {
-        if (categories.length === 1) return;
+        if (categories.length === 1) {
+            return;
+        }
 
         const minRating = categories
             .filter(cat => cat.idParent === category.idParent)
             .sort((a, b) => a.rating > b.rating)[0].rating;
 
-        if (category.rating === minRating) return;
+        if (category.rating === minRating) {
+            return;
+        }
+
+        console.log('console.log category = ', category)
 
         const ratingDOWNcategory = categories
             .filter(cat => cat.idParent === category.idParent)
             .find(cat => cat.rating === category.rating - 1);
+
+        console.log('console.log categories = ', categories)
+
+        console.log('console.log ratingDOWNcategory = ', ratingDOWNcategory)
 
         const newUPcategory = {
             name: category.name,
@@ -66,7 +73,7 @@ const Category = ({
             isParent: category.isParent,
             isChild: category.isChild,
             idParent: category.idParent
-        }
+        };
 
         updateCategory(category._id, newUPcategory);
 
@@ -76,18 +83,22 @@ const Category = ({
             isParent: ratingDOWNcategory.isParent,
             isChild: ratingDOWNcategory.isChild,
             idParent: ratingDOWNcategory.idParent
-        }
+        };
 
         updateCategory(ratingDOWNcategory._id, newDOWNcategory);
-    }
+    };
 
     const DOWNhandler = () => {
-        if (categories.length === 1) return;
+        if (categories.length === 1) {
+            return;
+        }
         const maxRating = categories
             .filter(cat => cat.idParent === category.idParent)
             .sort((a, b) => a.rating < b.rating)[0].rating;
 
-        if (category.rating === maxRating) return;
+        if (category.rating === maxRating) {
+            return;
+        }
 
         const ratingUPcategory = categories
             .filter(cat => cat.idParent === category.idParent)
@@ -99,7 +110,7 @@ const Category = ({
             isParent: ratingUPcategory.isParent,
             isChild: ratingUPcategory.isChild,
             idParent: ratingUPcategory.idParent
-        }
+        };
         updateCategory(ratingUPcategory._id, newUPcategory);
 
         const newDOWNcategory = {
@@ -108,70 +119,83 @@ const Category = ({
             isParent: category.isParent,
             isChild: category.isChild,
             idParent: category.idParent
-        }
+        };
         updateCategory(category._id, newDOWNcategory);
-    }
+    };
 
     const UPhandlerSubCat = subCategory => {
-        const curSubCategories = subCategories
-            .filter(subCat => subCat.idCategory === subCategory.idCategory)
+        const curSubCategories = categories
+            .filter(cat => cat.idParent === subCategory.idParent);
 
-        if (curSubCategories.length === 1) return;
+        if (curSubCategories.length === 1) {
+            return;
+        }
 
         const minRating = curSubCategories.sort((a, b) => a.rating > b.rating)[0].rating;
-        if (subCategory.rating === minRating) return;
-
+        if (subCategory.rating === minRating) {
+            return;
+        }
 
         const ratingDOWNcategory = curSubCategories
             .find(subCat => subCat.rating === subCategory.rating - 1);
 
         const newUPcategory = {
-            idUser: subCategory.idUser,
-            idCategory: subCategory.idCategory,
+            name: subCategory.name,
             rating: subCategory.rating - 1,
+            isParent: subCategory.isParent,
+            isChild: subCategory.isChild,
             idParent: subCategory.idParent
-        }
-        updateSubCategory(subCategory._id, newUPcategory)
+        };
+
+        updateCategory(subCategory._id, newUPcategory);
 
         const newDOWNcategory = {
-            idUser: ratingDOWNcategory.idUser,
-            idCategory: ratingDOWNcategory.idCategory,
+            name: ratingDOWNcategory.name,
             rating: ratingDOWNcategory.rating + 1,
+            isParent: ratingDOWNcategory.isParent,
+            isChild: ratingDOWNcategory.isChild,
             idParent: ratingDOWNcategory.idParent
-        }
-        updateSubCategory(ratingDOWNcategory._id, newDOWNcategory)
-    }
+        };
+
+        updateCategory(ratingDOWNcategory._id, newDOWNcategory);
+    };
 
     const DOWNhandlerSubCat = subCategory => {
-        const curSubCategories = subCategories
-            .filter(subCat => subCat.idCategory === subCategory.idCategory)
+        const curSubCategories = categories
+            .filter(cat => cat.idParent === subCategory.idParent);
 
-        if (curSubCategories.length === 1) return;
+
+        if (curSubCategories.length === 1) {
+            return;
+        }
 
         const maxRating = curSubCategories.sort((a, b) => a.rating < b.rating)[0].rating;
 
-        if (subCategory.rating === maxRating) return;
-
+        if (subCategory.rating === maxRating) {
+            return;
+        }
 
         const ratingUPcategory = curSubCategories
             .find(subCat => subCat.rating === subCategory.rating + 1);
 
         const newUPcategory = {
-            idUser: ratingUPcategory.idUser,
-            idCategory: ratingUPcategory.idCategory,
+            name: ratingUPcategory.name,
             rating: ratingUPcategory.rating - 1,
+            isParent: ratingUPcategory.isParent,
+            isChild: ratingUPcategory.isChild,
             idParent: ratingUPcategory.idParent
-        }
-        updateSubCategory(ratingUPcategory._id, newUPcategory)
+        };
+        updateCategory(ratingUPcategory._id, newUPcategory);
 
         const newDOWNcategory = {
-            idUser: subCategory.idUser,
-            idCategory: subCategory.idCategory,
+            name: subCategory.name,
             rating: subCategory.rating + 1,
+            isParent: subCategory.isParent,
+            isChild: subCategory.isChild,
             idParent: subCategory.idParent
-        }
-        updateSubCategory(subCategory._id, newDOWNcategory)
-    }
+        };
+        updateCategory(subCategory._id, newDOWNcategory);
+    };
 
     return (
         <div>
@@ -215,7 +239,7 @@ const Category = ({
                             category={category}
                             delCategory={delCategory}
                             updateCategory={updateCategory}
-                            subCategories={subCategories}
+                            subCategories={categories.filter(subCategory => subCategory.idParent === category._id)}
                             delSubCategory={delSubCategory}
                             expenses={expenses}
                             updateExpense={updateExpense}
@@ -224,9 +248,9 @@ const Category = ({
                     <CardActions>
                         <ModalDialogEditSubCategories
                             category={category}
-                            subCategories={subCategories}
-                            subCategoryUP={subCategoryUP}
-                            subCategoryDOWN={subCategoryDOWN}
+                            subCategories={categories.filter(subCategory => subCategory.idParent === category._id)}
+                            // subCategoryUP={subCategoryUP}
+                            // subCategoryDOWN={subCategoryDOWN}
                             delSubCategory={delSubCategory}
                             addSubCategory={addSubCategory}
                             clearCategories={clearCategories}
@@ -240,46 +264,50 @@ const Category = ({
             </Card>
 
 
-            {/*<Grid container>*/}
-                {/*<GridItem xs={12} sm={12} md={10}>*/}
-                    {/*<Card>*/}
-                        {/*<CardBody>*/}
-                            {/*<Table>*/}
-                                {/*<TableBody>*/}
-                                    {/*{subCategories*/}
-                                        {/*.filter(subCategory => subCategory.idCategory === category._id)*/}
-                                        {/*.sort((a, b) => a.rating > b.rating)*/}
-                                        {/*.map(subCategory => {*/}
-                                            {/*return (*/}
-                                                {/*<TableRow key={category._id}>*/}
-                                                    {/*<TableCell component="th" scope="row">*/}
-                                                        {/*<SubCategory*/}
-                                                            {/*subCategories={subCategories}*/}
-                                                            {/*subCategory={subCategory}*/}
-                                                            {/*subCategoryUP={subCategoryUP}*/}
-                                                            {/*subCategoryDOWN={subCategoryDOWN}*/}
-                                                            {/*categories={categories}*/}
-                                                            {/*DOWNhandlerSubCat={DOWNhandlerSubCat}*/}
-                                                            {/*UPhandlerSubCat={UPhandlerSubCat}*/}
-                                                        {/*/>*/}
-                                                    {/*</TableCell>*/}
-                                                {/*</TableRow>*/}
-                                            {/*)*/}
-                                        {/*})}*/}
-                                {/*</TableBody>*/}
-                            {/*</Table>*/}
-                        {/*</CardBody>*/}
-                    {/*</Card>*/}
-                {/*</GridItem>*/}
-            {/*</Grid>*/}
+            <Grid container>
+                <GridItem xs={12} sm={12} md={10}>
+                    <Card>
+                        <CardBody>
+                            <Table>
+                                <TableBody>
+                                    {
+                                        // subCategories
+                                        categories.filter(subCategory => subCategory.idParent === category._id)
+                                            .sort((a, b) => a.rating > b.rating)
+                                            .map(subCategory => {
+                                                return (
+                                                    <TableRow key={category._id}>
+                                                        <TableCell component="th" scope="row">
+                                                            <SubCategory
+                                                                subCategories={
+                                                                    categories
+                                                                        .filter(subCategory => subCategory.idParent === category._id)
+                                                                }
+                                                                subCategory={subCategory}
+                                                                // subCategoryUP={subCategoryUP}
+                                                                // subCategoryDOWN={subCategoryDOWN}
+                                                                // categories={categories}
+                                                                DOWNhandlerSubCat={DOWNhandlerSubCat}
+                                                                UPhandlerSubCat={UPhandlerSubCat}
+                                                            />
+                                                        </TableCell>
+                                                    </TableRow>
+                                                );
+                                            })}
+                                </TableBody>
+                            </Table>
+                        </CardBody>
+                    </Card>
+                </GridItem>
+            </Grid>
         </div>
-    )
-}
+    );
+};
 
 
 Category.propTypes = {
     category: PropTypes.object.isRequired,
     updateExpense: PropTypes.func.isRequired
-}
+};
 
-export default Category
+export default Category;

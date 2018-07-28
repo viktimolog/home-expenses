@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 // core components
 import GridItem from "components/Grid/GridItem.jsx";
 
-const SubCategoryReports = ({expense}) =>
+const SubCategoryReports = ({name, sum}) =>
     (
         <Grid container>
             <GridItem xs={12} sm={12} md={2}>
@@ -18,18 +18,18 @@ const SubCategoryReports = ({expense}) =>
                         gutterBottom variant="title"
                         component="h2"
                     >
-                        {expense.category}
+                        {name}
                     </Typography>
                 </Card>
             </GridItem>
-            <GridItem xs={12} sm={12} md={4}>
+            <GridItem xs={12} sm={12} md={6}>
                 <Card>
                     <Typography
                         color="inherit"
                         gutterBottom variant="title"
                         component="h2"
                     >
-                        {expense.expense}
+                        {sum}
                     </Typography>
                 </Card>
             </GridItem>
