@@ -57,10 +57,6 @@ const Category = ({
             .filter(cat => cat.idParent === category.idParent)
             .find(cat => cat.rating === category.rating - 1);
 
-        console.log('console.log categories = ', categories);
-
-        console.log('console.log ratingDOWNcategory = ', ratingDOWNcategory);
-
         const newUPcategory = {
             name: category.name,
             rating: category.rating - 1,
