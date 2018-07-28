@@ -58,13 +58,6 @@ class Dashboard extends React.Component {
         curCategory: null
     };
 
-    //todo
-    stringHandler = name => event => {
-        this.setState({
-            [name]: event.target.value
-        });
-    };
-
     uahHandler = event => {
 
         let ch = event.target.value.replace(/[^0-9.0-9]/g, '');
