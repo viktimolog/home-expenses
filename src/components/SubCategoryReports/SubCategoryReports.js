@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
-import Grid from "@material-ui/core/Grid";
+import Grid from '@material-ui/core/Grid';
 // core components
-import GridItem from "components/Grid/GridItem.jsx";
+import GridItem from 'components/Grid/GridItem.jsx';
 
 const SubCategoryReports = ({name, sum}) =>
     (
@@ -34,10 +34,10 @@ const SubCategoryReports = ({name, sum}) =>
                 </Card>
             </GridItem>
         </Grid>
-    )
+    );
 
 SubCategoryReports.propTypes = {
     category: PropTypes.object.isRequired,
-}
+};
 
-export default SubCategoryReports
+export default SubCategoryReports;

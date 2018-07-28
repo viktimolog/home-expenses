@@ -49,7 +49,7 @@ class ModalDialogEditCategoryName extends React.Component {
             isParent: this.props.category.isParent,
             isChild: this.props.category.isChild,
             rating: this.props.category.rating
-        }
+        };
         this.props.updateCategory(this.props.category._id, updateCat);
         this.handleClose();
     };
@@ -100,6 +100,8 @@ class ModalDialogEditCategoryName extends React.Component {
 
 ModalDialogEditCategoryName.propTypes = {
     classes: PropTypes.object.isRequired,
+    category: PropTypes.object.isRequired,
+    updateCategory: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(ModalDialogEditCategoryName);

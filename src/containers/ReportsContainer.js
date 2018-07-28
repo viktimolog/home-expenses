@@ -7,7 +7,6 @@ import {
 import Reports from 'components/Reports/Reports';
 
 class ReportsContainer extends React.Component {
-
     componentDidMount() {
         this.props.getInitialState();
     }

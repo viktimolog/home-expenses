@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {ConnectedRouter} from 'react-router-redux';
 import App from './App';
-import store, {history} from 'store'
+import store, {history} from 'store';
 
 ReactDOM.render(
-    <Provider store = {store}>
+    <Provider store={store}>
         <ConnectedRouter history={history}>
             < App/>
         </ConnectedRouter>

@@ -1,7 +1,8 @@
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
-import Grid from "@material-ui/core/Grid";
+import withStyles from '@material-ui/core/styles/withStyles';
+import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,41 +11,41 @@ import TableHead from '@material-ui/core/TableHead';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 // core components
-import GridItem from "components/Grid/GridItem.jsx";
-import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
-import Button from "components/CustomButtons/Button.jsx";
+import GridItem from 'components/Grid/GridItem.jsx';
+import Card from 'components/Card/Card.jsx';
+import CardHeader from 'components/Card/CardHeader.jsx';
+import CardBody from 'components/Card/CardBody.jsx';
+import CustomInput from 'components/CustomInput/CustomInput.jsx';
+import Button from 'components/CustomButtons/Button.jsx';
 
-import Autocomplete from "views/Dashboard/Autocomplete"
+import Autocomplete from 'views/Dashboard/Autocomplete';
 
 const styles = {
     cardCategoryWhite: {
-        "&,& a,& a:hover,& a:focus": {
-            color: "rgba(255,255,255,.62)",
-            margin: "0",
-            fontSize: "14px",
-            marginTop: "0",
-            marginBottom: "0"
+        '&,& a,& a:hover,& a:focus': {
+            color: 'rgba(255,255,255,.62)',
+            margin: '0',
+            fontSize: '14px',
+            marginTop: '0',
+            marginBottom: '0'
         },
-        "& a,& a:hover,& a:focus": {
-            color: "#FFFFFF"
+        '& a,& a:hover,& a:focus': {
+            color: '#FFFFFF'
         }
     },
     cardTitleWhite: {
-        color: "#FFFFFF",
-        marginTop: "0px",
-        minHeight: "auto",
-        fontWeight: "300",
-        fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-        marginBottom: "3px",
-        textDecoration: "none",
-        "& small": {
-            color: "#777",
-            fontSize: "65%",
-            fontWeight: "400",
-            lineHeight: "1"
+        color: '#FFFFFF',
+        marginTop: '0px',
+        minHeight: 'auto',
+        fontWeight: '300',
+        fontFamily: '\'Roboto\', \'Helvetica\', \'Arial\', sans-serif',
+        marginBottom: '3px',
+        textDecoration: 'none',
+        '& small': {
+            color: '#777',
+            fontSize: '65%',
+            fontWeight: '400',
+            lineHeight: '1'
         }
     }
 };
@@ -55,21 +56,21 @@ class Dashboard extends React.Component {
         uah: '',
         expense: '',
         curCategory: null
-    }
+    };
 
     //todo
     stringHandler = name => event => {
         this.setState({
             [name]: event.target.value
-        })
-    }
+        });
+    };
 
     uahHandler = event => {
 
         let ch = event.target.value.replace(/[^0-9.0-9]/g, '');
         let pos1 = ch.indexOf('.');
 
-        if (pos1 != -1) {
+        if (pos1 !== -1) {
             if ((ch.length - pos1) > 3) {
                 ch = ch.slice(0, -1);
             }
@@ -77,8 +78,8 @@ class Dashboard extends React.Component {
 
         this.setState({
             uah: ch
-        })
-    }
+        });
+    };
 
     handleChange = event => {
         this.setState({
@@ -90,53 +91,50 @@ class Dashboard extends React.Component {
     handleAddExpenses = () => {
 
         if (this.state.uah === '') {
-            alert('Please, fill the textfield UAH')
-            return
+            alert('Please, fill the textfield UAH');
+            return;
         }
 
         if (this.props.categories.length <= 0) {
-            alert('Please, add category!')
-            return
+            alert('Please, add category!');
+            return;
         }
 
         let curCat;
 
-        if(this.state.curCategory === null){
+        if (this.state.curCategory === null) {
             curCat = this.props.categories[0];
         }
-        else{
-            curCat = {...this.state.curCategory}
+        else {
+            curCat = {...this.state.curCategory};
         }
 
         const newExpense = {
-            idUser: this.props.idUser,
             idCategory: curCat._id,
             date: Date.now(),
             category: curCat.name,
             expense: this.state.expense,
             valueUAH: Number(this.state.uah),
-        }
+        };
 
         this.setState({
             uah: '',
-            expense: '',
-            // curCategory: null//mustn't use, lose value of current category in select, but user sees it
-            //todo
-        })
+            expense: ''
+        });
         this.props.addExpense(newExpense);
     };
 
     getDate = value => {
         const dateFormat = require('dateformat');
-        const date = dateFormat(value, 'dddd, mmmm dS, yyyy, h:MM:ss TT')
+        const date = dateFormat(value, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
         return date;
-    }
+    };
 
-    handleExpense = exp =>{
+    handleExpense = exp => {
         this.setState({
             expense: exp
-        })
-    }
+        });
+    };
 
     render() {
         const {classes} = this.props;
@@ -166,7 +164,7 @@ class Dashboard extends React.Component {
                                                             <option value={category._id}>
                                                                 {category.name}
                                                             </option>
-                                                        )
+                                                        );
                                                     }
                                                 )
                                         }
@@ -174,10 +172,10 @@ class Dashboard extends React.Component {
                                 </GridItem>
                                 <GridItem xs={2} sm={12} md={4}>
                                     <div style={{paddingTop: '43px'}}>
-                                    <Autocomplete
-                                        pastDescriptions={this.props.pastDescriptions}
-                                        setExpense={this.handleExpense}
-                                    />
+                                        <Autocomplete
+                                            pastDescriptions={this.props.pastDescriptions}
+                                            setExpense={this.handleExpense}
+                                        />
                                     </div>
                                 </GridItem>
                                 <GridItem xs={12} sm={12} md={2}>
@@ -262,3 +260,11 @@ class Dashboard extends React.Component {
 }
 
 export default withStyles(styles)(Dashboard);
+
+Dashboard.propTypes = {
+    categories: PropTypes.array.isRequired,
+    pastDescriptions: PropTypes.array.isRequired,
+    expenses: PropTypes.array.isRequired,
+    addExpense: PropTypes.func.isRequired
+
+};

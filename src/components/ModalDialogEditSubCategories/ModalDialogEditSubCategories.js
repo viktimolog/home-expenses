@@ -10,17 +10,17 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
 // @material-ui/core components
-import Grid from "@material-ui/core/Grid";
+import Grid from '@material-ui/core/Grid';
 // core components
-import GridItem from "components/Grid/GridItem.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import SubCategoriesEdit from "components/SubCategoriesEdit/SubCategoriesEdit";
-import SelectDialogAddSubCategory from "components/SelectDialogAddSubCategory/SelectDialogAddSubCategory";
+import GridItem from 'components/Grid/GridItem.jsx';
+import CardHeader from 'components/Card/CardHeader.jsx';
+import CardBody from 'components/Card/CardBody.jsx';
+import SubCategoriesEdit from 'components/SubCategoriesEdit/SubCategoriesEdit';
+import SelectDialogAddSubCategory from 'components/SelectDialogAddSubCategory/SelectDialogAddSubCategory';
 
 function getModalStyle() {
-    const top = 50
-    const left = 50
+    const top = 50;
+    const left = 50;
 
     return {
         top: `${top}%`,
@@ -43,7 +43,7 @@ class ModalDialogEditSubCategories extends React.Component {
 
     state = {
         open: false,
-    }
+    };
 
     handleOpen = () => {
         this.setState({open: true});
@@ -99,13 +99,8 @@ class ModalDialogEditSubCategories extends React.Component {
                                                                     <TableCell component="th" scope="row">
                                                                         <SubCategoriesEdit
                                                                             category={this.props.category}
-                                                                            // subCategories={this.props.subCategories}
                                                                             categories={this.props.categories}
                                                                             subCategory={subCategory}
-                                                                            // subCategoryUP={this.props.subCategoryUP}
-                                                                            // subCategoryDOWN={this.props.subCategoryDOWN}
-                                                                            delSubCategory={this.props.delSubCategory}
-                                                                            categories={this.props.categories}
                                                                             updateCategory={this.props.updateCategory}
                                                                             UPhandlerSubCat={this.props.UPhandlerSubCat}
                                                                             DOWNhandlerSubCat={this.props.DOWNhandlerSubCat}
@@ -123,7 +118,6 @@ class ModalDialogEditSubCategories extends React.Component {
                                                             clearCategories={this.props.clearCategories}
                                                             subCategories={this.props.subCategories}
                                                             updateCategory={this.props.updateCategory}
-                                                            token={this.props.token}
                                                         />
                                                     </TableCell>
                                                 </TableRow>
@@ -142,6 +136,11 @@ class ModalDialogEditSubCategories extends React.Component {
 
 ModalDialogEditSubCategories.propTypes = {
     classes: PropTypes.object.isRequired,
+    category: PropTypes.object.isRequired,
+    updateCategory: PropTypes.func.isRequired,
+    addSubCategory: PropTypes.func.isRequired,
+    categories: PropTypes.array.isRequired,
+    clearCategories: PropTypes.array.isRequired
 };
 
 export default withStyles(styles)(ModalDialogEditSubCategories);

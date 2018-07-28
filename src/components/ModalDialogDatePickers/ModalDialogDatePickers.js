@@ -5,18 +5,18 @@ import Card from '@material-ui/core/Card';
 import Modal from '@material-ui/core/Modal';
 
 // @material-ui/core components
-import Grid from "@material-ui/core/Grid";
+import Grid from '@material-ui/core/Grid';
 // core components
-import GridItem from "components/Grid/GridItem.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import Button from "components/CustomButtons/Button.jsx";
+import GridItem from 'components/Grid/GridItem.jsx';
+import CardHeader from 'components/Card/CardHeader.jsx';
+import CardBody from 'components/Card/CardBody.jsx';
+import Button from 'components/CustomButtons/Button.jsx';
 
-import DatePickerReports from "components/DatePickerReports/DatePickerReports";
+import DatePickerReports from 'components/DatePickerReports/DatePickerReports';
 
 function getModalStyle() {
-    const top = 50
-    const left = 50
+    const top = 50;
+    const left = 50;
 
     return {
         top: `${top}%`,
@@ -43,29 +43,29 @@ class ModalDialogDatePickers extends React.Component {
         endDay: this.props.endDay,
         tmpBegin: Date.now(),
         tmpEnd: Date.now()
-    }
+    };
 
-    handleTmpBegin = val => this.setState({tmpBegin: val})
+    handleTmpBegin = val => this.setState({tmpBegin: val});
 
-    handleTmpEnd = val => this.setState({tmpEnd: val})
+    handleTmpEnd = val => this.setState({tmpEnd: val});
 
     handleOK = () => {
         if (isNaN(this.state.tmpBegin) || isNaN(this.state.tmpEnd)) {
-            alert('Please, fill all the datepickers')
-            return
+            alert('Please, fill all the datepickers');
+            return;
         }
 
         if (this.state.tmpBegin > this.state.tmpEnd) {
-            this.props.setPeriod(this.state.tmpEnd, this.state.tmpBegin)
-            this.handleClose()
-            return
+            this.props.setPeriod(this.state.tmpEnd, this.state.tmpBegin);
+            this.handleClose();
+            return;
         }
-        this.props.setPeriod(this.state.tmpBegin, this.state.tmpEnd)
-        this.handleClose()
-    }
+        this.props.setPeriod(this.state.tmpBegin, this.state.tmpEnd);
+        this.handleClose();
+    };
 
-    handleBeginDay = val => this.setState({beginDay: val})
-    handleEndDay = val => this.setState({endDay: val})
+    handleBeginDay = val => this.setState({beginDay: val});
+    handleEndDay = val => this.setState({endDay: val});
 
     handleOpen = () => {
         this.setState({open: true});
@@ -146,7 +146,7 @@ class ModalDialogDatePickers extends React.Component {
 }
 
 ModalDialogDatePickers.propTypes = {
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(ModalDialogDatePickers);

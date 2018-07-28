@@ -1,35 +1,33 @@
-import React from "react";
+import React from 'react';
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
-import Grid from "@material-ui/core/Grid";
-import InputLabel from "@material-ui/core/InputLabel";
+import withStyles from '@material-ui/core/styles/withStyles';
+import Grid from '@material-ui/core/Grid';
 // core components
-import GridItem from "components/Grid/GridItem.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
-import Button from "components/CustomButtons/Button.jsx";
-import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardAvatar from "components/Card/CardAvatar.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import CardFooter from "components/Card/CardFooter.jsx";
-import {Link} from 'react-router-dom'
+import GridItem from 'components/Grid/GridItem.jsx';
+import CustomInput from 'components/CustomInput/CustomInput.jsx';
+import Button from 'components/CustomButtons/Button.jsx';
+import Card from 'components/Card/Card.jsx';
+import CardHeader from 'components/Card/CardHeader.jsx';
+import CardBody from 'components/Card/CardBody.jsx';
+import CardFooter from 'components/Card/CardFooter.jsx';
+import {Link} from 'react-router-dom';
 
 const styles = {
     cardCategoryWhite: {
-        color: "rgba(255,255,255,.62)",
-        margin: "0",
-        fontSize: "14px",
-        marginTop: "0",
-        marginBottom: "0"
+        color: 'rgba(255,255,255,.62)',
+        margin: '0',
+        fontSize: '14px',
+        marginTop: '0',
+        marginBottom: '0'
     },
     cardTitleWhite: {
-        color: "#FFFFFF",
-        marginTop: "0px",
-        minHeight: "auto",
-        fontWeight: "300",
-        fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-        marginBottom: "3px",
-        textDecoration: "none"
+        color: '#FFFFFF',
+        marginTop: '0px',
+        minHeight: 'auto',
+        fontWeight: '300',
+        fontFamily: '\'Roboto\', \'Helvetica\', \'Arial\', sans-serif',
+        marginBottom: '3px',
+        textDecoration: 'none'
     }
 };
 
@@ -38,21 +36,21 @@ class Signin extends React.Component {
     state = {
         email: '',
         password: ''
-    }
+    };
 
     handleSignin = () => {
         const user = {
             email: this.state.email.trim(),
             password: this.state.password.trim()
-        }
-        this.props.signin(user)
-    }
+        };
+        this.props.signin(user);
+    };
 
     stringHandler = name => event => {
         this.setState({
             [name]: event.target.value
-        })
-    }
+        });
+    };
 
     render() {
         const {classes} = this.props;

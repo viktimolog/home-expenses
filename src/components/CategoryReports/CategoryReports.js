@@ -36,7 +36,8 @@ const CategoryReports = ({name, sum}) => (
 );
 
 CategoryReports.propTypes = {
-    category: PropTypes.object.isRequired,
+    name: PropTypes.string.isRequired,
+    sum: PropTypes.number.isRequired
 };
 
 export default CategoryReports;

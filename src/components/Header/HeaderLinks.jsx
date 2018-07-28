@@ -1,28 +1,28 @@
-import React from "react";
-import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
-import classNames from "classnames";
-import {Manager, Target, Popper} from "react-popper";
+import React from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import {Manager, Target, Popper} from 'react-popper';
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
-import MenuItem from "@material-ui/core/MenuItem";
-import MenuList from "@material-ui/core/MenuList";
-import Grow from "@material-ui/core/Grow";
-import Paper from "@material-ui/core/Paper";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Hidden from "@material-ui/core/Hidden";
+import withStyles from '@material-ui/core/styles/withStyles';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Hidden from '@material-ui/core/Hidden';
 // @material-ui/icons
 // core components
-import Person from "@material-ui/icons/Person";
-import FormLabel from "@material-ui/core/FormLabel";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import Button from "components/CustomButtons/Button.jsx";
-import {Link} from 'react-router-dom'
+import Person from '@material-ui/icons/Person';
+import FormLabel from '@material-ui/core/FormLabel';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Button from 'components/CustomButtons/Button.jsx';
+import {Link} from 'react-router-dom';
 
-import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle";
+import headerLinksStyle from 'assets/jss/material-dashboard-react/components/headerLinksStyle';
 import {
     signOut
-} from 'actions/actionCreator'
+} from 'actions/actionCreator';
 
 
 class HeaderLinks extends React.Component {
@@ -41,7 +41,7 @@ class HeaderLinks extends React.Component {
     handleSignOut = () => {
         this.props.signOut();
         this.handleClose();
-    }
+    };
 
     render() {
         const {classes, isUser, email} = this.props;
@@ -56,7 +56,7 @@ class HeaderLinks extends React.Component {
                 <Manager className={classes.manager}>
                     <Target>
                         <Button
-                            color={window.innerWidth > 959 ? "transparent" : "white"}
+                            color={window.innerWidth > 959 ? 'transparent' : 'white'}
                             justIcon={window.innerWidth > 959}
                             simple={!(window.innerWidth > 959)}
                             aria-label="Person"
@@ -76,7 +76,7 @@ class HeaderLinks extends React.Component {
                         eventsEnabled={open}
                         className={
                             classNames({[classes.popperClose]: !open}) +
-                            " " +
+                            ' ' +
                             classes.pooperResponsive
                         }
                     >
@@ -85,7 +85,7 @@ class HeaderLinks extends React.Component {
                             <Grow
                                 in={open}
                                 id="menu-list"
-                                style={{transformOrigin: "0 0 0"}}
+                                style={{transformOrigin: '0 0 0'}}
                             >
                                 <Paper className={classes.dropdown}>
                                     <MenuList role="menu">
@@ -135,17 +135,18 @@ class HeaderLinks extends React.Component {
 HeaderLinks.propTypes = {
     isUser: PropTypes.string.isRequired,
     signOut: PropTypes.func.isRequired,
-    email: PropTypes.string.isRequired
-}
+    email: PropTypes.string.isRequired,
+    classes: PropTypes.object.isRequired
+};
 
 const mapStateToProps = state => ({
     isUser: state.mainReducer.isUser,
     email: state.mainReducer.email
-})
+});
 
 const mapDispatchToProps = {
     signOut
-}
+};
 
 export default connect(mapStateToProps,
-    mapDispatchToProps)(withStyles(headerLinksStyle)(HeaderLinks))
+    mapDispatchToProps)(withStyles(headerLinksStyle)(HeaderLinks));

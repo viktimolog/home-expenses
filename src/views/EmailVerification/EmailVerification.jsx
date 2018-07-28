@@ -1,63 +1,62 @@
-import React from "react";
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
-import Grid from "@material-ui/core/Grid";
+import withStyles from '@material-ui/core/styles/withStyles';
+import Grid from '@material-ui/core/Grid';
 // core components
-import GridItem from "components/Grid/GridItem.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
-import Button from "components/CustomButtons/Button.jsx";
-import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import CardFooter from "components/Card/CardFooter.jsx";
-import {Link} from 'react-router-dom'
+import GridItem from 'components/Grid/GridItem.jsx';
+import CustomInput from 'components/CustomInput/CustomInput.jsx';
+import Button from 'components/CustomButtons/Button.jsx';
+import Card from 'components/Card/Card.jsx';
+import CardHeader from 'components/Card/CardHeader.jsx';
+import CardBody from 'components/Card/CardBody.jsx';
+import CardFooter from 'components/Card/CardFooter.jsx';
+import {Link} from 'react-router-dom';
 
 import {
     verify
-} from 'actions/actionCreator'
-import {connect} from "react-redux";
+} from 'actions/actionCreator';
+import {connect} from 'react-redux';
 
 const styles = {
     cardCategoryWhite: {
-        color: "rgba(255,255,255,.62)",
-        margin: "0",
-        fontSize: "14px",
-        marginTop: "0",
-        marginBottom: "0"
+        color: 'rgba(255,255,255,.62)',
+        margin: '0',
+        fontSize: '14px',
+        marginTop: '0',
+        marginBottom: '0'
     },
     cardTitleWhite: {
-        color: "#FFFFFF",
-        marginTop: "0px",
-        minHeight: "auto",
-        fontWeight: "300",
-        fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-        marginBottom: "3px",
-        textDecoration: "none"
+        color: '#FFFFFF',
+        marginTop: '0px',
+        minHeight: 'auto',
+        fontWeight: '300',
+        fontFamily: '\'Roboto\', \'Helvetica\', \'Arial\', sans-serif',
+        marginBottom: '3px',
+        textDecoration: 'none'
     }
 };
 
 class EmailVerification extends React.Component {
-
     componentDidMount() {
         this.setState({
             email: this.props.match.params.email,
             verifyKey: this.props.match.params.verifyKey
-        })
+        });
     }
 
     state = {
         email: '',
         verifyKey: ''
-    }
+    };
 
     handleVerify = () => {
         const user = {
             email: this.state.email,
             verifyKey: this.state.verifyKey
-        }
-        this.props.verify(user)
-    }
+        };
+        this.props.verify(user);
+    };
 
 
     render() {
@@ -123,21 +122,12 @@ class EmailVerification extends React.Component {
     }
 }
 
-// export default withStyles(styles)(EmailVerification);
-
 EmailVerification.propTypes = {
     verify: PropTypes.func.isRequired
-}
-
-// const mapStateToProps = state => ({
-//     email: state.mainReducer.email,
-//     idUser: state.mainReducer.idUser,
-//     token: state.mainReducer.idUser,
-//     avatar: state.mainReducer.idUser
-// })
+};
 
 const mapDispatchToProps = {
     verify
-}
+};
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(EmailVerification))
+export default connect(null, mapDispatchToProps)(withStyles(styles)(EmailVerification));

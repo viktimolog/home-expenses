@@ -1,7 +1,6 @@
 import React from 'react';
-
-import {Route, Switch} from 'react-router-dom'
-import indexRoutes from "routes/index.jsx";
+import {Route, Switch} from 'react-router-dom';
+import indexRoutes from 'routes/index.jsx';
 
 const App = () => (
     <Switch>
@@ -13,7 +12,7 @@ const App = () => (
             />;
         })}
     </Switch>
-)
+);
 
 export default App;
 

@@ -4,8 +4,8 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Button from 'components/CustomButtons/Button.jsx'
-import {ArrowUpward, ArrowDownward} from "@material-ui/icons";
+import Button from 'components/CustomButtons/Button.jsx';
+import {ArrowUpward, ArrowDownward} from '@material-ui/icons';
 
 
 const Styles = {
@@ -13,18 +13,22 @@ const Styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     alignContent: 'center',
-}
+};
 
 
-const subCategory = ({UPhandlerSubCat, DOWNhandlerSubCat, subCategory, subCategories, subCategoryUP, subCategoryDOWN, categories}) => {
+const SubCategory = ({
+                         UPhandlerSubCat,
+                         DOWNhandlerSubCat,
+                         subCategory
+                     }) => {
 
     const UPhandler = () => {
-        UPhandlerSubCat(subCategory)
-    }
+        UPhandlerSubCat(subCategory);
+    };
 
     const DOWNhandler = () => {
-        DOWNhandlerSubCat(subCategory)
-    }
+        DOWNhandlerSubCat(subCategory);
+    };
 
     return (
         <Card style={Styles}>
@@ -34,7 +38,6 @@ const subCategory = ({UPhandlerSubCat, DOWNhandlerSubCat, subCategory, subCatego
                     gutterBottom variant="title"
                     component="h2"
                 >
-                    {/*{categories.filter(cat => cat._id === subCategory.idParent)[0].name}*/}
                     {subCategory.name}
                 </Typography>
             </CardContent>
@@ -57,11 +60,13 @@ const subCategory = ({UPhandlerSubCat, DOWNhandlerSubCat, subCategory, subCatego
                 </CardActions>
             </div>
         </Card>
-    )
-}
+    );
+};
 
-subCategory.propTypes = {
-    category: PropTypes.object.isRequired,
-}
+SubCategory.propTypes = {
+    subCategory: PropTypes.object.isRequired,
+    UPhandlerSubCat: PropTypes.func.isRequired,
+    DOWNhandlerSubCat: PropTypes.func.isRequired,
+};
 
-export default subCategory
+export default SubCategory;

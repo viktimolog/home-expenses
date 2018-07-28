@@ -36,10 +36,6 @@ const Category = ({
                       categoryUP,
                       categoryDOWN,
                       delCategory,
-                      subCategoryUP,
-                      subCategoryDOWN,
-                      delSubCategory,
-                      addSubCategory,
                       clearCategories,
                       updateCategory,
                   }) => {
@@ -57,15 +53,13 @@ const Category = ({
             return;
         }
 
-        console.log('console.log category = ', category)
-
         const ratingDOWNcategory = categories
             .filter(cat => cat.idParent === category.idParent)
             .find(cat => cat.rating === category.rating - 1);
 
-        console.log('console.log categories = ', categories)
+        console.log('console.log categories = ', categories);
 
-        console.log('console.log ratingDOWNcategory = ', ratingDOWNcategory)
+        console.log('console.log ratingDOWNcategory = ', ratingDOWNcategory);
 
         const newUPcategory = {
             name: category.name,
@@ -240,7 +234,6 @@ const Category = ({
                             delCategory={delCategory}
                             updateCategory={updateCategory}
                             subCategories={categories.filter(subCategory => subCategory.idParent === category._id)}
-                            delSubCategory={delSubCategory}
                             expenses={expenses}
                             updateExpense={updateExpense}
                         />
@@ -249,10 +242,6 @@ const Category = ({
                         <ModalDialogEditSubCategories
                             category={category}
                             subCategories={categories.filter(subCategory => subCategory.idParent === category._id)}
-                            // subCategoryUP={subCategoryUP}
-                            // subCategoryDOWN={subCategoryDOWN}
-                            delSubCategory={delSubCategory}
-                            addSubCategory={addSubCategory}
                             clearCategories={clearCategories}
                             updateCategory={updateCategory}
                             categories={categories}
@@ -271,7 +260,6 @@ const Category = ({
                             <Table>
                                 <TableBody>
                                     {
-                                        // subCategories
                                         categories.filter(subCategory => subCategory.idParent === category._id)
                                             .sort((a, b) => a.rating > b.rating)
                                             .map(subCategory => {
@@ -284,9 +272,6 @@ const Category = ({
                                                                         .filter(subCategory => subCategory.idParent === category._id)
                                                                 }
                                                                 subCategory={subCategory}
-                                                                // subCategoryUP={subCategoryUP}
-                                                                // subCategoryDOWN={subCategoryDOWN}
-                                                                // categories={categories}
                                                                 DOWNhandlerSubCat={DOWNhandlerSubCat}
                                                                 UPhandlerSubCat={UPhandlerSubCat}
                                                             />
@@ -307,7 +292,14 @@ const Category = ({
 
 Category.propTypes = {
     category: PropTypes.object.isRequired,
-    updateExpense: PropTypes.func.isRequired
+    updateExpense: PropTypes.func.isRequired,
+    categories: PropTypes.array.isRequired,
+    clearCategories: PropTypes.array.isRequired,
+    expenses: PropTypes.array.isRequired,
+    categoryUP: PropTypes.func.isRequired,
+    categoryDOWN: PropTypes.func.isRequired,
+    delCategory: PropTypes.func.isRequired,
+    updateCategory: PropTypes.func.isRequired,
 };
 
 export default Category;

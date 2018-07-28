@@ -1,9 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 // @material-ui/core components
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
 import {FormLabel} from '@material-ui/core';
@@ -107,7 +107,7 @@ class Reports extends React.Component {
         function getMonday(d) {
             d = new Date(d);
             const day = d.getDay(),
-                diff = d.getDate() - day + (day == 0 ? -6 : 1);
+                diff = d.getDate() - day + (day === 0 ? -6 : 1);
             return new Date(d.setDate(diff));
         }
 
@@ -304,7 +304,9 @@ class Reports extends React.Component {
         let curChildren = [];
 
         curCategories.map(cat => {
-            if (!cat.isParent && !cat.isChild) {
+            if ((!cat.isParent && !cat.isChild)
+                || (!cat.isParent && cat.isChild
+                    && !curCategories.find(category => category._id === cat.idParent))) {
                 let sum = 0;
 
                 curExpenses.filter(exp => exp.idCategory === cat._id)
@@ -481,5 +483,10 @@ class Reports extends React.Component {
         );
     }
 }
+
+Reports.propTypes = {
+    categories: PropTypes.array.isRequired,
+    expenses: PropTypes.array.isRequired
+};
 
 export default withStyles(styles)(Reports);

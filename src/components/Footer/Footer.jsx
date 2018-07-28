@@ -1,12 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
-import ListItem from "@material-ui/core/ListItem";
-import List from "@material-ui/core/List";
+import withStyles from '@material-ui/core/styles/withStyles';
+import ListItem from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
 // core components
-import footerStyle from "assets/jss/material-dashboard-react/components/footerStyle";
-import {Link} from 'react-router-dom'
+import footerStyle from 'assets/jss/material-dashboard-react/components/footerStyle';
+import {Link} from 'react-router-dom';
 
 function Footer({...props}) {
     const {classes} = props;
@@ -28,7 +28,7 @@ function Footer({...props}) {
                 </div>
                 <p className={classes.right}>
           <span>
-            &copy; {1900 + new Date().getYear()}{" "}
+            &copy; {1900 + new Date().getYear()}{' '}
               <a href="https://github.com/viktimolog?tab=repositories" target="_blank" className={classes.a}>
               Koganov Alexander
             </a>, made with love for a better web

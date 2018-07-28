@@ -47,20 +47,30 @@ const styles = {
 };
 
 const ConfigTableList = props => {
-    const getRatingLastCategory = arr => {
-        if (arr.length > 0) {
-            return arr[arr.length - 1].rating;
-        }
-        return -1;
-    };
-
     const ADDhandler = () => {
+
+        let maxRating;
+
+        if (!props.categories.length) {
+            maxRating = -1;
+        }
+        else if (props.categories
+            .filter(cat => cat.idParent === '0')
+            .length === 1) {
+            maxRating = props.categories[0].rating;
+        }
+        else {
+            maxRating = props.categories
+                .filter(cat => cat.idParent === '0')
+                .sort((a, b) => a.rating < b.rating)[0].rating;
+        }
+
         const newCategory = {
             name: '',
             idParent: '0',
             isParent: false,
             isChild: false,
-            rating: getRatingLastCategory(props.categories) + 1,
+            rating: maxRating + 1,
         };
         props.addCategory(newCategory);
     };
@@ -80,7 +90,7 @@ const ConfigTableList = props => {
                         <Table>
                             <TableBody>
                                 {props.categories
-                                    .filter(cat => cat.idParent === '0')//те, что не дети, верхний уровень, idParent = '0'
+                                    .filter(cat => cat.idParent === '0')
                                     .sort((a, b) => a.rating > b.rating)
                                     .map(category => {
                                         return (
@@ -105,7 +115,7 @@ const ConfigTableList = props => {
                                                     />
                                                 </TableCell>
                                             </TableRow>
-                                        )
+                                        );
                                     })}
                                 <TableRow>
                                     <TableCell component="th" scope="row">
@@ -132,10 +142,19 @@ export default withStyles(styles)(ConfigTableList);
 
 ConfigTableList.propTypes = {
     categories: PropTypes.array.isRequired,
+    clearCategories: PropTypes.array.isRequired,
+    expenses: PropTypes.array.isRequired,
+    subCategories: PropTypes.array.isRequired,
+    classes: PropTypes.object.isRequired,
     categoryUP: PropTypes.func.isRequired,
     categoryDOWN: PropTypes.func.isRequired,
     delCategory: PropTypes.func.isRequired,
-    updateCategory: PropTypes.func.isRequired
+    updateCategory: PropTypes.func.isRequired,
+    addCategory: PropTypes.func.isRequired,
+    subCategoryUP: PropTypes.func.isRequired,
+    subCategoryDOWN: PropTypes.func.isRequired,
+    delSubCategory: PropTypes.func.isRequired,
+    addSubCategory: PropTypes.func.isRequired,
+    updateExpense: PropTypes.func.isRequired,
+    updateSubCategory: PropTypes.func.isRequired
 };
-
-

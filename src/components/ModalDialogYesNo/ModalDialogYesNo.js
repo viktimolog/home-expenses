@@ -42,11 +42,7 @@ class ModalDialogYesNo extends React.Component {
 
     DELhandler = () => {
 
-        //todo expenses fix
-
         const curExpenses = this.props.expenses.filter(exp => exp.idCategory === this.props.category._id);
-
-        console.log('console.log curExpenses = ', curExpenses);
 
         curExpenses.map(exp => {
             const newExp = {
@@ -146,6 +142,11 @@ class ModalDialogYesNo extends React.Component {
 
 ModalDialogYesNo.propTypes = {
     classes: PropTypes.object.isRequired,
+    expenses: PropTypes.array.isRequired,
+    categories: PropTypes.array.isRequired,
+    category: PropTypes.object.isRequired,
+    updateExpense: PropTypes.func.isRequired,
+    delCategory: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(ModalDialogYesNo);

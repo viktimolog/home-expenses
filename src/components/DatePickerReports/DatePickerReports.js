@@ -19,18 +19,18 @@ class DatePickerReports extends React.Component {
 
     getDate = value => {
         const dateFormat = require('dateformat');
-        const date = dateFormat(value, 'yyyy-mm-dd')
+        const date = dateFormat(value, 'yyyy-mm-dd');
         return date;
-    }
+    };
 
     state = {
         date: this.getDate(Date.now())
-    }
+    };
 
     handleDate = event => {
-        this.setState({date: event.target.value})
-        this.props.handleTmpBegin(new Date(event.target.value).getTime())
-    }
+        this.setState({date: event.target.value});
+        this.props.handleTmpBegin(new Date(event.target.value).getTime());
+    };
 
     render() {
         const {classes} = this.props;
@@ -55,6 +55,7 @@ class DatePickerReports extends React.Component {
 
 DatePickerReports.propTypes = {
     classes: PropTypes.object.isRequired,
+    handleTmpBegin: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(DatePickerReports);

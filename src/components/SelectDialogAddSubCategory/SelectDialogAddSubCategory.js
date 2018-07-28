@@ -45,7 +45,6 @@ class SelectDialogAddSubCategory extends React.Component {
         });
     };
 
-    //this.props.category - кому добавляем
     handleAddSubCategory = () => {
 
         if (this.props.clearCategories.length <= 0) {
@@ -70,7 +69,7 @@ class SelectDialogAddSubCategory extends React.Component {
                 name: curCategory.name,
                 rating: maxRating + 1,
                 isParent: curCategory.isParent,
-                isChild:true,
+                isChild: true,
                 idParent: category._id,
             };
             return newSubCategory;
@@ -89,9 +88,9 @@ class SelectDialogAddSubCategory extends React.Component {
 
         const pushToDB = (category, curCategory) => {
 
-            this.props.updateCategory(category._id, getCategorySetParent());//update parent
+            this.props.updateCategory(category._id, getCategorySetParent());
 
-            this.props.updateCategory(curCategory._id, getNewSubCategory(category, curCategory));//update child
+            this.props.updateCategory(curCategory._id, getNewSubCategory(category, curCategory));
         };
 
         let curCat;
@@ -102,7 +101,7 @@ class SelectDialogAddSubCategory extends React.Component {
                 .filter(cat => cat._id !== this.props.category._id)[0]);
 
             curCat = this.props.clearCategories
-                .filter(cat => cat._id !== this.props.category._id)[0]
+                .filter(cat => cat._id !== this.props.category._id)[0];
         }
         else {
             pushToDB(this.props.category, this.state.curCategory);
@@ -113,17 +112,18 @@ class SelectDialogAddSubCategory extends React.Component {
             .filter(cat => cat.idParent === curCat.idParent)
             .filter(cat => cat.rating > curCat.rating);
 
-        if(arrNextSubCats.length)
+        if (arrNextSubCats.length) {
             arrNextSubCats.map(subCat => {
                 const newNextCategory = {
                     name: subCat.name,
-                    rating: subCat.rating-1,
+                    rating: subCat.rating - 1,
                     isParent: subCat.isParent,
                     isChild: subCat.isChild,
                     idParent: subCat.idParent
                 };
                 this.props.updateCategory(subCat._id, newNextCategory);
             });
+        }
         this.handleClose();
     };
 
@@ -152,7 +152,7 @@ class SelectDialogAddSubCategory extends React.Component {
                             <FormControl className={classes.formControl}>
                                 <Select
                                     native
-                                    onChange={this.handleChange('nameCategory')}//todo
+                                    onChange={this.handleChange('nameCategory')}
                                     input={<Input id="age-native-simple"/>}
                                 >
                                     {
@@ -187,6 +187,10 @@ class SelectDialogAddSubCategory extends React.Component {
 
 SelectDialogAddSubCategory.propTypes = {
     classes: PropTypes.object.isRequired,
+    clearCategories: PropTypes.array.isRequired,
+    categories: PropTypes.array.isRequired,
+    category: PropTypes.object.isRequired,
+    updateCategory: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(SelectDialogAddSubCategory);

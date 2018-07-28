@@ -1,11 +1,11 @@
-import React from 'react'
-import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
+import React from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import {
     signin
-} from 'actions/actionCreator'
+} from 'actions/actionCreator';
 
-import Signin from 'views/Signin/Signin'
+import Signin from 'views/Signin/Signin';
 
 class SignInContainer extends React.Component {
     render() {
@@ -14,16 +14,16 @@ class SignInContainer extends React.Component {
                 <Signin
                     signin={this.props.signin}
                 />
-            </div>)
+            </div>);
     }
 }
 
 SignInContainer.propTypes = {
     signin: PropTypes.func.isRequired
-}
+};
 
 const mapDispatchToProps = {
     signin
-}
+};
 
-export default connect(null, mapDispatchToProps)(SignInContainer)
+export default connect(null, mapDispatchToProps)(SignInContainer);

@@ -1,4 +1,4 @@
-const baseApiUrl = 'http://localhost:5000/api/'
+const baseApiUrl = 'http://localhost:7777/api/'
 
 const Urls = {
     baseApiUrl: baseApiUrl,
@@ -7,11 +7,6 @@ const Urls = {
     delCategory: 'categories/delCategory/',
     updateCategory: 'categories/updateCategory/',
     upCategory: 'categories/upCategory/',
-
-    getSubCategories: 'subCategories/getSubCategories',
-    addSubCategory: 'subCategories/addSubCategory',
-    delSubCategory: 'subCategories/delSubCategory/',
-    updateSubCategory: 'subCategories/updateSubCategory/',
 
     getExpenses: 'expenses/getExpenses',
     addExpense: 'expenses/addExpense',

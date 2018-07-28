@@ -15,7 +15,18 @@ const Styles = {
 };
 
 
-const SubCategoriesEdit = ({UPhandlerSubCat, DOWNhandlerSubCat, category, delSubCategory, subCategory, subCategories, subCategoryUP, subCategoryDOWN, categories, updateCategory}) => {
+const SubCategoriesEdit = ({
+                               UPhandlerSubCat,
+                               DOWNhandlerSubCat,
+                               category,
+                               delSubCategory,
+                               subCategory,
+                               subCategories,
+                               subCategoryUP,
+                               subCategoryDOWN,
+                               categories,
+                               updateCategory
+                           }) => {
     const UPhandler = () => {
         UPhandlerSubCat(subCategory);
     };
@@ -24,24 +35,23 @@ const SubCategoriesEdit = ({UPhandlerSubCat, DOWNhandlerSubCat, category, delSub
         DOWNhandlerSubCat(subCategory);
     };
 
-    //todo //category // subCategory
     const delSubCategoryHandler = () => {
-
         const arrNextSubCats = categories
             .filter(cat => cat.idParent === subCategory.idParent)
             .filter(cat => cat.rating > subCategory.rating);
 
-        if(arrNextSubCats.length)
-        arrNextSubCats.map(subCat => {
-            const newNextCategory = {
-                name: subCat.name,
-                rating: subCat.rating-1,
-                isParent: subCat.isParent,
-                isChild: subCat.isChild,
-                idParent: subCat.idParent
-            };
-            updateCategory(subCat._id, newNextCategory);
-        });
+        if (arrNextSubCats.length) {
+            arrNextSubCats.map(subCat => {
+                const newNextCategory = {
+                    name: subCat.name,
+                    rating: subCat.rating - 1,
+                    isParent: subCat.isParent,
+                    isChild: subCat.isChild,
+                    idParent: subCat.idParent
+                };
+                updateCategory(subCat._id, newNextCategory);
+            });
+        }
 
         const countSubCatsCategory = categories.filter(cat => cat.idParent === subCategory.idParent).length;
 
@@ -114,6 +124,15 @@ const SubCategoriesEdit = ({UPhandlerSubCat, DOWNhandlerSubCat, category, delSub
 
 SubCategoriesEdit.propTypes = {
     category: PropTypes.object.isRequired,
+    subCategory: PropTypes.object.isRequired,
+    subCategories: PropTypes.array.isRequired,
+    categories: PropTypes.array.isRequired,
+    updateCategory: PropTypes.func.isRequired,
+    DOWNhandlerSubCat: PropTypes.func.isRequired,
+    delSubCategory: PropTypes.func.isRequired,
+    subCategoryUP: PropTypes.func.isRequired,
+    subCategoryDOWN: PropTypes.func.isRequired,
+    UPhandlerSubCat: PropTypes.func.isRequired
 };
 
 export default SubCategoriesEdit;

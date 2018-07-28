@@ -1,30 +1,31 @@
 /* eslint-disable */
-import React from "react";
-import PropTypes from "prop-types";
-import {Switch, Route, Redirect} from "react-router-dom";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {Switch, Route, Redirect} from 'react-router-dom';
 // creates a beautiful scrollbar
-import PerfectScrollbar from "perfect-scrollbar";
-import "perfect-scrollbar/css/perfect-scrollbar.css";
+import PerfectScrollbar from 'perfect-scrollbar';
+import 'perfect-scrollbar/css/perfect-scrollbar.css';
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
+import withStyles from '@material-ui/core/styles/withStyles';
 // core components
-import Header from "components/Header/Header.jsx";
-import Footer from "components/Footer/Footer.jsx";
-import Sidebar from "components/Sidebar/Sidebar.jsx";
+import Header from 'components/Header/Header.jsx';
+import Footer from 'components/Footer/Footer.jsx';
+import Sidebar from 'components/Sidebar/Sidebar.jsx';
 
-import getDashboardRoutes from "routes/dashboard.jsx";
+import getDashboardRoutes from 'routes/dashboard.jsx';
 
-import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
+import dashboardStyle from 'assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx';
 
-import image from "assets/img/sidebar-2.jpg";
-import logo from "assets/img/reactlogo.png";
-import {connect} from "react-redux";
+import image from 'assets/img/sidebar-2.jpg';
+import logo from 'assets/img/reactlogo.png';
+import {connect} from 'react-redux';
 
 const switchRoutes = isUser => (
     <Switch>
         {getDashboardRoutes(isUser).map((prop, key) => {
-            if (prop.redirect)
+            if (prop.redirect) {
                 return <Redirect from={prop.path} to={prop.to} key={key}/>;
+            }
             return <Route path={prop.path} component={prop.component} key={key}/>;
         })}
     </Switch>
@@ -39,15 +40,13 @@ class App extends React.Component {
     };
 
     getRoute() {
-        return this.props.location.pathname !== "/maps";
+        return this.props.location.pathname !== '/maps';
     }
 
     componentDidMount() {
-        if (navigator.platform.indexOf("Win") > -1) {
+        if (navigator.platform.indexOf('Win') > -1) {
             const ps = new PerfectScrollbar(this.refs.mainPanel);
         }
-        // if(localStorage.getItem('token'))
-        //     this.props.GetCurrentUserByToken()
     }
 
     componentDidUpdate(e) {
@@ -65,7 +64,7 @@ class App extends React.Component {
             <div className={classes.wrapper}>
                 <Sidebar
                     routes={getDashboardRoutes(this.props.isUser)}
-                    logoText={"HOME EXPENSES"}
+                    logoText={'HOME EXPENSES'}
                     logo={logo}
                     image={image}
                     handleDrawerToggle={this.handleDrawerToggle}
@@ -103,6 +102,6 @@ App.propTypes = {
 
 const mapStateToProps = state => ({
     isUser: state.mainReducer.isUser
-})
+});
 
 export default connect(mapStateToProps, null)(withStyles(dashboardStyle)(App))

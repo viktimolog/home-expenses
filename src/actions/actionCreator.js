@@ -1,72 +1,14 @@
 import {
-    GET_ITEMS,
-    FIND_ITEMS,
-    CATEGORY_DOWN,
-    CATEGORY_UP,
-    DEL_CATEGORY,
-    ADD_CATEGORY,
-    UPDATE_CATEGORYNAME,
-    SUBCATEGORY_DOWN,
-    SUBCATEGORY_UP,
-    DEL_SUBCATEGORY,
-    ADD_SUBCATEGORY,
-    ADD_EXPENSES,
     GET_CATEGORIES,
-    GET_SUBCATEGORIES,
     GET_EXPENSES,
     SIGN_OUT,
-    SIGN_IN,
-    SIGN_UP
+    SIGN_IN
 } from 'actions/actionTypes';
 import {TextConstants} from 'constants/TextConstants';
 import {
-    GetCategories, UpdateCategory, AddCategory, DelCategory, AddSubCategory, GetSubCategories, AddExpense, GetExpenses,
-    DelSubCategory, UpdateExpense, UpdateSubCategory, Signin, Signup, Verify, GetCurrentUserByToken, UpCategory
+    GetCategories, UpdateCategory, AddCategory, DelCategory, AddExpense, GetExpenses,
+    UpdateExpense, Signin, Signup, Verify, GetCurrentUserByToken
 } from './axiosRequests';
-
-export const upCategory = (_id, category) => dispatch => {
-    UpCategory(_id, category)
-        .then(res => {
-                // alert(res.data.success)//true, false - badly
-                if (res.data.success) {
-                    GetCategories()
-                        .then(res =>
-                            dispatch({
-                                type: GET_CATEGORIES,
-                                payload: res.data
-                            })
-                        )
-                        .catch(err => {
-                                // alert(TextConstants.SERVETNOTRESP)
-                                alert('first catch UpCategory');
-                                dispatch({
-                                    type: GET_CATEGORIES,
-                                    payload: []
-                                });
-                            }
-                        )
-                }
-                else {
-                    // alert(TextConstants.SERVETNOTRESP)
-                    alert('third catch UpCategory')
-                    dispatch({
-                        type: GET_CATEGORIES,
-                        payload: []
-                    })
-                }
-            }
-        )
-        .catch(err => {
-                // alert(TextConstants.SERVETNOTRESP)
-                alert('fourth catch UpCategory');
-                dispatch({
-                    type: GET_CATEGORIES,
-                    payload: []
-                });
-            }
-        );
-};
-
 
 export const signup = user => dispatch => {
     Signup(user)
@@ -182,7 +124,6 @@ export const getCurrentUserByToken = () => dispatch => {
 };
 
 export const getInitialState = () => dispatch => {
-
     GetCurrentUserByToken()
         .then(res => {
                 if (res.data.success) {
@@ -221,36 +162,16 @@ export const getInitialState = () => dispatch => {
             }
         )
         .then(res => GetCategories()
-            // GetCategories()
-                .then(res =>
-                    dispatch({
-                        type: GET_CATEGORIES,
-                        payload: res.data
-                    })
-                )
-                .catch(err => {
-                        // alert(TextConstants.SERVETNOTRESP)
-                        alert('first catch GetCategories');
-                        dispatch({
-                            type: GET_CATEGORIES,
-                            payload: []
-                        });
-                    }
-                )
-        )
-        .then(res => GetSubCategories()
-            .then(res => {
-                    dispatch({
-                        type: GET_SUBCATEGORIES,
-                        payload: res.data
-                    });
-                }
+            .then(res =>
+                dispatch({
+                    type: GET_CATEGORIES,
+                    payload: res.data
+                })
             )
             .catch(err => {
-                    // alert(TextConstants.SERVETNOTRESP)
-                    alert('second catch GetSubCategories');
+                    alert(TextConstants.SERVETNOTRESP);
                     dispatch({
-                        type: GET_SUBCATEGORIES,
+                        type: GET_CATEGORIES,
                         payload: []
                     });
                 }
@@ -264,8 +185,7 @@ export const getInitialState = () => dispatch => {
                 })
             )
             .catch(err => {
-                    // alert(TextConstants.SERVETNOTRESP)
-                    alert('first catch GetExpenses');
+                    alert(TextConstants.SERVETNOTRESP);
                     dispatch({
                         type: GET_EXPENSES,
                         payload: []
@@ -279,7 +199,6 @@ export const signin = user => dispatch => {
     Signin(user)
         .then(res => {
                 if (res.data.success) {
-                    // localStorage.setItem('token', res.data.token)
                     dispatch({
                         type: SIGN_IN,
                         email: res.data.payload.email,
@@ -316,51 +235,11 @@ export const signin = user => dispatch => {
         );
 };
 
-export const updateSubCategory = (_id, subCategory, token) => dispatch => {
-    UpdateSubCategory(_id, subCategory, token)
+export const updateExpense = (_id, expense) => dispatch => {
+    UpdateExpense(_id, expense)
         .then(res => {
                 if (res.data.success) {
-                    GetSubCategories(token)
-                        .then(res => {
-                                dispatch({
-                                    type: GET_SUBCATEGORIES,
-                                    payload: res.data
-                                });
-                            }
-                        )
-                        .catch(err => {
-                                alert(err);
-                                dispatch({
-                                    type: GET_SUBCATEGORIES,
-                                    payload: []
-                                });
-                            }
-                        );
-                }
-                else {
-                    alert(res.data.message);
-                    dispatch({
-                        type: GET_SUBCATEGORIES,
-                        payload: []
-                    });
-                }
-            }
-        )
-        .catch(err => {
-                alert(err);
-                dispatch({
-                    type: GET_SUBCATEGORIES,
-                    payload: []
-                });
-            }
-        );
-};
-
-export const updateExpense = (_id, expense, token) => dispatch => {
-    UpdateExpense(_id, expense, token)
-        .then(res => {
-                if (res.data.success) {
-                    GetExpenses(token)
+                    GetExpenses()
                         .then(res =>
                             dispatch({
                                 type: GET_EXPENSES,
@@ -396,59 +275,9 @@ export const updateExpense = (_id, expense, token) => dispatch => {
 };
 
 
-// Del SubCategory
-export const delSubCategory = (id, token) => dispatch => {
-    DelSubCategory(id, token)
-        .then(res => {
-                if (res.data.success) {
-                    GetCategories(token)
-                        .then(res =>
-                            dispatch({
-                                type: GET_CATEGORIES,
-                                payload: res.data
-                            })
-                        )
-                        .catch(err => {
-                                alert(err);
-                                dispatch({
-                                    type: GET_CATEGORIES,
-                                    payload: []
-                                });
-                            }
-                        )
-                        .then(res => GetSubCategories(token)
-                            .then(res => {
-                                    dispatch({
-                                        type: GET_SUBCATEGORIES,
-                                        payload: res.data
-                                    });
-                                }
-                            )
-                            .catch(err => {
-                                    alert(err);
-                                    dispatch({
-                                        type: GET_SUBCATEGORIES,
-                                        payload: []
-                                    });
-                                }
-                            )
-                        );
-                }
-            }
-        )
-        .catch(err => {
-                alert(err);
-                dispatch({
-                    type: GET_SUBCATEGORIES,
-                    payload: []
-                });
-            }
-        );
-};
-
 //Get Expenses
-export const getExpenses = token => dispatch => {
-    GetExpenses(token)
+export const getExpenses = () => dispatch => {
+    GetExpenses()
         .then(res =>
             dispatch({
                 type: GET_EXPENSES,
@@ -456,8 +285,7 @@ export const getExpenses = token => dispatch => {
             })
         )
         .catch(err => {
-                // alert(TextConstants.SERVETNOTRESP)
-                alert('first catch getExpenses');
+                alert(TextConstants.SERVETNOTRESP);
                 dispatch({
                     type: GET_EXPENSES,
                     payload: []
@@ -466,11 +294,11 @@ export const getExpenses = token => dispatch => {
         );
 };
 
-export const addExpense = (newExpense, token) => dispatch => {
-    AddExpense(newExpense, token)
+export const addExpense = newExpense => dispatch => {
+    AddExpense(newExpense)
         .then(res => {
                 if (res.data.success) {
-                    GetExpenses(token)
+                    GetExpenses()
                         .then(res =>
                             dispatch({
                                 type: GET_EXPENSES,
@@ -478,8 +306,7 @@ export const addExpense = (newExpense, token) => dispatch => {
                             })
                         )
                         .catch(err => {
-                                // alert(TextConstants.SERVETNOTRESP)
-                                alert('first catch addExpense');
+                                alert(TextConstants.SERVETNOTRESP);
                                 dispatch({
                                     type: GET_EXPENSES,
                                     payload: []
@@ -490,8 +317,7 @@ export const addExpense = (newExpense, token) => dispatch => {
             }
         )
         .catch(err => {
-                // alert(TextConstants.SERVETNOTRESP)
-                alert('second catch addExpense');
+                alert(TextConstants.SERVETNOTRESP)
                 dispatch({
                     type: GET_EXPENSES,
                     payload: []
@@ -501,12 +327,11 @@ export const addExpense = (newExpense, token) => dispatch => {
 
 };
 
-export const updateCategory = (_id, category, token) => dispatch => {
-    UpdateCategory(_id, category, token)
+export const updateCategory = (_id, category) => dispatch => {
+    UpdateCategory(_id, category)
         .then(res => {
-                // alert(res.data.success)//true, false - badly
                 if (res.data.success) {
-                    GetCategories(token)
+                    GetCategories()
                         .then(res =>
                             dispatch({
                                 type: GET_CATEGORIES,
@@ -514,46 +339,18 @@ export const updateCategory = (_id, category, token) => dispatch => {
                             })
                         )
                         .catch(err => {
-                                // alert(TextConstants.SERVETNOTRESP)
-                                alert('first catch updateCategory');
+                                alert(TextConstants.SERVETNOTRESP)
                                 dispatch({
                                     type: GET_CATEGORIES,
                                     payload: []
                                 });
                             }
                         )
-                        .then(res => GetSubCategories(token)
-                            .then(res => {
-                                    dispatch({
-                                        type: GET_SUBCATEGORIES,
-                                        payload: res.data
-                                    });
-                                }
-                            )
-                            .catch(err => {
-                                    // alert(TextConstants.SERVETNOTRESP)
-                                    alert('second catch updateCategory');
-                                    dispatch({
-                                        type: GET_SUBCATEGORIES,
-                                        payload: []
-                                    });
-                                }
-                            )
-                        );
                 }
-                // else {
-                //     // alert(TextConstants.SERVETNOTRESP)
-                //     alert('third catch updateCategory')
-                //     dispatch({
-                //         type: GET_CATEGORIES,
-                //         payload: []
-                //     })
-                // }
             }
         )
         .catch(err => {
-                // alert(TextConstants.SERVETNOTRESP)
-                alert('fourth catch updateCategory');
+                alert(TextConstants.SERVETNOTRESP)
                 dispatch({
                     type: GET_CATEGORIES,
                     payload: []
@@ -562,84 +359,9 @@ export const updateCategory = (_id, category, token) => dispatch => {
         );
 };
 
-export const addSubCategory = (newSubCategory, token) => dispatch => {
-    AddSubCategory(newSubCategory, token)
-        .then(res => {
-                if (res.data.success) {
-                    GetSubCategories(token)
-                        .then(res => {
-                                dispatch({
-                                    type: GET_SUBCATEGORIES,
-                                    payload: res.data
-                                });
-                            }
-                        )
-                        .catch(err => {
-                                // alert(TextConstants.SERVETNOTRESP)
-                                alert('first catch addSubCategory');
-                                dispatch({
-                                    type: GET_SUBCATEGORIES,
-                                    payload: []
-                                });
-                            }
-                        )
-                        .then(res => GetCategories(token)
-                            .then(res =>
-                                dispatch({
-                                    type: GET_CATEGORIES,
-                                    payload: res.data
-                                })
-                            )
-                            .catch(err => {
-                                    // alert(TextConstants.SERVETNOTRESP)
-                                    alert('second catch addSubCategory');
-                                    dispatch({
-                                        type: GET_CATEGORIES,
-                                        payload: []
-                                    });
-                                }
-                            )
-                        );
-                } else {
-                    alert('SubCategory has already been added');
-                }
-            }
-        )
-        .catch(err => {
-                // alert(TextConstants.SERVETNOTRESP)
-                alert('third catch addSubCategory');
-                dispatch({
-                    type: GET_SUBCATEGORIES,
-                    payload: []
-                });
-            }
-        );
-};
-
-//Get SubCategories
-export const getSubCategories = token => dispatch => {
-    GetSubCategories(token)
-        .then(res =>
-            dispatch({
-                type: GET_SUBCATEGORIES,
-                payload: res.data
-            })
-        )
-        .catch(err => {
-                // alert(TextConstants.SERVETNOTRESP)
-                alert('first catch getSubCategories');
-                dispatch({
-                    type: GET_SUBCATEGORIES,
-                    payload: []
-                });
-            }
-        );
-};
-
-
 //Get categories
-export const getCategories = token => dispatch => {
-    GetCategories(token)
+export const getCategories = () => dispatch => {
+    GetCategories()
         .then(res =>
             dispatch({
                 type: GET_CATEGORIES,
@@ -647,8 +369,7 @@ export const getCategories = token => dispatch => {
             })
         )
         .catch(err => {
-                // alert(TextConstants.SERVETNOTRESP)
-                alert('first catch getCategories');
+                alert(TextConstants.SERVETNOTRESP)
                 dispatch({
                     type: GET_CATEGORIES,
                     payload: []
@@ -670,8 +391,7 @@ export const addCategory = newCategory => dispatch => {
                             })
                         )
                         .catch(err => {
-                                // alert(TextConstants.SERVETNOTRESP)
-                                alert('first catch addCategory');
+                                alert(TextConstants.SERVETNOTRESP)
                                 dispatch({
                                     type: GET_CATEGORIES,
                                     payload: []
@@ -684,8 +404,7 @@ export const addCategory = newCategory => dispatch => {
             }
         )
         .catch(err => {
-                // alert(TextConstants.SERVETNOTRESP)
-                alert('second catch addCategory');
+                alert(TextConstants.SERVETNOTRESP)
                 dispatch({
                     type: GET_CATEGORIES,
                     payload: []
@@ -696,10 +415,8 @@ export const addCategory = newCategory => dispatch => {
 
 // Del Category
 export const delCategory = id => dispatch => {
-    // alert('delCategory')//ok
     DelCategory(id)
         .then(res => {
-                // alert('res.data.success = '+res.data.success)
                 if (res.data.success) {
                     GetCategories()
                         .then(res =>
@@ -709,38 +426,18 @@ export const delCategory = id => dispatch => {
                             })
                         )
                         .catch(err => {
-                                // alert(TextConstants.SERVETNOTRESP)
-                                alert('first catch delCategory');
+                                alert(TextConstants.SERVETNOTRESP)
                                 dispatch({
                                     type: GET_CATEGORIES,
                                     payload: []
                                 });
                             }
                         )
-                        .then(res => GetSubCategories()
-                            .then(res => {
-                                    dispatch({
-                                        type: GET_SUBCATEGORIES,
-                                        payload: res.data
-                                    });
-                                }
-                            )
-                            .catch(err => {
-                                    // alert(TextConstants.SERVETNOTRESP)
-                                    alert('second catch delCategory');
-                                    dispatch({
-                                        type: GET_SUBCATEGORIES,
-                                        payload: []
-                                    });
-                                }
-                            )
-                        );
                 }
             }
         )
         .catch(err => {
-                // alert(TextConstants.SERVETNOTRESP)
-                alert('third catch delCategory');
+                alert(TextConstants.SERVETNOTRESP)
                 dispatch({
                     type: GET_CATEGORIES,
                     payload: []
@@ -754,34 +451,3 @@ export const signOut = () => dispatch => {
         type: SIGN_OUT,
     });
 };
-
-//todo
-export const categoryUP = (categories, rating) => dispatch => {
-    dispatch({
-        type: CATEGORY_UP,
-        categories,
-        rating
-    });
-};
-
-export const categoryDOWN = (categories, rating) => dispatch => {
-    dispatch({
-        type: CATEGORY_DOWN,
-        categories,
-        rating
-    });
-};
-
-export const subCategoryUP = subCategory => dispatch => {
-    dispatch({
-        type: SUBCATEGORY_UP,
-        subCategory
-    });
-};
-
-export const subCategoryDOWN = subCategory => dispatch => {
-    dispatch({
-        type: SUBCATEGORY_DOWN,
-        subCategory
-    })
-}
