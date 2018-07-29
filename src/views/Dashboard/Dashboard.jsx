@@ -231,7 +231,12 @@ class Dashboard extends React.Component {
                                                         {this.getDate(expense.date)}
                                                     </TableCell>
                                                     <TableCell component="th" scope="row">
-                                                        {expense.category}
+                                                        {
+                                                            expense.idCategory
+                                                                ? this.props.categories
+                                                                    .find(cat => cat._id === expense.idCategory).name
+                                                                : expense.category
+                                                        }
                                                     </TableCell>
                                                     <TableCell component="th" scope="row">
                                                         {expense.expense}
