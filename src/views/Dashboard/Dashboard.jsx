@@ -222,8 +222,8 @@ class Dashboard extends React.Component {
                                 </TableHead>
                                 <TableBody>
                                     {this.props.expenses
-                                        .slice(0, 20)
                                         .sort((a, b) => b.date - a.date)
+                                        .slice(0, 20)
                                         .map(expense => {
                                             return (
                                                 <TableRow key={expense._id}>
