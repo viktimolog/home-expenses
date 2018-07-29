@@ -1,4 +1,5 @@
-const baseApiUrl = 'http://localhost:7777/api/'
+// const baseApiUrl = 'http://localhost:7777/api/'
+const baseApiUrl = 'https://evening-sands-78848.herokuapp.com/api/'
 
 const Urls = {
     baseApiUrl: baseApiUrl,
