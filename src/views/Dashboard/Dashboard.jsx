@@ -168,6 +168,7 @@ class Dashboard extends React.Component {
                                         <Autocomplete
                                             pastDescriptions={this.props.pastDescriptions}
                                             setExpense={this.handleExpense}
+                                            expense={this.state.expense}
                                         />
                                     </div>
                                 </GridItem>

@@ -108,7 +108,7 @@ const styles = theme => ({
 
 class IntegrationAutosuggest extends React.Component {
     state = {
-        value: '',
+        expense: this.props.expense,
         suggestions: []
     };
 
@@ -125,9 +125,6 @@ class IntegrationAutosuggest extends React.Component {
     };
 
     handleChange = (event, {newValue}) => {
-        this.setState({
-            value: newValue,
-        });
         this.props.setExpense(newValue);
     };
 
@@ -149,7 +146,7 @@ class IntegrationAutosuggest extends React.Component {
                 inputProps={{
                     classes,
                     placeholder: 'Description of the expense',
-                    value: this.state.value,
+                    value: this.props.expense,
                     onChange: this.handleChange,
                 }}
             />
