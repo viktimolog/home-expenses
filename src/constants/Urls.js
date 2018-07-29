@@ -18,5 +18,6 @@ const Urls = {
     verify: baseApiUrl + 'users/verify',
     token: baseApiUrl + 'users/token'
 };
+
 export default Urls;
 
