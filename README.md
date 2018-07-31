@@ -10,5 +10,7 @@ Run yarn start or npm start
 
 Pay attention, you should have the free port 3000
 
+Server for this app: https://github.com/viktimolog/home-expenses-server
+
 
 
